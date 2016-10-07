@@ -1,0 +1,37 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package logica;
+
+import java.util.ArrayList;
+
+/**
+ *
+ * @author usuario
+ */
+public class SubSistemaPartida {
+    private ArrayList<Partida> partidas = new ArrayList();
+    
+    public boolean partidasFinalizadas(){
+        
+        if(!partidas.isEmpty()){
+            for(Partida p:partidas){
+                if(p.getGanador() == null)
+                    return false;
+            }
+        }
+        return true;
+    }
+    
+    public Partida partidaPosision(int pos){
+        return partidas.get(pos);
+    }
+
+    public ArrayList<Partida> getPartidas() {
+        return partidas;
+    }
+    
+    
+}
