@@ -13,4 +13,9 @@ public class Ficha {
     private int valorDerecha;
     private int valorIzquierda;
     
+    public void rotar(){
+        int aux=valorDerecha;
+        valorDerecha=valorIzquierda;
+        valorIzquierda=aux;
+    }
 }

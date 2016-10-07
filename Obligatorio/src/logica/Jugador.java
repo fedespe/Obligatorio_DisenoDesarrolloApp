@@ -23,6 +23,8 @@ public class Jugador extends Usuario {
     public double getSaldo() {
         return saldo;
     }
-    
+    public boolean verificarSaldo(double monto) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
