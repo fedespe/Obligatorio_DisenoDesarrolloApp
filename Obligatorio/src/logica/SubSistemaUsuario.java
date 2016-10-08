@@ -6,16 +6,17 @@
 package logica;
 
 import java.util.ArrayList;
+import utilidades.ObligatorioException;
 
 /**
  *
  * @author usuario
  */
-public class SubSistemaUsuario {
+public class SubSistemaUsuario{
     private ArrayList<Usuario> usuarios = new ArrayList();
     private ArrayList<Usuario> logueados = new ArrayList();
     
-    public Usuario login(String n, String p){
+    public Usuario login(String n, String p) throws ObligatorioException{
         for(Usuario u:usuarios){
             if(u.getNombre().equalsIgnoreCase(n)){
                 if(u.getPassword().equals(p)){
@@ -23,14 +24,14 @@ public class SubSistemaUsuario {
                         logueados.add(u);
                         return u;
                     }
-                    //else
-                        //dar aviso de que ya está logueado y debe cerrar sesión
+                    else
+                        throw new ObligatorioException("Usuario ya logueado, debe cerrar la otra sesión.");
                 }
                 else
-                    return null;
+                    throw new ObligatorioException("Password incorrecto.");
             } 
         }
-        return null;
+        throw new ObligatorioException("Usuario incorrecto.");
     }
     
     public void logout(Usuario usu){
@@ -38,7 +39,7 @@ public class SubSistemaUsuario {
             if(usu.equals(u)){
                 logueados.remove(u);
                 return;
-            }  
+            }
         }
     }
     

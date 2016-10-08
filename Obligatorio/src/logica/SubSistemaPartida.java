@@ -6,6 +6,7 @@
 package logica;
 
 import java.util.ArrayList;
+import utilidades.ObligatorioException;
 
 /**
  *
@@ -14,12 +15,12 @@ import java.util.ArrayList;
 public class SubSistemaPartida {
     private ArrayList<Partida> partidas = new ArrayList();
     
-    public boolean partidasFinalizadas(){
+    public boolean partidasFinalizadas() throws ObligatorioException{
         
         if(!partidas.isEmpty()){
             for(Partida p:partidas){
                 if(p.getGanador() == null)
-                    return false;
+                    throw new ObligatorioException("No puede cerrar el servidor hasta que todas las partidas hayan finalizado.");
             }
         }
         return true;

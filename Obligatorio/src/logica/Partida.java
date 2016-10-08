@@ -85,6 +85,7 @@ public class Partida {
       
         return true;
     }
+    
     private void cambiarTurno(){
         for(Jugador j : jugadores){
             if(j!=turno)

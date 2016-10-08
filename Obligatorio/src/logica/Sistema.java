@@ -6,6 +6,7 @@
 package logica;
 
 import java.util.ArrayList;
+import utilidades.ObligatorioException;
 
 /**
  *
@@ -22,11 +23,11 @@ public class Sistema {
         return instancia;
     }
 
-    public Usuario login(String n, String p) {
+    public Usuario login(String n, String p) throws ObligatorioException{
         return ssu.login(n, p);
     }
 
-    public boolean partidasFinalizadas() {
+    public boolean partidasFinalizadas() throws ObligatorioException{
         return ssp.partidasFinalizadas();
     }
 
