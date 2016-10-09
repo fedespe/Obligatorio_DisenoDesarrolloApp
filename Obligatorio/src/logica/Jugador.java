@@ -6,6 +6,7 @@
 package logica;
 
 import java.util.ArrayList;
+import utilidades.ObligatorioException;
 
 /**
  *
@@ -23,11 +24,13 @@ public class Jugador extends Usuario {
     public double getSaldo() {
         return saldo;
     }
-    public boolean verificarSaldo(double monto) {
-        if(monto <= saldo)
-            return true;
-        
-        return false;
+    public void verificarSaldo(double monto)throws ObligatorioException {
+        if(monto >= saldo)
+            throw new ObligatorioException("Saldo insuficiente del jugador: "+getNombreCompleto());
+    }
+
+    public void agregarFicha(Ficha get) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
