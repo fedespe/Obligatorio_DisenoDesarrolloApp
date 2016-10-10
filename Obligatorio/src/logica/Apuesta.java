@@ -11,6 +11,28 @@ package logica;
  */
 public class Apuesta {
     private double valor;
-    private boolean aceptada;
+    //private boolean aceptada;
     private Jugador jugador;
+
+    public double getValor() {
+        return valor;
+    }
+
+//    public boolean isAceptada() {
+//        return aceptada;
+//    }
+
+    public Jugador getJugador() {
+        return jugador;
+    }
+
+    public void setValor(double valor) {
+        this.valor = valor;
+    }
+
+    public void setJugador(Jugador jugador) {
+        this.jugador = jugador;
+    }
+    
+    
 }

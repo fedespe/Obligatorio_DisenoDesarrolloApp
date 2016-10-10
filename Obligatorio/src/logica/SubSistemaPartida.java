@@ -34,15 +34,18 @@ public class SubSistemaPartida {
         return partidas;
     }
     
-    public Partida iniciarPartida(Jugador j) throws ObligatorioException{
+    public Partida agregarJugador(Jugador j) throws ObligatorioException{
         Partida ultimaPartida = partidas.get(partidas.size() -1);
         
         if(ultimaPartida.enEspera()){
-            ultimaPartida.iniciarPartida(j);
+            ultimaPartida.agregarJugador(j);
             return ultimaPartida;
         }
         else{
-            return new Partida(j);
+            Partida nueva= new Partida();
+            nueva.agregarJugador(j);
+            partidas.add(nueva);
+            return nueva;
         }
     }
 }

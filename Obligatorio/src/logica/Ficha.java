@@ -26,6 +26,16 @@ public class Ficha {
     public int getValorIzquierda() {
         return valorIzquierda;
     }
+
+    public Ficha(int valorDerecha, int valorIzquierda) {
+        this.valorDerecha = valorDerecha;
+        this.valorIzquierda = valorIzquierda;
+    }
     
-    
+    @Override
+    public boolean equals(Object o){
+        Ficha f = (Ficha)o;
+        return (f.getValorDerecha()==valorDerecha && f.getValorIzquierda()==valorIzquierda)
+                || (f.getValorDerecha()==valorIzquierda && f.getValorIzquierda()==valorDerecha);
+    }
 }
