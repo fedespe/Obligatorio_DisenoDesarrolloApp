@@ -25,12 +25,17 @@ public class Jugador extends Usuario {
         return saldo;
     }
     public void verificarSaldo(double monto)throws ObligatorioException {
-        if(monto >= saldo)
-            throw new ObligatorioException("Saldo insuficiente del jugador: "+getNombreCompleto());
+        if(monto > saldo)
+            throw new ObligatorioException("El jugador " + getNombreCompleto() + " no posee saldo suficiente.");
     }
 
-    public void agregarFicha(Ficha get) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    //Usé este método porque estaba creado... Pero es necesario? Para eso no son los getter y setter?
+    public void agregarFicha(Ficha f) {
+        fichas.add(f);
+    }
+
+    public ArrayList<Ficha> getFichas() {
+        return fichas;
     }
     
 }

@@ -3,8 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/FEDE/Proyectos_GitHub/ObligatorioDisDesApp/Obligatorio/src/logica/Partida.java</file>
-            <file>file:/D:/FEDE/Proyectos_GitHub/ObligatorioDisDesApp/Obligatorio/src/utilidades/ObligatorioException.java</file>
+            <file>file:/C:/Users/usuario/Documents/GitHub/Obligatorio%20Diseño/Obligatorio/src/logica/Jugador.java</file>
+            <file>file:/C:/Users/usuario/Documents/GitHub/Obligatorio%20Diseño/Obligatorio/src/logica/Sistema.java</file>
+            <file>file:/C:/Users/usuario/Documents/GitHub/Obligatorio%20Diseño/Obligatorio/src/logica/Ficha.java</file>
+            <file>file:/C:/Users/usuario/Documents/GitHub/Obligatorio%20Diseño/Obligatorio/src/logica/Partida.java</file>
+            <file>file:/C:/Users/usuario/Documents/GitHub/Obligatorio%20Diseño/Obligatorio/src/logica/Usuario.java</file>
+            <file>file:/C:/Users/usuario/Documents/GitHub/Obligatorio%20Diseño/Obligatorio/src/logica/SubSistemaUsuario.java</file>
+            <file>file:/C:/Users/usuario/Documents/GitHub/Obligatorio%20Diseño/Obligatorio/src/logica/SubSistemaPartida.java</file>
         </group>
     </open-files>
 </project-private>

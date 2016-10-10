@@ -34,5 +34,15 @@ public class SubSistemaPartida {
         return partidas;
     }
     
-    
+    public Partida iniciarPartida(Jugador j) throws ObligatorioException{
+        Partida ultimaPartida = partidas.get(partidas.size() -1);
+        
+        if(ultimaPartida.enEspera()){
+            ultimaPartida.iniciarPartida(j);
+            return ultimaPartida;
+        }
+        else{
+            return new Partida(j);
+        }
+    }
 }

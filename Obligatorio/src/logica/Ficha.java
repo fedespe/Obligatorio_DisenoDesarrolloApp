@@ -18,4 +18,14 @@ public class Ficha {
         valorDerecha=valorIzquierda;
         valorIzquierda=aux;
     }
+
+    public int getValorDerecha() {
+        return valorDerecha;
+    }
+
+    public int getValorIzquierda() {
+        return valorIzquierda;
+    }
+    
+    
 }
