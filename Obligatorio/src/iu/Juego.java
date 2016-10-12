@@ -5,23 +5,19 @@
  */
 package iu;
 
-import logica.Sistema;
-import logica.Usuario;
+import controladores.VistaJuego;
 
 /**
  *
  * @author usuario
  */
-public class Juego extends javax.swing.JFrame {
-    private Sistema sistema = Sistema.getInstancia();
-    private Usuario usuario;
+public class Juego extends javax.swing.JFrame implements VistaJuego{
     /**
      * Creates new form Juego
      */
-    public Juego(Usuario u) {
+    public Juego() {
         initComponents();
         setLocationRelativeTo(null);
-        usuario = u;
     }
 
     /**
@@ -283,18 +279,12 @@ public class Juego extends javax.swing.JFrame {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-        finalizarPartida();
     }//GEN-LAST:event_formWindowClosing
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         System.out.println("Robaría una Ficha.");
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void finalizarPartida() {
-        sistema.logout(usuario);
-        dispose();
-    }
 
     /**
      * @param args the command line arguments

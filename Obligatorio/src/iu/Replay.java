@@ -5,22 +5,20 @@
  */
 package iu;
 
-import logica.Partida;
+import controladores.VistaReplay;
 
 /**
  *
  * @author usuario
  */
-public class Replay extends javax.swing.JDialog {
-    private Partida partida;
+public class Replay extends javax.swing.JDialog implements VistaReplay{
     /**
      * Creates new form Replay
      */
-    public Replay(java.awt.Frame parent, boolean modal, Partida p) {
+    public Replay(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
-        partida = p;
     }
 
     /**
@@ -79,12 +77,10 @@ public class Replay extends javax.swing.JDialog {
 
     private void btnJugadaSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJugadaSiguienteActionPerformed
         // TODO add your handling code here:
-        System.out.println("Se mostraría el siguiente movimiento.");
     }//GEN-LAST:event_btnJugadaSiguienteActionPerformed
 
     private void btnJugadaAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJugadaAnteriorActionPerformed
         // TODO add your handling code here:
-        System.out.println("Se mostratía el anterior movimiento.");
     }//GEN-LAST:event_btnJugadaAnteriorActionPerformed
 
     /**

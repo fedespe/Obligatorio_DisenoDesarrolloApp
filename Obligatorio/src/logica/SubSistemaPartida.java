@@ -15,15 +15,14 @@ import utilidades.ObligatorioException;
 public class SubSistemaPartida {
     private ArrayList<Partida> partidas = new ArrayList();
     
-    public boolean partidasFinalizadas() throws ObligatorioException{
+    public void partidasFinalizadas() throws ObligatorioException{
         
-        if(!partidas.isEmpty()){
+        if(!partidas.isEmpty()){ //Ver si es necesario el if... Si está vacía la lista, da excepción o no hace nada?
             for(Partida p:partidas){
                 if(p.getGanador() == null)
                     throw new ObligatorioException("No puede cerrar el servidor hasta que todas las partidas hayan finalizado.");
             }
         }
-        return true;
     }
     
     public Partida partidaPosision(int pos){

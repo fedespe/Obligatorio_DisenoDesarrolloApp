@@ -5,27 +5,20 @@
  */
 package iu;
 
-import java.util.ArrayList;
-import javax.swing.JOptionPane;
-import logica.Partida;
-import logica.Sistema;
-import logica.Usuario;
+import controladores.VistaPartidas;
 
 /**
  *
  * @author usuario
  */
-public class Partidas extends javax.swing.JFrame {
-    private Sistema sistema = Sistema.getInstancia();
-    private Usuario logueado;
+public class Partidas extends javax.swing.JFrame implements VistaPartidas{
+
     /**
      * Creates new form Partidas
      */
-    public Partidas(Usuario log) {
+    public Partidas() {
         initComponents();
         setLocationRelativeTo(null);
-        logueado = log;
-        cargarPartidas();
     }
 
     /**
@@ -112,25 +105,18 @@ public class Partidas extends javax.swing.JFrame {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-        cerrarSesion();
     }//GEN-LAST:event_formWindowClosing
 
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
         // TODO add your handling code here:
-        cerrarSesion();
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
     private void btnVerPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerPartidaActionPerformed
         // TODO add your handling code here:
-        verPartida();
     }//GEN-LAST:event_btnVerPartidaActionPerformed
 
     private void lstPartidasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstPartidasMouseClicked
-        // TODO add your handling code here:
-        if(evt.getClickCount()==2){
-            System.out.println("Se hicieron 2 click, se abre la partida seleccionada.");
-            verPartida();
-        }
+
     }//GEN-LAST:event_lstPartidasMouseClicked
 
     /**
@@ -145,48 +131,5 @@ public class Partidas extends javax.swing.JFrame {
     private javax.swing.JList lstPartidas;
     // End of variables declaration//GEN-END:variables
 
-    private void cerrarSesion() {
-        sistema.logout(logueado);
-        dispose();
-    }
 
-    private void verPartida() {
-        if(!sistema.getPartidas().isEmpty()){
-            int posPartida = lstPartidas.getSelectedIndex();
-            Partida p = sistema.partidaPosision(posPartida);
-            
-            new Replay(null,false,p).setVisible(true);
-        }
-        else
-            JOptionPane.showMessageDialog(this, "Debe seleccionar una partida.");
-    }
-
-    private void cargarPartidas() {
-        ArrayList<String> partidas = new ArrayList();
-        String linea = "";
-        
-        for(Partida p:sistema.getPartidas()){
-            if(p.getUltimaApuesta() != null){ //Ojo que tenemos que hacer que las apuestas iniciales, no generen un objeto apuesta, sino que únicamente sumen al pozo
-                boolean g = false;
-                if(p.getGanador() != null)
-                    g=true;
-
-                if(g)
-                    linea = linea + "[Finalizada] ";
-                else
-                    linea = linea + "[En Juego] ";
-
-                linea = linea + p.getJugadores().get(0).getNombreCompleto() + " ($" + p.getJugadores().get(0).getSaldo() + ") - ";
-                linea = linea + p.getJugadores().get(1).getNombreCompleto() + " ($" + p.getJugadores().get(1).getSaldo() + ") : ";
-                linea = "$" + p.getPozoApuestas() + " => ";
-
-                if(g)
-                    linea = linea + p.getGanador().getNombreCompleto();
-                else
-                    linea = linea + " No Finalizada...";
-
-                partidas.add(linea);
-            }
-        }
-    }
 }

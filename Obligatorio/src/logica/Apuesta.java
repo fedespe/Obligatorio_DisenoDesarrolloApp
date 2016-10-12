@@ -34,5 +34,7 @@ public class Apuesta {
         this.jugador = jugador;
     }
     
-    
+    public Apuesta(double valor){
+        this.valor = valor;
+    }
 }

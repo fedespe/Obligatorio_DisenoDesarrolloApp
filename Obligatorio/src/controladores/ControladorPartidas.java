@@ -3,20 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package iu;
+package controladores;
+
+import utilidades.Observable;
+import utilidades.Observador;
 
 /**
  *
  * @author usuario
  */
-public class Inicio {
+public class ControladorPartidas implements Observador{
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
-        new Servidor().setVisible(true);
+    @Override
+    public void actualizar(Observable origen, Object evento) {
+        
     }
     
 }

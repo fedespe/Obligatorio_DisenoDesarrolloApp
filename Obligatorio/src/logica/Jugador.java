@@ -15,6 +15,7 @@ import utilidades.ObligatorioException;
 public class Jugador extends Usuario {
     private double saldo;
     private ArrayList<Ficha> fichas = new ArrayList();
+    private Partida partida;
     
     public Jugador(String n, String p, String np, double s){
         super(n,p,np);
@@ -41,6 +42,10 @@ public class Jugador extends Usuario {
     void quitarApuesta(double valor) throws ObligatorioException{
         verificarSaldo(valor);
         saldo-=valor;
+    }
+
+    void eliminarFicha(Ficha ficha) {
+        fichas.remove(ficha);
     }
     
 }

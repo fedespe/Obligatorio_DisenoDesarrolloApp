@@ -22,26 +22,11 @@ public class Sistema {
     public static Sistema getInstancia() {
         return instancia;
     }
-
-    public Usuario login(String n, String p) throws ObligatorioException{
-        return ssu.login(n, p);
-    }
-
-    public boolean partidasFinalizadas() throws ObligatorioException{
-        return ssp.partidasFinalizadas();
-    }
-
-    public void logout(Usuario usu) {
-        ssu.logout(usu);
-    }
-
-    public Partida partidaPosision(int pos) {
-        return ssp.partidaPosision(pos);
-    }
-
-    public ArrayList<Partida> getPartidas() {
-        return ssp.getPartidas();
-    }
     
-    
+    public enum Eventos{
+        fichaDescartada, //Lo utilizaremos cada vez que se agrega una ficha al Tablero
+        fartidaFinalizada, //Lo urilizaremos cada vez que una partida se finaliza
+        jugadorAgregado; //Lo utilizaremos cada vez que ingresa un segudno jugador a una partida que estaba esperando
+        
+    }
 }

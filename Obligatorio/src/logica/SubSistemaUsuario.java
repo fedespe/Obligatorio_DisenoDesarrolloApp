@@ -13,19 +13,20 @@ import utilidades.ObligatorioException;
  * @author usuario
  */
 public class SubSistemaUsuario{
-    private ArrayList<Usuario> usuarios = new ArrayList();
-    private ArrayList<Usuario> logueados = new ArrayList();
+    private ArrayList<Administrador> administradores = new ArrayList();
+    private ArrayList<Jugador> jugadores = new ArrayList();
+    private ArrayList<Jugador> jugadoresLogueados = new ArrayList();
     
-    public Usuario login(String n, String p) throws ObligatorioException{
-        for(Usuario u:usuarios){
-            if(u.getNombre().equalsIgnoreCase(n)){
-                if(u.getPassword().equals(p)){
+    public Jugador loginJugador(String n, String p) throws ObligatorioException{
+        for(Jugador j:jugadores){
+            if(j.getNombre().equalsIgnoreCase(n)){
+                if(j.getPassword().equals(p)){
                     if(!estaLogueado(n)){
-                        logueados.add(u);
-                        return u;
+                        jugadoresLogueados.add(j);
+                        return j;
                     }
                     else
-                        throw new ObligatorioException("Usuario ya logueado, debe cerrar la otra sesión.");
+                        throw new ObligatorioException("Jugador ya logueado, debe cerrar la otra sesión.");
                 }
                 else
                     throw new ObligatorioException("Password incorrecto.");
@@ -34,18 +35,31 @@ public class SubSistemaUsuario{
         throw new ObligatorioException("Usuario incorrecto.");
     }
     
-    public void logout(Usuario usu){
-        for(Usuario u:logueados){
-            if(usu.equals(u)){
-                logueados.remove(u);
+    public Administrador loginAdministrador(String n, String p) throws ObligatorioException{
+        for(Administrador a:administradores){
+            if(a.getNombre().equalsIgnoreCase(n)){
+                if(a.getPassword().equals(p)){
+                    return a;
+                }
+                else
+                    throw new ObligatorioException("Password incorrecto.");
+            }
+        } 
+        throw new ObligatorioException("Usuario incorrecto.");
+    }
+    
+    public void logoutJugador(Jugador jug){
+        for(Jugador j:jugadoresLogueados){
+            if(jug.equals(j)){
+                jugadoresLogueados.remove(j);
                 return;
             }
         }
     }
     
     private boolean estaLogueado(String n){
-        for(Usuario u:logueados){
-            if(u.getNombre().equalsIgnoreCase(n))
+        for(Jugador j:jugadoresLogueados){
+            if(j.getNombre().equalsIgnoreCase(n))
                 return true;
         }
         return false;
@@ -56,11 +70,11 @@ public class SubSistemaUsuario{
     }
     
     private void cargarUsuarios(){
-        usuarios.add(new Jugador("a","a","Ana",5));
-        usuarios.add(new Jugador("b","b","Bruno",500));
-        usuarios.add(new Jugador("c","c","Carlos",250));
-        usuarios.add(new Administrador("d","d","Dilma"));
-        usuarios.add(new Administrador("e","e","Emiliano"));
-        usuarios.add(new Administrador("f","f","Federico"));
+        jugadores.add(new Jugador("a","a","Ana",5));
+        jugadores.add(new Jugador("b","b","Bruno",500));
+        jugadores.add(new Jugador("c","c","Carlos",250));
+        administradores.add(new Administrador("d","d","Dilma"));
+        administradores.add(new Administrador("e","e","Emiliano"));
+        administradores.add(new Administrador("f","f","Federico"));
     }
 }
