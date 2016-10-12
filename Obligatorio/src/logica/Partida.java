@@ -15,7 +15,8 @@ import utilidades.ObligatorioException;
  */
 public class Partida {
     //private double apuestaInicial;
-    private double pozoApuestas;
+    private boolean partidaActiva=false;
+    private double pozoApuestas=0;
     private ArrayList<Jugador> jugadores = new ArrayList();
     private Jugador turno;
     private Jugador ganador;
@@ -48,43 +49,44 @@ public class Partida {
     //Se crea la partida y luego se agregan los jugadores
     //La partida se agrega al sistema si tiene jugadores ingresados
     public Partida(){
-        //iniciar la apuesta
-        //mezclar las fichas (metodo) 
-        pozoApuestas=100;//inicial  
+        //iniciar la apuesta   
         ultimaApuesta= new Apuesta();
+        ultimaApuesta.setValor(100);
         crearFichas();
         //No mezclo para hacer pruebas
-        //Esta mezclando bien
         //mezclarFichas();
     }
     public void agregarJugador(Jugador jugador) throws ObligatorioException{
         if(jugadores.isEmpty()){
-            jugador.verificarSaldo(pozoApuestas);
+            jugador.verificarSaldo(ultimaApuesta.getValor());
             jugadores.add(jugador);
             turno=jugador;
         }else if(jugadores.size()==1){
-            jugador.verificarSaldo(pozoApuestas);
+            jugador.verificarSaldo(ultimaApuesta.getValor());
             jugadores.add(jugador);
+            ingresarApuestaAPartida();
             repartirFichas();
+            partidaActiva=true;
         }
     }
-    
+
     //Podemos hacer que el movimiento inicial en el cual 
     //no hay fichas en el tablero se ingrese 
     //fichaTablero null
-    public boolean mover(Jugador jugador, Ficha fichaTablero, Ficha fichaDescartada)throws ObligatorioException{
+    public void mover(Jugador jugador, Ficha fichaTablero, Ficha fichaDescartada)throws ObligatorioException{
+        verificarPartidaActiva();
         //falta registrar movimiento
         verificarTurno(jugador);//tira excepcion 
         unirFicha(fichaTablero, fichaDescartada);//tira excepcion
         //Finaliza la partida si se descarto todas
         verificarSiSeDescartoTodas();
         cambiarTurno();
-        return true;
     }
     
     //El metodo robar tendria que ser void
     //ya que el sistema vuelve a mostrar las fichas
     public void robar(Jugador j)throws ObligatorioException{
+        verificarPartidaActiva();
         verificarTurno(j);
         //ver que pasa cuando no hay 
         //mas fichas para robar
@@ -94,11 +96,15 @@ public class Partida {
         }else if(libres.size()==1){
             //Finaliza la partida si no se puede colocar
             verificarSiNoSePuedeColocar(libres.get(0));
-        }       
+            j.agregarFicha(libres.get(0));
+            libres.remove(0);
+        }
+        //ver si hay que evaluar el caso en que no hay mas fichas       
     }
     //Ver que el pozoApuesta creo tiene que tener la suma
     //de los dos si se apuesta 500 creo tiene que ser 1000
     public void apostar(Jugador apostador, double monto)throws ObligatorioException{
+        verificarPartidaActiva();
         //Verifico que no haya sido el ultimo en apostar
         //Verifico que el monto sea correcto
         //tanto para el que apuesta como para el rival
@@ -109,12 +115,14 @@ public class Partida {
         verificarApuesta(monto);
         ultimaApuesta.setJugador(apostador);
         ultimaApuesta.setValor(monto);
+        partidaActiva=false;
     }
-    public void confirmarApuesta(boolean confirmacion){
+    public void confirmarApuesta(boolean confirmacion)throws ObligatorioException{
         //si acepta incremento el pozo
         //si no acepta finaliza partida
         if(confirmacion){
-            pozoApuestas+=ultimaApuesta.getValor();
+            ingresarApuestaAPartida();
+            partidaActiva=true;
         }else{
             finalizarPartida(ultimaApuesta.getJugador());
         }
@@ -166,6 +174,11 @@ public class Partida {
         }
     }
   
+    private void ingresarApuestaAPartida()throws ObligatorioException{
+        jugadores.get(0).quitarApuesta(ultimaApuesta.getValor());
+        jugadores.get(1).quitarApuesta(ultimaApuesta.getValor());
+        pozoApuestas+=ultimaApuesta.getValor()*2;
+    }
     //Metodo para reuso en unir ficha codigo repetido
     //No lo cambie todavia
     private void agregarFichaAlTableroYRemoverDelJugador(Ficha ficha){
@@ -207,6 +220,7 @@ public class Partida {
         //da fin a la partida indicando el gandor
         //lanzar evento de fin de partida
         this.ganador=ganador;
+        partidaActiva=false;
     }
     
     private void verificarTurno(Jugador jugador)throws ObligatorioException{
@@ -215,8 +229,10 @@ public class Partida {
             throw new ObligatorioException("No es su turno.");
     }
     
-    
+    //ver que solo puedo pruntar por el jugador que tiene el turno
     private void verificarSiSeDescartoTodas()throws ObligatorioException{
+        //if(turno.getFichas().isEmpty())
+        //  finalizarPartida(turno);
         for(Jugador j:jugadores){
             if(j.getFichas().isEmpty())
                 finalizarPartida(j);
@@ -247,14 +263,17 @@ public class Partida {
         if(apostador==ultimaApuesta.getJugador())
             throw new ObligatorioException("No se puede realizar dos apuestas consecutivas.");
     }
-
+    private void verificarPartidaActiva()throws ObligatorioException{
+        if(!partidaActiva)
+            throw new ObligatorioException("La partdia se encuntra detenida. Espere.");
+    }
     public boolean enEspera() {
         if(jugadores.size() < 2)
             return true;
         
         return false;
     }
-    public void crearFichas(){
+    private void crearFichas(){
         libres.add(new Ficha(0,0));
         libres.add(new Ficha(0,1));
         libres.add(new Ficha(0,2));
@@ -284,16 +303,4 @@ public class Partida {
         libres.add(new Ficha(5,6));
         libres.add(new Ficha(6,6));
     }
-    //La elimine ya que la partida inicia 
-    //cuando se agrega el segundo jugador
-//    public void iniciarPartida(Jugador jugador2) throws ObligatorioException{
-//        //Se ingresa el jugdor 
-//        //Se reparten las fichas(metodo)
-//        //hay que verificar que este logueado?
-//        
-//        jugadores.add(jugador2);
-//        verificarApuesta(pozoApuestas);
-//        //Ver que pasa acá... Si salta la excepción, la partida va a quedar con el jugador2 agregado... Eso no está bien. Creo que deberíamos controlarlo antes...
-//        repartirFichas();
-//    }
 }

@@ -24,7 +24,7 @@ public class MainPruebaLogica {
             //partida.mover(j2, partida.getTablero().get(0), j2.getFichas().get(1));
             partida.robar(j1);
             partida.apostar(j1, 500);
-            partida.confirmarApuesta(false);
+            partida.confirmarApuesta(true);
             
         }catch(ObligatorioException ex){
             System.out.println(ex.getMessage());

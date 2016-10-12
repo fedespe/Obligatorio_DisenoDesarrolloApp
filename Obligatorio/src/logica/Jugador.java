@@ -37,5 +37,10 @@ public class Jugador extends Usuario {
     public ArrayList<Ficha> getFichas() {
         return fichas;
     }
+
+    void quitarApuesta(double valor) throws ObligatorioException{
+        verificarSaldo(valor);
+        saldo-=valor;
+    }
     
 }
