@@ -10,5 +10,9 @@ package controladores;
  * @author usuario
  */
 public interface VistaServidor {
+
+    public void cerrar();
+
+    public void ingresarIngresarLogin(boolean jugador);
     
 }

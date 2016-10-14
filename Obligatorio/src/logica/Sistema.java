@@ -6,13 +6,14 @@
 package logica;
 
 import java.util.ArrayList;
+import java.util.Observable;
 import utilidades.ObligatorioException;
 
 /**
  *
  * @author usuario
  */
-public class Sistema {
+public class Sistema extends Observable{
     private SubSistemaUsuario ssu = new SubSistemaUsuario();
     private SubSistemaPartida ssp = new SubSistemaPartida();
     private static Sistema instancia = new Sistema();
@@ -21,6 +22,14 @@ public class Sistema {
 
     public static Sistema getInstancia() {
         return instancia;
+    }
+
+    public Jugador loginJugador(String nombre, String pass) throws ObligatorioException {
+        return ssu.loginJugador(nombre, pass);
+    }
+
+    public Administrador loginAdministrador(String nombre, String pass) throws ObligatorioException {
+        return ssu.loginAdministrador(nombre, pass);
     }
     
     public enum Eventos{

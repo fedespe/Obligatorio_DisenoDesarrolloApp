@@ -1,14 +1,31 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package controladores;
 
-/**
- *
- * @author usuario
- */
-public class ControladorServidor {
+import logica.Sistema;
+import utilidades.Observable;
+import utilidades.Observador;
+
+public class ControladorServidor{
+    
+    private Sistema modelo = Sistema.getInstancia();
+    private VistaServidor vista;
+
+    public ControladorServidor(VistaServidor vista) {
+        this.vista = vista;
+    }
+
+    public void jugador() {
+        vista.ingresarIngresarLogin(true);
+    }
+
+    public void administrador() {
+        vista.ingresarIngresarLogin(false);
+    }
+
+    public void salir() {
+        //if(modelo.VerificarPartidasCerradas())
+        vista.cerrar();
+    }
+
     
 }

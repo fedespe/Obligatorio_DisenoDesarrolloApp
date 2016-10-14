@@ -3,21 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package iu;
+package vista;
 
-import controladores.VistaLogin;
+import controladores.VistaJuego;
 
 /**
  *
  * @author usuario
  */
-public class Login extends javax.swing.JFrame implements VistaLogin{
-
+//El juego tiene que ser jDialog para que se cierre todo junto
+//El jfream tendria que ser solo la ventana servidor
+public class Juego extends javax.swing.JFrame implements VistaJuego{
     /**
-     * Creates new form Login
+     * Creates new form Juego
      */
-    public Login() {
+    public Juego() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -29,25 +31,25 @@ public class Login extends javax.swing.JFrame implements VistaLogin{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
+        getContentPane().setLayout(null);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
-
-        pack();
+        setBounds(0, 0, 728, 623);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
      */
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
