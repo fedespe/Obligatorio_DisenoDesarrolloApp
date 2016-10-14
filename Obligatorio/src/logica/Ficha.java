@@ -29,7 +29,7 @@ public class Ficha {
         return valorIzquierda;
     }
 
-    public Ficha(int valorDerecha, int valorIzquierda) {
+    public Ficha(int valorIzquierda, int valorDerecha) {
         this.valorDerecha = valorDerecha;
         this.valorIzquierda = valorIzquierda;
     }
@@ -62,5 +62,10 @@ public class Ficha {
             else
                 throw new ObligatorioException("Las fichas seleccionadas no se pueden unir.");
         }
+    }
+    
+    @Override
+    public String toString() {
+        return valorIzquierda + " | " + valorDerecha;
     }
 }
