@@ -5,6 +5,7 @@
  */
 package controladores;
 
+import logica.Sistema;
 import utilidades.Observable;
 import utilidades.Observador;
 
@@ -14,9 +15,21 @@ import utilidades.Observador;
  */
 public class ControladorPartidas implements Observador{
 
+    private Sistema modelo = Sistema.getInstancia();
+    private VistaPartidas vista;
+    
+    public ControladorPartidas (VistaPartidas vista){
+        this.vista = vista;
+        vista.mostrarPartidas(modelo.getPartidas());
+    }
+    
     @Override
     public void actualizar(Observable origen, Object evento) {
         
+    }
+
+    public void salir() {
+        vista.cerrar();
     }
     
 }

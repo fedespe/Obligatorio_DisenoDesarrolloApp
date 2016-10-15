@@ -7,6 +7,7 @@ package vista;
 
 import controladores.ControladorServidor;
 import controladores.VistaServidor;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,6 +20,7 @@ public class Servidor extends javax.swing.JFrame implements VistaServidor{
     public Servidor() {
         initComponents();
         setLocationRelativeTo(null);
+        setTitle("Servidor");
         controlador = new ControladorServidor(this);
     }
 
@@ -35,7 +37,12 @@ public class Servidor extends javax.swing.JFrame implements VistaServidor{
         btnAdmin = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
         getContentPane().setLayout(null);
 
         btnJugador.setText("Jugador");
@@ -77,8 +84,13 @@ public class Servidor extends javax.swing.JFrame implements VistaServidor{
     }//GEN-LAST:event_btnAdminActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        salir();
+        controlador.salir();
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        controlador.salir();
+    }//GEN-LAST:event_formWindowClosing
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdmin;
@@ -92,25 +104,19 @@ public class Servidor extends javax.swing.JFrame implements VistaServidor{
     private void administrador() {
         controlador.administrador();
     }
-    private void salir() {
-        controlador.salir();
-    }
-
+    
     @Override
-    public void ingresarIngresarLogin(boolean jugador) {
+    public void ingresarLogin(boolean jugador) {
         new Login(this,false,jugador).setVisible(true);
     }
 
     @Override
     public void cerrar() {
-        //Falta resolver la logica de cierre del controlador
-        //para cuando hay partidas en juego
-        //el evento de cierre tambien tiene que invocar metodo
-        //salir()
         dispose();
     }
 
-    
-
-    
+    @Override
+    public void error(String message) {
+        JOptionPane.showMessageDialog(this, message);
+    }
 }

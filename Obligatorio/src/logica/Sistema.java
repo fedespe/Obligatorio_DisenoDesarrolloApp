@@ -31,6 +31,20 @@ public class Sistema extends Observable{
     public Administrador loginAdministrador(String nombre, String pass) throws ObligatorioException {
         return ssu.loginAdministrador(nombre, pass);
     }
+
+    public void partidasFinalizadas() throws ObligatorioException {
+        ssp.partidasFinalizadas();
+    }
+
+    public ArrayList<Partida> getPartidas() {
+        return ssp.getPartidas();
+    }
+
+    public Partida agregarJugador(Jugador j) throws ObligatorioException {
+        return ssp.agregarJugador(j);
+    }
+    
+    
     
     public enum Eventos{
         fichaDescartada, //Lo utilizaremos cada vez que se agrega una ficha al Tablero

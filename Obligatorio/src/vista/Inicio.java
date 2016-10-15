@@ -5,6 +5,9 @@
  */
 package vista;
 
+import java.util.ArrayList;
+import logica.Ficha;
+
 /**
  *
  * @author usuario

@@ -5,20 +5,27 @@
  */
 package vista;
 
+import controladores.ControladorPartidas;
 import controladores.VistaPartidas;
+import java.util.ArrayList;
+import logica.Jugador;
+import logica.Partida;
 
 /**
  *
  * @author usuario
  */
 public class Partidas extends javax.swing.JFrame implements VistaPartidas{
-
+    
+    private ControladorPartidas controlador;
     /**
      * Creates new form Partidas
      */
     public Partidas() {
         initComponents();
         setLocationRelativeTo(null);
+        controlador = new ControladorPartidas(this);
+        setTitle("Listado de Partidas");
     }
 
     /**
@@ -105,18 +112,21 @@ public class Partidas extends javax.swing.JFrame implements VistaPartidas{
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
+        controlador.salir();
     }//GEN-LAST:event_formWindowClosing
 
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
         // TODO add your handling code here:
+        controlador.salir();
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
     private void btnVerPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerPartidaActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnVerPartidaActionPerformed
 
     private void lstPartidasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstPartidasMouseClicked
-
+        
     }//GEN-LAST:event_lstPartidasMouseClicked
 
     /**
@@ -131,5 +141,38 @@ public class Partidas extends javax.swing.JFrame implements VistaPartidas{
     private javax.swing.JList lstPartidas;
     // End of variables declaration//GEN-END:variables
 
+    @Override
+    public void cerrar() {
+        dispose();
+    }
+
+    //Hay que ver esto! Si bien es para formatear... Parecería tener mucha lógica... Se hará todo acá?
+    @Override
+    public void mostrarPartidas(ArrayList<Partida> partidas) {
+        ArrayList<String> lista = new ArrayList();
+        
+        for(Partida p:partidas){
+            String linea = "";
+            String g = "Aún no hay ganador";
+            
+            Jugador ganador= p.getGanador();
+            
+            if(ganador == null)
+                linea += "[En juego] ";
+            else{
+                linea += "[Finalizada] ";
+                g = ganador.getNombreCompleto();
+            }
+                
+            linea += p.getJugadores().get(0).getNombreCompleto() + " ($ " + p.getJugadores().get(0).getSaldo() + ") - ";
+            linea += p.getJugadores().get(1).getNombreCompleto() + " ($ " + p.getJugadores().get(1).getSaldo() + ") : $";
+            
+            linea += p.getPozoApuestas()+" => ";
+            
+            linea += g;
+            
+            lista.add(linea);
+        }
+    }
 
 }

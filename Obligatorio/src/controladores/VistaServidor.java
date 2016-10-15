@@ -13,6 +13,8 @@ public interface VistaServidor {
 
     public void cerrar();
 
-    public void ingresarIngresarLogin(boolean jugador);
+    public void ingresarLogin(boolean jugador);
+
+    public void error(String message);
     
 }

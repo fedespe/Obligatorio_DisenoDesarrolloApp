@@ -34,7 +34,7 @@ public class ControladorLogin {
             vista.inicializar("Administrador");
         }
     }
-    //Los metodos de login en sistema no estan creados
+    
     public void login(String nombre, String pass) {
         try {
             if(jugador){

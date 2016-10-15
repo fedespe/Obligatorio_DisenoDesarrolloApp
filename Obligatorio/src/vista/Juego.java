@@ -5,7 +5,14 @@
  */
 package vista;
 
+import controladores.ControladorJuego;
 import controladores.VistaJuego;
+import java.awt.GridLayout;
+import java.util.ArrayList;
+import javax.swing.JPanel;
+import logica.Ficha;
+import logica.Jugador;
+import utilidades.ObligatorioException;
 
 /**
  *
@@ -14,12 +21,15 @@ import controladores.VistaJuego;
 //El juego tiene que ser jDialog para que se cierre todo junto
 //El jfream tendria que ser solo la ventana servidor
 public class Juego extends javax.swing.JFrame implements VistaJuego{
+    private ControladorJuego controlador;
     /**
      * Creates new form Juego
      */
-    public Juego() {
+    public Juego(Jugador j) throws ObligatorioException{
         initComponents();
         setLocationRelativeTo(null);
+        controlador = new ControladorJuego(this,j);
+        setTitle("Partida");
     }
 
     /**
@@ -44,7 +54,32 @@ public class Juego extends javax.swing.JFrame implements VistaJuego{
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
+        controlador.salir();
     }//GEN-LAST:event_formWindowClosing
+
+    @Override
+    public void cerrar() {
+        dispose();
+    }
+
+    public void cargarPaneles(ArrayList<Ficha> fichasTablero, ArrayList<Ficha> fichasJugador) {
+        JPanel panelVentana = (JPanel)getContentPane(); //Obtengo el panel que viene por defecto en esta ventana
+        
+        GridLayout layout = new GridLayout(3,1);
+        panelVentana.setLayout(layout); //Al panel que viene con la ventana, le cambio el layout por el creado
+        panelVentana.add(new PanelInformacion(controlador));
+        
+        //Fichas Jugadas
+        PanelFichas panel1 = new PanelFichas(controlador, true); //True para decirle que es el panel de destino (Las del tablero)
+        panel1.mostrar(fichasTablero);
+        panelVentana.add(panel1);
+        //setContentPane(panel); //Cambio el panel que trae el frame por defecto, por el que acabo de crear
+        
+        //Fichas Mias
+        PanelFichas panel2 = new PanelFichas(controlador, false); //False para decirle que es el panel de origen (las de la mano)
+        panel2.mostrar(fichasJugador);
+        panelVentana.add(panel2);
+    }
 
     /**
      * @param args the command line arguments

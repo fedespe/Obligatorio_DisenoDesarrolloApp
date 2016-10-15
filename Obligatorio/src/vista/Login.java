@@ -7,9 +7,11 @@ package vista;
 
 import controladores.ControladorLogin;
 import controladores.VistaLogin;
+import javax.swing.JOptionPane;
 import logica.Administrador;
 import logica.Jugador;
 import logica.Usuario;
+import utilidades.ObligatorioException;
 
 /**
  *
@@ -36,19 +38,15 @@ public class Login extends javax.swing.JDialog implements VistaLogin{
     private void initComponents() {
 
         txtNombre = new javax.swing.JTextField();
-        txtPass = new javax.swing.JTextField();
         btnIngresar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        lblTipo = new javax.swing.JLabel();
-        lblError = new javax.swing.JLabel();
+        txtPass = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
         getContentPane().add(txtNombre);
-        txtNombre.setBounds(70, 90, 180, 30);
-        getContentPane().add(txtPass);
-        txtPass.setBounds(70, 160, 180, 30);
+        txtNombre.setBounds(70, 50, 180, 30);
 
         btnIngresar.setText("Ingresar");
         btnIngresar.addActionListener(new java.awt.event.ActionListener() {
@@ -57,36 +55,43 @@ public class Login extends javax.swing.JDialog implements VistaLogin{
             }
         });
         getContentPane().add(btnIngresar);
-        btnIngresar.setBounds(100, 270, 110, 30);
+        btnIngresar.setBounds(100, 170, 110, 30);
 
         jLabel1.setText("Nombre:");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(70, 60, 180, 30);
+        jLabel1.setBounds(70, 20, 180, 30);
 
         jLabel2.setText("Password:");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(70, 130, 180, 30);
-        getContentPane().add(lblTipo);
-        lblTipo.setBounds(10, 10, 170, 30);
-        getContentPane().add(lblError);
-        lblError.setBounds(70, 230, 180, 30);
+        jLabel2.setBounds(70, 90, 180, 30);
 
-        setBounds(0, 0, 343, 395);
+        txtPass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPassActionPerformed(evt);
+            }
+        });
+        getContentPane().add(txtPass);
+        txtPass.setBounds(70, 120, 180, 30);
+
+        setBounds(0, 0, 343, 275);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         login();
     }//GEN-LAST:event_btnIngresarActionPerformed
 
+    private void txtPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPassActionPerformed
+        // TODO add your handling code here:
+        login();
+    }//GEN-LAST:event_txtPassActionPerformed
+
  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIngresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel lblError;
-    private javax.swing.JLabel lblTipo;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtPass;
+    private javax.swing.JPasswordField txtPass;
     // End of variables declaration//GEN-END:variables
 
     
@@ -97,22 +102,28 @@ public class Login extends javax.swing.JDialog implements VistaLogin{
 
     @Override
     public void inicializar(String textoInicial) {
-        lblTipo.setText(textoInicial);
+        setTitle(textoInicial);
     }
     
+    //Ver esto... Está bien colocar los bloques Try y Catch acá? O sería algo que debe resolver el Controlador?
     @Override
     public void ingresarJugador(Jugador j) {
-        new Juego().setVisible(true);
+        try{
+            new Juego(j).setVisible(true);
+        }  
+        catch(ObligatorioException ex){
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
     }
 
     @Override
     public void ingresarAdministrador(Administrador a) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        new Partidas().setVisible(true);
     }
 
     @Override
     public void error(String textoError) {
-        lblError.setText(textoError);
+        JOptionPane.showMessageDialog(this, textoError);
     }
 
     @Override

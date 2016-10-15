@@ -2,8 +2,7 @@
 package controladores;
 
 import logica.Sistema;
-import utilidades.Observable;
-import utilidades.Observador;
+import utilidades.ObligatorioException;
 
 public class ControladorServidor{
     
@@ -15,16 +14,21 @@ public class ControladorServidor{
     }
 
     public void jugador() {
-        vista.ingresarIngresarLogin(true);
+        vista.ingresarLogin(true);
     }
 
     public void administrador() {
-        vista.ingresarIngresarLogin(false);
+        vista.ingresarLogin(false);
     }
 
     public void salir() {
-        //if(modelo.VerificarPartidasCerradas())
-        vista.cerrar();
+        try{
+            modelo.partidasFinalizadas();
+            vista.cerrar();
+        }
+        catch (ObligatorioException ex){
+            vista.error(ex.getMessage());
+        }
     }
 
     

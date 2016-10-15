@@ -5,10 +5,17 @@
  */
 package controladores;
 
+import java.util.ArrayList;
+import logica.Partida;
+
 /**
  *
  * @author usuario
  */
 public interface VistaPartidas {
+
+    public void cerrar();
+
+    public void mostrarPartidas(ArrayList<Partida> partidas);
     
 }

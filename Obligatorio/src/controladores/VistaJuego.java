@@ -5,10 +5,17 @@
  */
 package controladores;
 
+import java.util.ArrayList;
+import logica.Ficha;
+
 /**
  *
  * @author usuario
  */
 public interface VistaJuego {
+
+    public void cerrar();
+
+    public void cargarPaneles(ArrayList<Ficha> tablero, ArrayList<Ficha> fichas);
     
 }

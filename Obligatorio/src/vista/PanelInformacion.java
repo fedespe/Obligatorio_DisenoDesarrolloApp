@@ -17,9 +17,9 @@ public class PanelInformacion extends javax.swing.JPanel {
     /**
      * Creates new form PanelInformacion
      */
-    public PanelInformacion(ControladorJuego cf) {
+    public PanelInformacion(ControladorJuego cj) {
         initComponents();
-        controlador = cf;
+        controlador = cj;
     }
 
     /**
