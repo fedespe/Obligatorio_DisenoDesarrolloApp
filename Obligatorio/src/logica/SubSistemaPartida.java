@@ -14,6 +14,16 @@ import utilidades.ObligatorioException;
  */
 public class SubSistemaPartida {
     private ArrayList<Partida> partidas = new ArrayList();
+
+    public SubSistemaPartida() {
+        //siempre dejo una partida iniciada para evitar conflicto
+        //al enviar evento de actualizar al controlador
+        partidas.add(new Partida());
+    }
+    
+    public Partida partidaParaJugar(){
+        return partidas.get(partidas.size()-1);
+    }
     
     public void partidasFinalizadas() throws ObligatorioException{
         
@@ -33,21 +43,30 @@ public class SubSistemaPartida {
         return partidas;
     }
     
-    public Partida agregarJugador(Jugador j) throws ObligatorioException{
-        Partida ultimaPartida = null;
-                
-        if(!partidas.isEmpty())
-             ultimaPartida = partidas.get(partidas.size() -1);
-        
-        if(ultimaPartida != null && ultimaPartida.enEspera()){
-            ultimaPartida.agregarJugador(j);
-            return ultimaPartida;
+    public void agregarJugador(Jugador j) throws ObligatorioException{
+//        Partida ultimaPartida = null;
+//                
+//        if(!partidas.isEmpty())
+//             ultimaPartida = partidas.get(partidas.size() -1);
+//        
+//        if(ultimaPartida != null && ultimaPartida.enEspera()){
+//            ultimaPartida.agregarJugador(j);
+//            return ultimaPartida;
+//        }
+//        else{
+//            Partida nueva= new Partida();
+//            nueva.agregarJugador(j);
+//            partidas.add(nueva);
+//            //Se repite la linea de codigo de aviso            
+//            return nueva;
+//        }
+        Partida p= partidaParaJugar();
+        if(p.getJugadores().size()==1){//ver que esto podria ser un metodo en partida
+            p.agregarJugador(j);
+            partidas.add(new Partida());
+        }else{//si no tiene jugadores
+            p.agregarJugador(j);
         }
-        else{
-            Partida nueva= new Partida();
-            nueva.agregarJugador(j);
-            partidas.add(nueva);
-            return nueva;
-        }
+        Sistema.getInstancia().avisar(Sistema.Eventos.ingresoJugador);
     }
 }

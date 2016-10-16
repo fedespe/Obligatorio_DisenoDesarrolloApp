@@ -67,7 +67,7 @@ public class Partida {
             jugadores.add(jugador);
             ingresarApuestaAPartida();
             repartirFichas();
-            partidaActiva=true;
+            partidaActiva=true;          
         }
     }
 

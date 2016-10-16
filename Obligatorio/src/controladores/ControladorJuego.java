@@ -23,11 +23,15 @@ public class ControladorJuego implements Observador{
     private Ficha destino;
     private VistaJuego vista;
     private Partida partida;
+    private Jugador jugador;
     
     public ControladorJuego(VistaJuego vista, Jugador j) throws ObligatorioException{
-        this.vista = vista;
-        partida = modelo.agregarJugador(j);
-        vista.cargarPaneles(partida.getTablero(), j.getFichas());
+        modelo.agregar(this);
+        this.vista = vista;       
+        jugador=j;
+        partida = modelo.getPartidaParaJugar();
+        modelo.agregarJugador(j);//aca realiza la carga de paneles por que actualiza
+        //vista.cargarPaneles(partida.getTablero(), jugador.getFichas());
     }
     
     public void tirar(){
@@ -46,7 +50,9 @@ public class ControladorJuego implements Observador{
     
     @Override
     public void actualizar(Observable origen, Object evento) {
-        
+        if(evento.equals(Sistema.Eventos.ingresoJugador)){
+            vista.cargarPaneles(partida.getTablero(), jugador.getFichas());
+        }
     }
     
     public void salir() {

@@ -13,7 +13,7 @@ import utilidades.ObligatorioException;
  *
  * @author usuario
  */
-public class Sistema extends Observable{
+public class Sistema extends utilidades.Observable{
     private SubSistemaUsuario ssu = new SubSistemaUsuario();
     private SubSistemaPartida ssp = new SubSistemaPartida();
     private static Sistema instancia = new Sistema();
@@ -40,16 +40,18 @@ public class Sistema extends Observable{
         return ssp.getPartidas();
     }
 
-    public Partida agregarJugador(Jugador j) throws ObligatorioException {
-        return ssp.agregarJugador(j);
+    public void agregarJugador(Jugador j) throws ObligatorioException {
+        ssp.agregarJugador(j);
     }
-    
-    
-    
+
+    public Partida getPartidaParaJugar() {
+        return ssp.partidaParaJugar();
+    }
+ 
     public enum Eventos{
         fichaDescartada, //Lo utilizaremos cada vez que se agrega una ficha al Tablero
-        fartidaFinalizada, //Lo urilizaremos cada vez que una partida se finaliza
-        jugadorAgregado; //Lo utilizaremos cada vez que ingresa un segudno jugador a una partida que estaba esperando
+        partidaFinalizada, //Lo urilizaremos cada vez que una partida se finaliza
+        ingresoJugador; //Lo utilizaremos cada vez que ingresa un segudno jugador a una partida que estaba esperando
         
     }
 }
