@@ -1,12 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package controladores;
 
 import java.util.ArrayList;
 import logica.Ficha;
+import logica.Jugador;
+import logica.Partida;
 
 /**
  *
@@ -16,6 +14,9 @@ public interface VistaJuego {
 
     public void cerrar();
 
-    public void cargarPaneles(ArrayList<Ficha> tablero, ArrayList<Ficha> fichas);
-    
+    public void actualizarPaneles(Partida partida, Jugador jugador);
+
+    public void mensaje(String message);
+
+    public void confirmarApuesta(String mensaje);
 }

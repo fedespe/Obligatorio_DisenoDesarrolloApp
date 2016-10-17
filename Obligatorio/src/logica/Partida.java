@@ -13,7 +13,7 @@ import utilidades.ObligatorioException;
  *
  * @author usuario
  */
-public class Partida {
+public class Partida extends utilidades.Observable{
     //private double apuestaInicial;
     private boolean partidaActiva=false;
     private double pozoApuestas=0;
@@ -26,6 +26,23 @@ public class Partida {
     private ArrayList<Ficha> tablero = new ArrayList();
     private Ficha primera;
     private Ficha ultima;
+    
+    public enum Eventos{
+        fichaDescartada, 
+        partidaFinalizada, 
+        ingresoJugador, 
+        roboFicha, 
+        apuesta, 
+        confirmacionApuesta, realizoMovimiento;     
+    }
+
+    public ArrayList<Ficha> getLibres() {
+        return libres;
+    }
+
+    public Jugador getTurno() {
+        return turno;
+    }
 
     public ArrayList<Ficha> getTablero() {
         return tablero;
@@ -67,8 +84,9 @@ public class Partida {
             jugadores.add(jugador);
             ingresarApuestaAPartida();
             repartirFichas();
-            partidaActiva=true;          
+            partidaActiva=true;            
         }
+        avisar(Eventos.ingresoJugador);
     }
 
     //Podemos hacer que el movimiento inicial en el cual 
@@ -81,6 +99,7 @@ public class Partida {
         //Finaliza la partida si se descarto todas
         verificarSiSeDescartoTodas();
         cambiarTurno();
+        avisar(Eventos.realizoMovimiento);
     }
     
     public void primerJugada(Jugador jugador, Ficha fichaDescartada)throws ObligatorioException{
@@ -112,6 +131,7 @@ public class Partida {
             j.agregarFicha(libres.get(0));
             libres.remove(0);
         }
+        avisar(Eventos.roboFicha);
         //ver si hay que evaluar el caso en que no hay mas fichas       
     }
     //Ver que el pozoApuesta creo tiene que tener la suma
@@ -129,6 +149,7 @@ public class Partida {
         ultimaApuesta.setJugador(apostador);
         ultimaApuesta.setValor(monto);
         partidaActiva=false;
+        avisar(Eventos.apuesta);
     }
     public void confirmarApuesta(boolean confirmacion)throws ObligatorioException{
         //si acepta incremento el pozo
@@ -139,21 +160,44 @@ public class Partida {
         }else{
             finalizarPartida(ultimaApuesta.getJugador());
         }
+        avisar(Eventos.confirmacionApuesta);
     }
       
     private void unirFicha(Ficha fichaTablero, Ficha fichaDescartada)throws ObligatorioException{
         //Todas las verificaciones lanzan exceptions
         String lado = "";
-        
-        if(fichaTablero.equals(primera)){
+        if(primera==null){
+            tablero.add(fichaDescartada);
+            primera=ultima=fichaDescartada;
+            turno.eliminarFicha(primera);
+        }//Si la ficha en el tablero es una sola da problema
+        //por que si en la primera le erra tira excepcion
+        else if(fichaTablero.equals(primera)){
             lado = "Izq";
-            tablero.add(0,primera.sePuedeUnir(lado, fichaDescartada)); //Si no se puede unir la ficha, lanza excepcion
+            //aca arregle el tema comentado arriba de 
+            //forma espantosa solo para probar que ande
+            try {
+            primera.sePuedeUnir(lado, fichaDescartada);
+            } catch (ObligatorioException ex) {
+                if(primera==ultima){
+                    lado = "Der";
+                    ultima.sePuedeUnir(lado, fichaDescartada);
+                    tablero.add(fichaDescartada); //Si no se puede unir la ficha, lanza excepcion
+                    ultima = fichaDescartada;
+                    turno.eliminarFicha(fichaDescartada);
+                    return;
+                }else{
+                    throw new ObligatorioException("Debe seleccionar una ficha de uno de los extremos del tablero.");
+                }        
+            }  
+            tablero.add(0,fichaDescartada); //Si no se puede unir la ficha, lanza excepcion
             primera = fichaDescartada;
             turno.eliminarFicha(fichaDescartada);
         }
         else if(fichaTablero.equals(ultima)){
             lado = "Der";
-            tablero.add(primera.sePuedeUnir(lado, fichaDescartada)); //Si no se puede unir la ficha, lanza excepcion
+            ultima.sePuedeUnir(lado, fichaDescartada);
+            tablero.add(fichaDescartada); //Si no se puede unir la ficha, lanza excepcion
             ultima = fichaDescartada;
             turno.eliminarFicha(fichaDescartada);
         }

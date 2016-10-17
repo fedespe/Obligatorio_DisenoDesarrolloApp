@@ -6,13 +6,15 @@
 package vista;
 
 import controladores.ControladorJuego;
+import logica.Jugador;
+import logica.Partida;
 
 /**
  *
  * @author usuario
  */
 public class PanelInformacion extends javax.swing.JPanel {
-    ControladorJuego controlador;
+    private ControladorJuego controlador;
     
     /**
      * Creates new form PanelInformacion
@@ -37,121 +39,161 @@ public class PanelInformacion extends javax.swing.JPanel {
         txtSaldo = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         TxtMontoApuesta = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        btnApostar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         txtFichasDisponibles = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnRobar = new javax.swing.JButton();
         txtNombreJugador = new javax.swing.JTextField();
         txtNombreRival = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        btnDescartar = new javax.swing.JButton();
+        lblTurno = new javax.swing.JLabel();
 
         setLayout(null);
 
         jLabel5.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel5.setText("Total Apostado");
         add(jLabel5);
-        jLabel5.setBounds(430, 20, 121, 22);
+        jLabel5.setBounds(430, 60, 121, 22);
 
         TxtApuestaTotal.setEditable(false);
         TxtApuestaTotal.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         add(TxtApuestaTotal);
-        TxtApuestaTotal.setBounds(560, 20, 120, 28);
+        TxtApuestaTotal.setBounds(560, 60, 120, 28);
 
         jLabel4.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel4.setText("Su Saldo");
         add(jLabel4);
-        jLabel4.setBounds(700, 20, 80, 22);
+        jLabel4.setBounds(700, 60, 80, 22);
 
         txtSaldo.setEditable(false);
         txtSaldo.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         add(txtSaldo);
-        txtSaldo.setBounds(790, 20, 120, 28);
+        txtSaldo.setBounds(790, 60, 120, 28);
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel3.setText("Monto Apuesta");
         add(jLabel3);
-        jLabel3.setBounds(430, 70, 120, 22);
+        jLabel3.setBounds(430, 110, 120, 22);
 
         TxtMontoApuesta.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         add(TxtMontoApuesta);
-        TxtMontoApuesta.setBounds(560, 70, 120, 28);
+        TxtMontoApuesta.setBounds(560, 110, 120, 28);
 
-        jButton2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jButton2.setText("Apostar");
-        add(jButton2);
-        jButton2.setBounds(700, 70, 120, 31);
+        btnApostar.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnApostar.setText("Apostar");
+        btnApostar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnApostarActionPerformed(evt);
+            }
+        });
+        add(btnApostar);
+        btnApostar.setBounds(700, 110, 120, 31);
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel2.setText("Fichas Disponibles");
         add(jLabel2);
-        jLabel2.setBounds(10, 150, 151, 22);
+        jLabel2.setBounds(10, 190, 151, 22);
 
         txtFichasDisponibles.setEditable(false);
         txtFichasDisponibles.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         add(txtFichasDisponibles);
-        txtFichasDisponibles.setBounds(180, 150, 70, 28);
+        txtFichasDisponibles.setBounds(180, 190, 80, 28);
 
-        jButton1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jButton1.setText("Robar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnRobar.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnRobar.setText("Robar");
+        btnRobar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnRobarActionPerformed(evt);
             }
         });
-        add(jButton1);
-        jButton1.setBounds(270, 150, 81, 31);
+        add(btnRobar);
+        btnRobar.setBounds(270, 190, 130, 31);
 
         txtNombreJugador.setEditable(false);
         txtNombreJugador.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         txtNombreJugador.setText("Nombre Completo Jugador");
         add(txtNombreJugador);
-        txtNombreJugador.setBounds(90, 20, 320, 28);
+        txtNombreJugador.setBounds(90, 60, 320, 28);
 
         txtNombreRival.setEditable(false);
         txtNombreRival.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         txtNombreRival.setText("Nombre Completo Jugador Rival");
         add(txtNombreRival);
-        txtNombreRival.setBounds(90, 70, 320, 28);
+        txtNombreRival.setBounds(90, 110, 320, 28);
 
         jLabel6.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel6.setText("Jugador:");
         add(jLabel6);
-        jLabel6.setBounds(10, 20, 80, 22);
+        jLabel6.setBounds(10, 60, 80, 22);
 
         jLabel7.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel7.setText("Rival:");
         add(jLabel7);
-        jLabel7.setBounds(30, 70, 50, 22);
+        jLabel7.setBounds(30, 110, 50, 22);
 
-        jButton3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jButton3.setText("Descartar Ficha");
-        add(jButton3);
-        jButton3.setBounds(560, 150, 340, 31);
+        btnDescartar.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnDescartar.setText("Descartar Ficha");
+        btnDescartar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDescartarActionPerformed(evt);
+            }
+        });
+        add(btnDescartar);
+        btnDescartar.setBounds(560, 190, 340, 31);
+
+        lblTurno.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        add(lblTurno);
+        lblTurno.setBounds(10, 10, 360, 40);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        System.out.println("Robaría una Ficha.");
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnRobarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRobarActionPerformed
+        controlador.robar();
+    }//GEN-LAST:event_btnRobarActionPerformed
+
+    private void btnApostarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApostarActionPerformed
+        controlador.apostar(Double.parseDouble(TxtMontoApuesta.getText()));
+    }//GEN-LAST:event_btnApostarActionPerformed
+
+    private void btnDescartarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescartarActionPerformed
+        controlador.descartar();
+    }//GEN-LAST:event_btnDescartarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField TxtApuestaTotal;
     private javax.swing.JTextField TxtMontoApuesta;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btnApostar;
+    private javax.swing.JButton btnDescartar;
+    private javax.swing.JButton btnRobar;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel lblTurno;
     private javax.swing.JTextField txtFichasDisponibles;
     private javax.swing.JTextField txtNombreJugador;
     private javax.swing.JTextField txtNombreRival;
     private javax.swing.JTextField txtSaldo;
     // End of variables declaration//GEN-END:variables
+
+
+    public void mostrar(Partida partida, Jugador jugador) {
+        
+        for(Jugador j : partida.getJugadores()){
+            if(j==jugador){
+                txtNombreJugador.setText(j.getNombreCompleto());
+                txtSaldo.setText(jugador.getSaldo()+"");
+                
+            }else{
+                txtNombreRival.setText(j.getNombreCompleto());
+            }
+        }
+        TxtApuestaTotal.setText(partida.getPozoApuestas()+"");
+        txtFichasDisponibles.setText(partida.getLibres().size()+"");
+        lblTurno.setText("Turno de "+partida.getTurno().getNombreCompleto());
+    }
 }

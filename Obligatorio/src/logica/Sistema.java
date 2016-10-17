@@ -49,9 +49,7 @@ public class Sistema extends utilidades.Observable{
     }
  
     public enum Eventos{
-        fichaDescartada, //Lo utilizaremos cada vez que se agrega una ficha al Tablero
-        partidaFinalizada, //Lo urilizaremos cada vez que una partida se finaliza
-        ingresoJugador; //Lo utilizaremos cada vez que ingresa un segudno jugador a una partida que estaba esperando
-        
+        partidaFinalizada, 
+        partidaIniciada,         
     }
 }
