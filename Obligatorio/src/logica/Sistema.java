@@ -47,7 +47,12 @@ public class Sistema extends utilidades.Observable{
     public Partida getPartidaParaJugar() {
         return ssp.partidaParaJugar();
     }
+
+    public void logoutJugador(Jugador jug) {
+        ssu.logoutJugador(jug);
+    }
  
+    
     public enum Eventos{
         partidaFinalizada, 
         partidaIniciada,         

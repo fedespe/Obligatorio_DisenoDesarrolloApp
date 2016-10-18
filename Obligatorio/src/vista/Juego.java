@@ -5,14 +5,11 @@
  */
 package vista;
 
-import com.sun.java.swing.plaf.windows.resources.windows;
 import controladores.ControladorJuego;
 import controladores.VistaJuego;
 import java.awt.GridLayout;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import logica.Ficha;
 import logica.Jugador;
 import logica.Partida;
 import utilidades.ObligatorioException;
@@ -85,7 +82,9 @@ public class Juego extends javax.swing.JFrame implements VistaJuego{
         
         //el show esta puesto para que refresque
         //hay que ver que es lo ideal
-        this.setVisible(true);
+        //this.setVisible(true);
+        this.validate();
+        this.repaint();
     }
 
     @Override
@@ -95,12 +94,17 @@ public class Juego extends javax.swing.JFrame implements VistaJuego{
 
     @Override
     public void confirmarApuesta(String mensaje) {
-        int retorno=JOptionPane.showConfirmDialog(this, mensaje);
+        int retorno = JOptionPane.showConfirmDialog(this, mensaje);
         if(retorno==0){
             controlador.confirmarApuesta(true);
         }else{
             controlador.confirmarApuesta(false);
         }
+    }
+    
+    @Override
+    public void mostrarGanador(Jugador ganador) {
+        JOptionPane.showMessageDialog(this, "El ganador es: " + ganador.getNombreCompleto(), "Partida Finalizada", HEIGHT);
     }
 
     

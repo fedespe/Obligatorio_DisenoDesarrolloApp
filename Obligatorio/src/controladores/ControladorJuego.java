@@ -5,8 +5,6 @@
  */
 package controladores;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import logica.Ficha;
 import logica.Jugador;
 import logica.Partida;
@@ -45,12 +43,6 @@ public class ControladorJuego implements Observador{
         }
     }
     
-    public void tirar(){
-        System.out.println("TIRO");
-        System.out.println("Origen: " + origen);
-        System.out.println("Destino: " + destino);
-    }
-    
     public void setOrigen(Ficha ficha) {
         origen = ficha;
     }
@@ -67,25 +59,30 @@ public class ControladorJuego implements Observador{
         if(evento.equals(Partida.Eventos.ingresoJugador)){           
             vista.actualizarPaneles(partida, jugador);
         }
-        if(evento.equals(Partida.Eventos.roboFicha)){
+        else if(evento.equals(Partida.Eventos.roboFicha)){
             vista.actualizarPaneles(partida, jugador);
         }
-        if(evento.equals(Partida.Eventos.apuesta)){
+        else if(evento.equals(Partida.Eventos.apuesta)){
             if(partida.getUltimaApuesta().getJugador()==jugador){
                 vista.mensaje("Esperando confirmacion.");
             }else{
                 vista.confirmarApuesta("Acepta la apuesta: "+ partida.getUltimaApuesta().getValor());
             }
         }
-        if(evento.equals(Partida.Eventos.confirmacionApuesta)){
+        else if(evento.equals(Partida.Eventos.confirmacionApuesta)){
             vista.actualizarPaneles(partida, jugador);
         }
-        if(evento.equals(Partida.Eventos.realizoMovimiento)){
+        else if(evento.equals(Partida.Eventos.realizoMovimiento)){
             vista.actualizarPaneles(partida, jugador);
+        }
+        else if(evento.equals(Partida.Eventos.partidaFinalizada)){
+            vista.mostrarGanador(partida.getGanador());
         }
     }
     
     public void salir() {
+        partida.jugadorAbandonando(jugador);
+        modelo.logoutJugador(jugador);
         vista.cerrar();
     }
 
@@ -116,7 +113,11 @@ public class ControladorJuego implements Observador{
     public void descartar() {
         try {
             partida.mover(jugador, destino, origen);
-        } catch (ObligatorioException ex) {
-            vista.mensaje(ex.getMessage());        }
-        }   
+            origen = null;
+            destino = null;
+        }
+        catch (ObligatorioException ex) {
+            vista.mensaje(ex.getMessage());
+        }
+    }   
 }

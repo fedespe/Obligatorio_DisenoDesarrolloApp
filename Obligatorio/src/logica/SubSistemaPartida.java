@@ -14,24 +14,22 @@ import utilidades.ObligatorioException;
  */
 public class SubSistemaPartida {
     private ArrayList<Partida> partidas = new ArrayList();
+    private Partida proximaPartida;
 
     public SubSistemaPartida() {
         //siempre dejo una partida iniciada para evitar conflicto
         //al enviar evento de actualizar al controlador
-        partidas.add(new Partida());
+        proximaPartida = new Partida();
     }
     
     public Partida partidaParaJugar(){
-        return partidas.get(partidas.size()-1);
+        return proximaPartida;
     }
     
     public void partidasFinalizadas() throws ObligatorioException{
-        
-        if(!partidas.isEmpty()){ //Ver si es necesario el if... Si está vacía la lista, da excepción o no hace nada?
-            for(Partida p:partidas){
-                if(p.getGanador() == null)
-                    throw new ObligatorioException("No puede cerrar el servidor hasta que todas las partidas hayan finalizado.");
-            }
+        for(Partida p:partidas){
+            if(p.getGanador() == null)
+                throw new ObligatorioException("No puede cerrar el servidor hasta que todas las partidas hayan finalizado.");
         }
     }
     
@@ -44,12 +42,11 @@ public class SubSistemaPartida {
     }
     
     public void agregarJugador(Jugador j) throws ObligatorioException{
-        Partida p= partidaParaJugar();
-        if(p.getJugadores().size()==1){//ver que esto podria ser un metodo en partida
-            p.agregarJugador(j);
-            partidas.add(new Partida());
-        }else{//si no tiene jugadores
-            p.agregarJugador(j);
-        }       
+        
+        proximaPartida.agregarJugador(j);
+        if(proximaPartida.getJugadores().size() == 2){
+            partidas.add(proximaPartida);
+            proximaPartida = new Partida();  
+        } 
     }
 }
