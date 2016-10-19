@@ -116,6 +116,12 @@ public class Partida extends utilidades.Observable{
         verificarSiSeDescartoTodas();
         cambiarTurno();
         avisar(Eventos.realizoMovimiento);
+        if(libres.isEmpty()){
+            if(verificarSiTieneMovimientos(turno)){
+                cambiarTurno();
+                finalizarPartida(turno);
+            }
+        }
     }
     
     public void primerJugada(Jugador jugador, Ficha fichaDescartada)throws ObligatorioException{
