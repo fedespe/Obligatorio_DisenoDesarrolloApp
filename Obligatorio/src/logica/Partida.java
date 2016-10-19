@@ -28,17 +28,22 @@ public class Partida extends utilidades.Observable{
     private Ficha ultima;
 
     public void jugadorAbandonando(Jugador jugador) {
-        Jugador gana = jugador;
-        boolean encontrado = false;
-        
-        if(ganador == null){
-            for(Jugador j:jugadores){
-                if(!encontrado && gana != j){
-                    gana = j;
-                    encontrado = true;
+        if(jugadores.size() ==2){
+            Jugador gana = jugador;
+            boolean encontrado = false;
+
+            if(ganador == null){
+                for(Jugador j:jugadores){
+                    if(!encontrado && gana != j){
+                        gana = j;
+                        encontrado = true;
+                    }
                 }
+                finalizarPartida(gana);
             }
-            finalizarPartida(gana);
+        }
+        else{
+            jugadores.clear();
         }
     }
     
@@ -201,6 +206,9 @@ public class Partida extends utilidades.Observable{
             tablero.add(fichaDescartada);
             primera=ultima=fichaDescartada;
             turno.eliminarFicha(primera);
+        }
+        else if(fichaTablero == null || fichaDescartada == null){
+            throw new ObligatorioException("Debe seleccionar una ficha de origen y una de destino.");
         }//Si la ficha en el tablero es una sola da problema
         //por que si en la primera le erra tira excepcion
         else if(fichaTablero == primera){
@@ -280,6 +288,10 @@ public class Partida extends utilidades.Observable{
         //lanzar evento de fin de partida
         partidaActiva=false;
         this.ganador=ganador;
+        ganador.setSaldo(ganador.getSaldo() + pozoApuestas);
+        for(Jugador j:jugadores){
+            j.getFichas().clear();
+        }
         avisar(Eventos.partidaFinalizada);
     }
     

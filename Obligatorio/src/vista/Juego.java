@@ -35,6 +35,8 @@ public class Juego extends javax.swing.JFrame implements VistaJuego{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -42,6 +44,11 @@ public class Juego extends javax.swing.JFrame implements VistaJuego{
             }
         });
         getContentPane().setLayout(null);
+
+        jLabel1.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jLabel1.setText("Esperando otro jugador para dar comienzo a la partida...");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(10, 10, 610, 40);
 
         setBounds(0, 0, 1081, 769);
     }// </editor-fold>//GEN-END:initComponents
@@ -110,5 +117,6 @@ public class Juego extends javax.swing.JFrame implements VistaJuego{
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

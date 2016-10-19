@@ -76,6 +76,7 @@ public class ControladorJuego implements Observador{
             vista.actualizarPaneles(partida, jugador);
         }
         else if(evento.equals(Partida.Eventos.partidaFinalizada)){
+            vista.actualizarPaneles(partida, jugador); //Actualizo para que muestre bien el saldo del jugador cuando termina la partida
             vista.mostrarGanador(partida.getGanador());
         }
     }
@@ -83,6 +84,7 @@ public class ControladorJuego implements Observador{
     public void salir() {
         partida.jugadorAbandonando(jugador);
         modelo.logoutJugador(jugador);
+        partida.quitar(this);
         vista.cerrar();
     }
 

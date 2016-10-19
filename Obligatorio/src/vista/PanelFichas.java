@@ -53,7 +53,6 @@ public class PanelFichas extends JPanel implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         BotonFicha origen = (BotonFicha)e.getSource(); // Me devuelve en quien hicieron click - Podría ser un JButton también
         Ficha ficha = origen.getFicha();
-        System.out.println("Click en: " + ficha.getValorIzquierda() + " | " + ficha.getValorDerecha());
         
         if(this.destino)
             controlador.setDestino(ficha);
