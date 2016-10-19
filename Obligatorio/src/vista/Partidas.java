@@ -124,15 +124,15 @@ public class Partidas extends javax.swing.JFrame implements VistaPartidas{
         // TODO add your handling code here:
         
     }//GEN-LAST:event_btnVerPartidaActionPerformed
-
+    
     private void lstPartidasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstPartidasMouseClicked
         
     }//GEN-LAST:event_lstPartidasMouseClicked
-
+    
     /**
      * @param args the command line arguments
      */
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnVerPartida;
@@ -140,13 +140,12 @@ public class Partidas extends javax.swing.JFrame implements VistaPartidas{
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList lstPartidas;
     // End of variables declaration//GEN-END:variables
-
+    
     @Override
     public void cerrar() {
         dispose();
     }
-
-    //Hay que ver esto! Si bien es para formatear... Parecería tener mucha lógica... Se hará todo acá?
+    
     @Override
     public void mostrarPartidas(ArrayList<Partida> partidas) {
         ArrayList<String> lista = new ArrayList();
@@ -155,7 +154,7 @@ public class Partidas extends javax.swing.JFrame implements VistaPartidas{
             String linea = "";
             String g = "Aún no hay ganador";
             
-            Jugador ganador= p.getGanador();
+            Jugador ganador = p.getGanador();
             
             if(ganador == null)
                 linea += "[En juego] ";
@@ -173,6 +172,9 @@ public class Partidas extends javax.swing.JFrame implements VistaPartidas{
             
             lista.add(linea);
         }
+        
+        lstPartidas.setListData(lista.toArray());
+        this.validate();
+        //this.repaint();
     }
-
 }

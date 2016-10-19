@@ -121,6 +121,7 @@ public class Partida extends utilidades.Observable{
         verificarSiSeDescartoTodas();
         cambiarTurno();
         avisar(Eventos.realizoMovimiento);
+        Sistema.getInstancia().avisar(Sistema.Eventos.actualizacionEnPartida);
         if(libres.isEmpty()){
             if(verificarSiTieneMovimientos(turno)){
                 cambiarTurno();
@@ -153,6 +154,7 @@ public class Partida extends utilidades.Observable{
             j.agregarFicha(libres.get(0));
             libres.remove(0);
             avisar(Eventos.roboFicha);
+            Sistema.getInstancia().avisar(Sistema.Eventos.actualizacionEnPartida);
         }
         else{
             throw new ObligatorioException("No quedan más fichas en el pozo.");
@@ -197,6 +199,7 @@ public class Partida extends utilidades.Observable{
             finalizarPartida(ultimaApuesta.getJugador());
         }
         avisar(Eventos.confirmacionApuesta);
+        Sistema.getInstancia().avisar(Sistema.Eventos.actualizacionEnPartida);
     }
       
     private void unirFicha(Ficha fichaTablero, Ficha fichaDescartada)throws ObligatorioException{
@@ -293,6 +296,7 @@ public class Partida extends utilidades.Observable{
             j.getFichas().clear();
         }
         avisar(Eventos.partidaFinalizada);
+        Sistema.getInstancia().avisar(Sistema.Eventos.actualizacionEnPartida);
     }
     
     private void verificarTurno(Jugador jugador)throws ObligatorioException{

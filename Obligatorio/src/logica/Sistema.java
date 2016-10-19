@@ -51,10 +51,8 @@ public class Sistema extends utilidades.Observable{
     public void logoutJugador(Jugador jug) {
         ssu.logoutJugador(jug);
     }
- 
     
     public enum Eventos{
-        partidaFinalizada, 
-        partidaIniciada,         
+        actualizacionEnPartida;       
     }
 }

@@ -70,11 +70,25 @@ public class SubSistemaUsuario{
     }
     
     private void cargarUsuarios(){
-        jugadores.add(new Jugador("a","a","Ana",5));
-        jugadores.add(new Jugador("b","b","Bruno",500));
-        jugadores.add(new Jugador("c","c","Carlos",250));
+        jugadores.add(new Jugador("a","a","Alvaro",450));
+        jugadores.add(new Jugador("b","b","Bruno",400));
+        jugadores.add(new Jugador("c","c","Carlos",350));
+        jugadores.add(new Jugador("d","d","Darío",300));
+        jugadores.add(new Jugador("e","e","Emiliano",250));
+        jugadores.add(new Jugador("f","f","Federico",200));
+        jugadores.add(new Jugador("g","g","Gustavo",150));
+        jugadores.add(new Jugador("h","h","Hugo",100));
+        jugadores.add(new Jugador("i","i","Ismael",50));
+        jugadores.add(new Jugador("j","j","Javier",0));
+        administradores.add(new Administrador("a","a","Analía"));
+        administradores.add(new Administrador("b","b","Blanca"));
+        administradores.add(new Administrador("c","c","Claudia"));
         administradores.add(new Administrador("d","d","Dilma"));
-        administradores.add(new Administrador("e","e","Emiliano"));
-        administradores.add(new Administrador("f","f","Federico"));
+        administradores.add(new Administrador("e","e","Emilia"));
+        administradores.add(new Administrador("f","f","Fabiana"));
+        administradores.add(new Administrador("g","g","Graciela"));
+        administradores.add(new Administrador("h","h","Heidy"));
+        administradores.add(new Administrador("i","i","Ilda"));
+        administradores.add(new Administrador("j","j","Dilma"));
     }
 }

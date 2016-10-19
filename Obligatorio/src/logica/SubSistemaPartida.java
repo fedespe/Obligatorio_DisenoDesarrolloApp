@@ -46,7 +46,8 @@ public class SubSistemaPartida {
         proximaPartida.agregarJugador(j);
         if(proximaPartida.getJugadores().size() == 2){
             partidas.add(proximaPartida);
-            proximaPartida = new Partida();  
+            proximaPartida = new Partida();
+            Sistema.getInstancia().avisar(Sistema.Eventos.actualizacionEnPartida);
         } 
     }
 }

@@ -20,15 +20,18 @@ public class ControladorPartidas implements Observador{
     
     public ControladorPartidas (VistaPartidas vista){
         this.vista = vista;
+        modelo.agregar(this);
         vista.mostrarPartidas(modelo.getPartidas());
     }
     
     @Override
     public void actualizar(Observable origen, Object evento) {
-        
+        if(evento.equals(Sistema.Eventos.actualizacionEnPartida))
+            vista.mostrarPartidas(modelo.getPartidas());
     }
 
     public void salir() {
+        modelo.quitar(this);
         vista.cerrar();
     }
     
