@@ -34,7 +34,13 @@ public class PanelFichas extends JPanel implements ActionListener{
         for(int i = 0; i < fichas.size(); i++){ //Se puede hacer con for(IFicha f:fichas) pero nos puede servir la variable i para trabajar diferentes los botones según su posición.
             Ficha f = fichas.get(i);
             BotonFicha boton = new BotonFicha(f);
-            ImageIcon icono = new ImageIcon("Imagenes\\" + f.getValorIzquierda() + "-" + f.getValorDerecha() + ".jpg");
+            ImageIcon icono = null;
+            
+            if(destino)
+                icono = new ImageIcon("Imagenes\\Horizontales\\" + f.getValorIzquierda() + "-" + f.getValorDerecha() + ".jpg");
+            else
+                icono = new ImageIcon("Imagenes\\Verticales\\" + f.getValorIzquierda() + "-" + f.getValorDerecha() + ".jpg");
+            
             boton.setIcon(icono);
             boton.addActionListener(this); //Me agrego en la lista de escuchadores del botón (Para cada botón creado)
             boton.setEnabled(!destino || i==0 || i==fichas.size()-1); //Solo dejo habilitados los botones de las puntas.
