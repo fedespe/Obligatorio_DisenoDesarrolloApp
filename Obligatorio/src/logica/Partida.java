@@ -20,7 +20,7 @@ public class Partida extends utilidades.Observable{
     private ArrayList<Jugador> jugadores = new ArrayList();
     private Jugador turno;
     private Jugador ganador;
-    private ArrayList<Movimiento> jugadas = new ArrayList();
+    private ArrayList<Movimiento> movimientos = new ArrayList();
     private Apuesta ultimaApuesta;
     private ArrayList<Ficha> libres = new ArrayList();
     private ArrayList<Ficha> tablero = new ArrayList();
@@ -85,6 +85,10 @@ public class Partida extends utilidades.Observable{
         return ultimaApuesta;
     }
 
+    public ArrayList<Movimiento> getMovimientos() {
+        return movimientos;
+    }
+    
     //Se crea la partida y luego se agregan los jugadores
     //La partida se agrega al sistema si tiene jugadores ingresados
     public Partida(){
@@ -94,6 +98,7 @@ public class Partida extends utilidades.Observable{
         //No mezclo para hacer pruebas
         mezclarFichas();
     }
+    
     public void agregarJugador(Jugador jugador) throws ObligatorioException{
         if(jugadores.isEmpty()){
             jugador.verificarSaldo(ultimaApuesta.getValor());
@@ -105,7 +110,8 @@ public class Partida extends utilidades.Observable{
             jugadores.add(jugador);
             restarMontoJugadoresSumarApuestaEnPartida();
             repartirFichas();
-            partidaActiva=true;            
+            partidaActiva=true;
+            agregarMovimiento();
         }
         avisar(Eventos.ingresoJugador);
     }
@@ -117,6 +123,7 @@ public class Partida extends utilidades.Observable{
         controlesAntesJugar(jugador);
         //falta registrar movimiento
         unirFicha(fichaTablero, fichaDescartada);//tira excepcion
+        agregarMovimiento();
         //Finaliza la partida si se descarto todas
         verificarSiSeDescartoTodas();
         cambiarTurno();
@@ -126,6 +133,7 @@ public class Partida extends utilidades.Observable{
             if(verificarSiTieneMovimientos(turno)){
                 cambiarTurno();
                 finalizarPartida(turno);
+                agregarMovimiento();
             }
         }
     }
@@ -206,6 +214,8 @@ public class Partida extends utilidades.Observable{
         //Todas las verificaciones lanzan exceptions
         String lado = "";
         if(primera==null){
+            if(fichaDescartada == null)
+                throw new ObligatorioException("Debe seleccionar la ficha a descartar.");
             tablero.add(fichaDescartada);
             primera=ultima=fichaDescartada;
             turno.eliminarFicha(primera);
@@ -345,6 +355,11 @@ public class Partida extends utilidades.Observable{
         
         return false;
     }
+    
+    private void agregarMovimiento(){
+        movimientos.add(new Movimiento(ganador, pozoApuestas, turno, (ArrayList<Ficha>)tablero.clone()));
+    }
+    
     private void crearFichas(){
         libres.add(new Ficha(0,0));
         libres.add(new Ficha(0,1));

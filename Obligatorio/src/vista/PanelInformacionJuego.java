@@ -13,13 +13,13 @@ import logica.Partida;
  *
  * @author usuario
  */
-public class PanelInformacion extends javax.swing.JPanel {
+public class PanelInformacionJuego extends javax.swing.JPanel {
     private ControladorJuego controlador;
     
     /**
      * Creates new form PanelInformacion
      */
-    public PanelInformacion(ControladorJuego cj) {
+    public PanelInformacionJuego(ControladorJuego cj) {
         initComponents();
         controlador = cj;
     }
@@ -145,7 +145,7 @@ public class PanelInformacion extends javax.swing.JPanel {
 
         lblTurno.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         add(lblTurno);
-        lblTurno.setBounds(10, 10, 360, 40);
+        lblTurno.setBounds(0, 10, 360, 40);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRobarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRobarActionPerformed

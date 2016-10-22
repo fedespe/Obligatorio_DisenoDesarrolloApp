@@ -18,12 +18,13 @@ import logica.Ficha;
  *
  * @author usuario
  */
-public class PanelFichas extends JPanel implements ActionListener{
+public class PanelFichasJuego extends JPanel implements ActionListener{
     private BotonFicha marcado = null;
     private ControladorJuego controlador;
     private boolean destino;
-
-    public PanelFichas(ControladorJuego controlador, boolean d) {
+    
+    
+    public PanelFichasJuego(ControladorJuego controlador, boolean d) {
         this.controlador = controlador;
         destino = d;
     }
@@ -43,7 +44,9 @@ public class PanelFichas extends JPanel implements ActionListener{
             
             boton.setIcon(icono);
             boton.addActionListener(this); //Me agrego en la lista de escuchadores del botón (Para cada botón creado)
+
             boton.setEnabled(!destino || i==0 || i==fichas.size()-1); //Solo dejo habilitados los botones de las puntas.
+            
             this.add(boton);
             
             //Si consigo saber que alto y ancho va a tener cada botón, se puede hacer una imagen a escala para ponerle como imagen
@@ -60,7 +63,7 @@ public class PanelFichas extends JPanel implements ActionListener{
         BotonFicha origen = (BotonFicha)e.getSource(); // Me devuelve en quien hicieron click - Podría ser un JButton también
         Ficha ficha = origen.getFicha();
         
-        if(this.destino)
+        if(destino)
             controlador.setDestino(ficha);
         else
             controlador.setOrigen(ficha);

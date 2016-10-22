@@ -122,11 +122,12 @@ public class Partidas extends javax.swing.JFrame implements VistaPartidas{
 
     private void btnVerPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerPartidaActionPerformed
         // TODO add your handling code here:
-        
+        abrirPartida();
     }//GEN-LAST:event_btnVerPartidaActionPerformed
     
     private void lstPartidasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstPartidasMouseClicked
-        
+        if(evt.getClickCount() >= 2)
+            abrirPartida();
     }//GEN-LAST:event_lstPartidasMouseClicked
     
     /**
@@ -176,5 +177,15 @@ public class Partidas extends javax.swing.JFrame implements VistaPartidas{
         lstPartidas.setListData(lista.toArray());
         this.validate();
         //this.repaint();
+    }
+
+    @Override
+    public void mostrarPartida(Partida partida) {
+        new Replay(this, false, partida).setVisible(true);
+    }
+
+    private void abrirPartida() {
+        int nroPartidaSeleccionada = lstPartidas.getSelectedIndex();
+        controlador.abrirPartida(nroPartidaSeleccionada);
     }
 }

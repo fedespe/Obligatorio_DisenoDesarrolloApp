@@ -22,12 +22,12 @@ public class Juego extends javax.swing.JFrame implements VistaJuego{
     
     public Juego(Jugador j) throws ObligatorioException{
         initComponents();
-        setLocationRelativeTo(null);
         controlador = new ControladorJuego(this,j);
         //tuve que sacarlo del contructor por problemas
         //con los paneles, larga actualizacion antes de crear contructor
         //entonces los paneles info y fichas quedan con controlador en null
         controlador.agregarJugador();
+        setLocationRelativeTo(null);
         setTitle("Partida");
     }
 
@@ -57,9 +57,9 @@ public class Juego extends javax.swing.JFrame implements VistaJuego{
     
     @Override
     public void actualizarPaneles(Partida partida, Jugador jugador) {
-        PanelInformacion panelInfo;
-        PanelFichas panelFichasTablero;
-        PanelFichas panelFichasJugador;
+        PanelInformacionJuego panelInfo;
+        PanelFichasJuego panelFichasTablero;
+        PanelFichasJuego panelFichasJugador;
    
         setContentPane(new JPanel());
         JPanel panelVentana = (JPanel)getContentPane(); //Obtengo el panel que viene por defecto en esta ventana
@@ -67,13 +67,13 @@ public class Juego extends javax.swing.JFrame implements VistaJuego{
         GridLayout layout = new GridLayout(3,1);
         panelVentana.setLayout(layout); //Al panel que viene con la ventana, le cambio el layout por el creado
         
-        panelInfo=new PanelInformacion(controlador);
+        panelInfo=new PanelInformacionJuego(controlador);
         panelVentana.add(panelInfo);
         
-        panelFichasTablero = new PanelFichas(controlador, true); //True para decirle que es el panel de destino (Las del tablero)
+        panelFichasTablero = new PanelFichasJuego(controlador, true); //True para decirle que es el panel de destino (Las del tablero)
         panelVentana.add(panelFichasTablero);
         
-        panelFichasJugador = new PanelFichas(controlador, false); //False para decirle que es el panel de origen (las de la mano)
+        panelFichasJugador = new PanelFichasJuego(controlador, false); //False para decirle que es el panel de origen (las de la mano)
         panelVentana.add(panelFichasJugador);
 
         panelInfo.mostrar(partida, jugador);

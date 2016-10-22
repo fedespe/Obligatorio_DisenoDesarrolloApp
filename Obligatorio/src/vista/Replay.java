@@ -5,20 +5,34 @@
  */
 package vista;
 
+import controladores.ControladorReplay;
 import controladores.VistaReplay;
+import java.awt.GridLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import logica.Movimiento;
+import logica.Partida;
 
 /**
  *
  * @author usuario
  */
 public class Replay extends javax.swing.JDialog implements VistaReplay{
+    
+    private ControladorReplay controlador;
     /**
      * Creates new form Replay
+     * @param parent
+     * @param modal
+     * @param partida
      */
-    public Replay(java.awt.Frame parent, boolean modal) {
+    public Replay(java.awt.Frame parent, boolean modal, Partida partida){
         super(parent, modal);
         initComponents();
+        controlador = new ControladorReplay(this, partida);
+        setTitle("Replay");
         setLocationRelativeTo(null);
+        controlador.inicializar();
     }
 
     /**
@@ -30,58 +44,54 @@ public class Replay extends javax.swing.JDialog implements VistaReplay{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnJugadaSiguiente = new javax.swing.JButton();
-        btnJugadaAnterior = new javax.swing.JButton();
-
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-        btnJugadaSiguiente.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
-        btnJugadaSiguiente.setText(">>>");
-        btnJugadaSiguiente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnJugadaSiguienteActionPerformed(evt);
-            }
-        });
-
-        btnJugadaAnterior.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
-        btnJugadaAnterior.setText("<<<");
-        btnJugadaAnterior.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnJugadaAnteriorActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnJugadaAnterior)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 468, Short.MAX_VALUE)
-                .addComponent(btnJugadaSiguiente)
-                .addContainerGap())
+            .addGap(0, 1088, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(388, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnJugadaSiguiente)
-                    .addComponent(btnJugadaAnterior))
-                .addContainerGap())
+            .addGap(0, 436, Short.MAX_VALUE)
         );
 
-        setBounds(0, 0, 652, 483);
+        setBounds(0, 0, 1106, 483);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnJugadaSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJugadaSiguienteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnJugadaSiguienteActionPerformed
+    @Override
+    public void actualizarPaneles(Movimiento movimiento) {
+        PanelInformacionReplay panelInfo;
+        PanelFichasReplay panelFichasTablero;
+   
+        setContentPane(new JPanel());
+        JPanel panelVentana = (JPanel)getContentPane(); //Obtengo el panel que viene por defecto en esta ventana
+        
+        GridLayout layout = new GridLayout(2,1);
+        panelVentana.setLayout(layout); //Al panel que viene con la ventana, le cambio el layout por el creado
+        
+        panelInfo=new PanelInformacionReplay(this.controlador);
+        panelVentana.add(panelInfo);
+        
+        panelFichasTablero = new PanelFichasReplay(this.controlador); //True para decirle que es el panel de destino (Las del tablero)
+        panelVentana.add(panelFichasTablero);
 
-    private void btnJugadaAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJugadaAnteriorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnJugadaAnteriorActionPerformed
+        
+        panelFichasTablero.mostrar(movimiento.getTablero());
+        panelInfo.mostrar(movimiento);
+        
+        //el show esta puesto para que refresque
+        //hay que ver que es lo ideal
+        //this.setVisible(true);
+        this.validate();
+        this.repaint();
+    }
+
+    @Override
+    public void error(String message) {
+        JOptionPane.showMessageDialog(this, message);
+    }
 
     /**
      * @param args the command line arguments
@@ -89,7 +99,5 @@ public class Replay extends javax.swing.JDialog implements VistaReplay{
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnJugadaAnterior;
-    private javax.swing.JButton btnJugadaSiguiente;
     // End of variables declaration//GEN-END:variables
 }

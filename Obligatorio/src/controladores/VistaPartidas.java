@@ -17,5 +17,7 @@ public interface VistaPartidas {
     public void cerrar();
 
     public void mostrarPartidas(ArrayList<Partida> partidas);
+
+    public void mostrarPartida(Partida get);
     
 }

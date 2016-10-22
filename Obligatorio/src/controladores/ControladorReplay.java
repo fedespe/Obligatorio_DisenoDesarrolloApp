@@ -5,7 +5,10 @@
  */
 package controladores;
 
-import utilidades.Observador;
+import java.util.ArrayList;
+import logica.Movimiento;
+import logica.Partida;
+import logica.Sistema;
 
 /**
  *
@@ -16,4 +19,44 @@ import utilidades.Observador;
 //creo que todo se va actualizando al hacer click en Siguiente... Por lo que no hay por qué observar nada...
 public class ControladorReplay{
     
+    private Sistema modelo = Sistema.getInstancia();
+    private VistaReplay vista;
+    private Partida partida;
+    private int nroMovimiento;
+    private ArrayList<Movimiento> movimientos = new ArrayList();
+    
+    public ControladorReplay(VistaReplay vista, Partida partida){
+        this.vista = vista;
+        this.partida = partida;
+        this.movimientos = partida.getMovimientos();
+        this.nroMovimiento = 0;
+    }
+
+    public void movimientoSiguiente() {
+        this.nroMovimiento++;
+        cargarMovimiento();
+    }
+
+    public void movimientoAnterior() {
+        this.nroMovimiento--;
+        cargarMovimiento();
+    }
+    
+    private void cargarMovimiento(){
+        if(nroMovimiento < 0){
+            nroMovimiento++;
+            vista.error("No existen movimientos anteriores.");
+        }
+        else if(nroMovimiento >= partida.getMovimientos().size()){
+            nroMovimiento--;
+            vista.error("No existen movimientos posteriores.");
+        }
+        else{
+            vista.actualizarPaneles(movimientos.get(nroMovimiento));
+        }
+    }
+
+    public void inicializar() {
+        cargarMovimiento();
+    }
 }

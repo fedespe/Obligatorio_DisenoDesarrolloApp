@@ -5,6 +5,8 @@
  */
 package controladores;
 
+import java.util.ArrayList;
+import logica.Partida;
 import logica.Sistema;
 import utilidades.Observable;
 import utilidades.Observador;
@@ -33,6 +35,12 @@ public class ControladorPartidas implements Observador{
     public void salir() {
         modelo.quitar(this);
         vista.cerrar();
+    }
+
+    public void abrirPartida(int selectedIndex) {
+        ArrayList<Partida> partidas = modelo.getPartidas();
+        Partida partida = partidas.get(selectedIndex);
+        vista.mostrarPartida(partida);
     }
     
 }

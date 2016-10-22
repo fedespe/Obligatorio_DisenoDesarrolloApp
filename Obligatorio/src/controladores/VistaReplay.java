@@ -5,10 +5,16 @@
  */
 package controladores;
 
+import logica.Movimiento;
+
 /**
  *
  * @author usuario
  */
 public interface VistaReplay {
+
+    public void actualizarPaneles(Movimiento movimiento);
+
+    public void error(String message);
     
 }
