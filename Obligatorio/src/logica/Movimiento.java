@@ -39,6 +39,10 @@ public class Movimiento {
         return tablero;
     }
 
+    public void setGanador(Jugador ganador) {
+        this.ganador = ganador;
+    }
+
     public Movimiento(Jugador ganador, double pozoApuestas, Jugador jugador, ArrayList<Ficha> tablero) {
         this.ganador = ganador;
         this.pozoApuestas = pozoApuestas;

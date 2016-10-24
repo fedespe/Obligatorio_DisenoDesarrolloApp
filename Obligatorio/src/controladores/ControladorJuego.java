@@ -39,7 +39,12 @@ public class ControladorJuego implements Observador{
         try {
             modelo.agregarJugador(jugador);//aca realiza la carga de paneles por que actualiza
         } catch (ObligatorioException ex) {
-            vista.mensaje(ex.getMessage());
+            vista.mensajeModal(ex.getMessage());
+            modelo.logoutJugador(jugador);
+            partida.quitar(this);
+            jugador=null;
+            //vista.cerrar(); no se puede por que tidavia no esta creada la vista
+            //por eso se crea un evento despues que la ventana esta creada
         }
     }
     
@@ -122,4 +127,9 @@ public class ControladorJuego implements Observador{
             vista.mensaje(ex.getMessage());
         }
     }   
+
+    public void verificarJugadorAgregado() {
+        if(jugador==null)
+            vista.cerrar();
+    }
 }

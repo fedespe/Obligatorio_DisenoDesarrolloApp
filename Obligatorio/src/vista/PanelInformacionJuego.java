@@ -6,6 +6,8 @@
 package vista;
 
 import controladores.ControladorJuego;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import logica.Jugador;
 import logica.Partida;
 
@@ -49,6 +51,7 @@ public class PanelInformacionJuego extends javax.swing.JPanel {
         jLabel7 = new javax.swing.JLabel();
         btnDescartar = new javax.swing.JButton();
         lblTurno = new javax.swing.JLabel();
+        lblMensajeEspera = new javax.swing.JLabel();
 
         setLayout(null);
 
@@ -145,7 +148,12 @@ public class PanelInformacionJuego extends javax.swing.JPanel {
 
         lblTurno.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         add(lblTurno);
-        lblTurno.setBounds(0, 10, 360, 40);
+        lblTurno.setBounds(20, 10, 360, 40);
+
+        lblMensajeEspera.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblMensajeEspera.setForeground(new java.awt.Color(0, 204, 0));
+        add(lblMensajeEspera);
+        lblMensajeEspera.setBounds(560, 10, 360, 40);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRobarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRobarActionPerformed
@@ -153,7 +161,17 @@ public class PanelInformacionJuego extends javax.swing.JPanel {
     }//GEN-LAST:event_btnRobarActionPerformed
 
     private void btnApostarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApostarActionPerformed
-        controlador.apostar(Double.parseDouble(TxtMontoApuesta.getText()));
+        try {
+            controlador.apostar(Double.parseDouble(TxtMontoApuesta.getText()));
+        }
+        catch (java.lang.NumberFormatException ex) {
+            JOptionPane pane = new JOptionPane("Ingreso no valido");
+            JDialog dialog = pane.createDialog(this,"Aviso");
+            dialog.setLocationRelativeTo(null);
+            dialog.setModal(false); 
+            dialog.setVisible(true);
+        }
+        
     }//GEN-LAST:event_btnApostarActionPerformed
 
     private void btnDescartarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescartarActionPerformed
@@ -173,6 +191,7 @@ public class PanelInformacionJuego extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel lblMensajeEspera;
     private javax.swing.JLabel lblTurno;
     private javax.swing.JTextField txtFichasDisponibles;
     private javax.swing.JTextField txtNombreJugador;
@@ -195,5 +214,10 @@ public class PanelInformacionJuego extends javax.swing.JPanel {
         TxtApuestaTotal.setText(partida.getPozoApuestas()+"");
         txtFichasDisponibles.setText(partida.getLibres().size()+"");
         lblTurno.setText("Turno de "+partida.getTurno().getNombreCompleto());
+        if(partida.getJugadores().size()<2){
+            lblMensajeEspera.setText("Esperando jugador rival");
+        }else{
+            lblMensajeEspera.setText("");
+        }
     }
 }

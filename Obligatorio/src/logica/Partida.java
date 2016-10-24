@@ -39,7 +39,7 @@ public class Partida extends utilidades.Observable{
                         encontrado = true;
                     }
                 }
-                finalizarPartida(gana);
+                finalizarPartida(gana);               
             }
         }
         else{
@@ -305,6 +305,7 @@ public class Partida extends utilidades.Observable{
         for(Jugador j:jugadores){
             j.getFichas().clear();
         }
+        movimientos.get(movimientos.size()-1).setGanador(ganador);
         avisar(Eventos.partidaFinalizada);
         Sistema.getInstancia().avisar(Sistema.Eventos.actualizacionEnPartida);
     }

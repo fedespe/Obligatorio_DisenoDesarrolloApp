@@ -21,4 +21,6 @@ public interface VistaJuego {
     public void confirmarApuesta(String mensaje);
 
     public void mostrarGanador(Jugador ganador);
+    
+    public void mensajeModal(String message);
 }

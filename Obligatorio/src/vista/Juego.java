@@ -8,6 +8,7 @@ package vista;
 import controladores.ControladorJuego;
 import controladores.VistaJuego;
 import java.awt.GridLayout;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import logica.Jugador;
@@ -40,6 +41,9 @@ public class Juego extends javax.swing.JFrame implements VistaJuego{
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
         });
         getContentPane().setLayout(null);
 
@@ -49,6 +53,10 @@ public class Juego extends javax.swing.JFrame implements VistaJuego{
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         controlador.salir();
     }//GEN-LAST:event_formWindowClosing
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        controlador.verificarJugadorAgregado();
+    }//GEN-LAST:event_formWindowOpened
 
     @Override
     public void cerrar() {
@@ -89,7 +97,17 @@ public class Juego extends javax.swing.JFrame implements VistaJuego{
 
     @Override
     public void mensaje(String message) {
-        JOptionPane.showMessageDialog(this, message);
+        JOptionPane pane = new JOptionPane(message);
+        JDialog dialog = pane.createDialog(this,"Aviso");
+        dialog.setModal(false); 
+        dialog.setVisible(true);
+    }
+    @Override
+    public void mensajeModal(String message) {
+        JOptionPane pane = new JOptionPane(message);
+        JDialog dialog = pane.createDialog(this,"Aviso");
+        dialog.setModal(true); 
+        dialog.setVisible(true);
     }
 
     @Override
@@ -99,7 +117,7 @@ public class Juego extends javax.swing.JFrame implements VistaJuego{
             controlador.confirmarApuesta(true);
         }else{
             controlador.confirmarApuesta(false);
-        }
+        }    
     }
     
     @Override
