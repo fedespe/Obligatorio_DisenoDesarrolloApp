@@ -69,9 +69,9 @@ public class ControladorJuego implements Observador{
         }
         else if(evento.equals(Partida.Eventos.apuesta)){
             if(partida.getUltimaApuesta().getJugador()==jugador){
-                vista.mensaje("Esperando confirmacion.");
+                vista.mensaje("Se envió la solicitud de apuesta.");
             }else{
-                vista.confirmarApuesta("Acepta la apuesta: "+ partida.getUltimaApuesta().getValor());
+                vista.confirmarApuesta("Acepta la apuesta de: $"+ partida.getUltimaApuesta().getValor() + "?");
             }
         }
         else if(evento.equals(Partida.Eventos.confirmacionApuesta)){

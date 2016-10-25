@@ -113,6 +113,7 @@ public class Servidor extends javax.swing.JFrame implements VistaServidor{
     @Override
     public void cerrar() {
         dispose();
+        System.exit(0);
     }
 
     @Override

@@ -133,7 +133,6 @@ public class Partida extends utilidades.Observable{
             if(verificarSiTieneMovimientos(turno)){
                 cambiarTurno();
                 finalizarPartida(turno);
-                agregarMovimiento();
             }
         }
     }
