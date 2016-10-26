@@ -70,25 +70,25 @@ public class SubSistemaUsuario{
     }
     
     private void cargarUsuarios(){
-        jugadores.add(new Jugador("a","a","Alvaro",450));
-        jugadores.add(new Jugador("b","b","Bruno",400));
-        jugadores.add(new Jugador("c","c","Carlos",350));
-        jugadores.add(new Jugador("d","d","Darío",300));
-        jugadores.add(new Jugador("e","e","Emiliano",250));
-        jugadores.add(new Jugador("f","f","Federico",200));
-        jugadores.add(new Jugador("g","g","Gustavo",150));
-        jugadores.add(new Jugador("h","h","Hugo",100));
-        jugadores.add(new Jugador("i","i","Ismael",50));
-        jugadores.add(new Jugador("j","j","Javier",0));
-        administradores.add(new Administrador("a","a","Analía"));
-        administradores.add(new Administrador("b","b","Blanca"));
-        administradores.add(new Administrador("c","c","Claudia"));
-        administradores.add(new Administrador("d","d","Dilma"));
-        administradores.add(new Administrador("e","e","Emilia"));
-        administradores.add(new Administrador("f","f","Fabiana"));
-        administradores.add(new Administrador("g","g","Graciela"));
-        administradores.add(new Administrador("h","h","Heidy"));
-        administradores.add(new Administrador("i","i","Ilda"));
-        administradores.add(new Administrador("j","j","Dilma"));
+        jugadores.add(new Jugador("a","a","Alvaro Fernández",450));
+        jugadores.add(new Jugador("b","b","Bruno Díaz",400));
+        jugadores.add(new Jugador("c","c","Carlos González",350));
+        jugadores.add(new Jugador("d","d","Darío Pérez",300));
+        jugadores.add(new Jugador("e","e","Emiliano Lasa",250));
+        jugadores.add(new Jugador("f","f","Federico Speroni",200));
+        jugadores.add(new Jugador("g","g","Gustavo Valverde",150));
+        jugadores.add(new Jugador("h","h","Hugo Collazo",100));
+        jugadores.add(new Jugador("i","i","Ismael Espósito",50));
+        jugadores.add(new Jugador("j","j","Javier Montero",0));
+        administradores.add(new Administrador("a","a","Analía Pereyra"));
+        administradores.add(new Administrador("b","b","Blanca Moreira"));
+        administradores.add(new Administrador("c","c","Claudia Tabárez"));
+        administradores.add(new Administrador("d","d","Dilma Rousseff"));
+        administradores.add(new Administrador("e","e","Emilia Suárez"));
+        administradores.add(new Administrador("f","f","Fabiana Guerra"));
+        administradores.add(new Administrador("g","g","Graciela García"));
+        administradores.add(new Administrador("h","h","Heidy Montero"));
+        administradores.add(new Administrador("i","i","Ilda De León"));
+        administradores.add(new Administrador("j","j","Judith Barsi"));
     }
 }
