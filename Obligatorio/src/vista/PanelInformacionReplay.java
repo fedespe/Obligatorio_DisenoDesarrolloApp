@@ -124,12 +124,13 @@ public class PanelInformacionReplay extends javax.swing.JPanel {
     }//GEN-LAST:event_btnMovimientoAnteriorActionPerformed
 
     void mostrar(Movimiento movimiento) {
-        if(movimiento.getGanador() != null){
-            txtGanador.setText("El ganador es: " + movimiento.getGanador().getNombreCompleto());
-        }
-        else
-            txtGanador.setText("");
         
+        txtGanador.setText("");
+        txtTotalApostado.setText(movimiento.getPozoApuestas()+"");
+        
+        if(movimiento.getGanador() != null)
+            txtGanador.setText("El ganador es: " + movimiento.getGanador().getNombreCompleto());
+            
         if(movimiento.getTablero().isEmpty()){
             txtFechaHora.setText("Aún no se ha jugado");
             txtJugador.setText("Aún no se ha jugado");
@@ -138,7 +139,7 @@ public class PanelInformacionReplay extends javax.swing.JPanel {
             txtFechaHora.setText(movimiento.getFechaHora().toString());
             txtJugador.setText(movimiento.getJugador().getNombreCompleto());
         }
-        txtTotalApostado.setText(movimiento.getPozoApuestas()+"");
+        
     }
 
 

@@ -26,8 +26,6 @@ public class Jugador extends Usuario {
         this.saldo = saldo;
     }
     
-    
-    
     public double getSaldo() {
         return saldo;
     }

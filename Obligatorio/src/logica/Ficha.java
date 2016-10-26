@@ -34,12 +34,12 @@ public class Ficha {
         this.valorIzquierda = valorIzquierda;
     }
     
-    @Override
-    public boolean equals(Object o){
-        Ficha f = (Ficha)o;
-        return (f.getValorDerecha()==valorDerecha && f.getValorIzquierda()==valorIzquierda);
+    //@Override
+    //public boolean equals(Object o){
+    //    Ficha f = (Ficha)o;
+    //    return (f.getValorDerecha()==valorDerecha && f.getValorIzquierda()==valorIzquierda);
                 //|| (f.getValorDerecha()==valorIzquierda && f.getValorIzquierda()==valorDerecha);
-    }
+    //}
 
     public void sePuedeUnir(String lado, Ficha fichaDescartada) throws ObligatorioException {
         if(lado.equals("Izq")){
@@ -62,8 +62,8 @@ public class Ficha {
         }
     }
     
-    @Override
-    public String toString() {
-        return valorIzquierda + " | " + valorDerecha;
-    }
+    //@Override
+    //public String toString() {
+    //    return valorIzquierda + " | " + valorDerecha;
+    //}
 }

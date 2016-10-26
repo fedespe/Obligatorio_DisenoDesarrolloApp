@@ -35,7 +35,7 @@ public class PanelFichasReplay extends javax.swing.JPanel {
             
             boton.setIcon(icono);
 
-            boton.setEnabled(false); //Solo dejo habilitados los botones de las puntas.
+            boton.setEnabled(false);
             
             this.add(boton);
             

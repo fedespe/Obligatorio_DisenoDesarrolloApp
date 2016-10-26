@@ -116,13 +116,11 @@ public class PanelInformacionJuego extends javax.swing.JPanel {
 
         txtNombreJugador.setEditable(false);
         txtNombreJugador.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        txtNombreJugador.setText("Nombre Completo Jugador");
         add(txtNombreJugador);
         txtNombreJugador.setBounds(90, 60, 320, 28);
 
         txtNombreRival.setEditable(false);
         txtNombreRival.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        txtNombreRival.setText("Nombre Completo Jugador Rival");
         add(txtNombreRival);
         txtNombreRival.setBounds(90, 110, 320, 28);
 
@@ -206,7 +204,6 @@ public class PanelInformacionJuego extends javax.swing.JPanel {
             if(j==jugador){
                 txtNombreJugador.setText(j.getNombreCompleto());
                 txtSaldo.setText(jugador.getSaldo()+"");
-                
             }else{
                 txtNombreRival.setText(j.getNombreCompleto());
             }

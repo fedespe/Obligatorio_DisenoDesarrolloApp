@@ -6,7 +6,6 @@
 package logica;
 
 import java.util.ArrayList;
-import java.util.Observable;
 import utilidades.ObligatorioException;
 
 /**

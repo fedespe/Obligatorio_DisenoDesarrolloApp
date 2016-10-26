@@ -102,6 +102,7 @@ public class Juego extends javax.swing.JFrame implements VistaJuego{
         dialog.setModal(false); 
         dialog.setVisible(true);
     }
+    
     @Override
     public void mensajeModal(String message) {
         JOptionPane pane = new JOptionPane(message);

@@ -32,10 +32,6 @@ public class SubSistemaPartida {
                 throw new ObligatorioException("No puede cerrar el servidor hasta que todas las partidas hayan finalizado.");
         }
     }
-    
-    public Partida partidaPosision(int pos){
-        return partidas.get(pos);
-    }
 
     public ArrayList<Partida> getPartidas() {
         return partidas;

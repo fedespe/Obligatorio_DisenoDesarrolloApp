@@ -23,9 +23,9 @@ public class Partidas extends javax.swing.JFrame implements VistaPartidas{
      */
     public Partidas() {
         initComponents();
-        setLocationRelativeTo(null);
         controlador = new ControladorPartidas(this);
         setTitle("Listado de Partidas");
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -152,18 +152,16 @@ public class Partidas extends javax.swing.JFrame implements VistaPartidas{
         ArrayList<String> lista = new ArrayList();
         
         for(Partida p:partidas){
-            String linea = "";
+            String linea = "[En juego] ";;
             String g = "Aún no hay ganador";
             
             Jugador ganador = p.getGanador();
             
-            if(ganador == null)
-                linea += "[En juego] ";
-            else{
-                linea += "[Finalizada] ";
+            if(ganador != null){
+                linea = "[Finalizada] ";
                 g = ganador.getNombreCompleto();
             }
-                
+            
             linea += p.getJugadores().get(0).getNombreCompleto() + " ($ " + p.getJugadores().get(0).getSaldo() + ") - ";
             linea += p.getJugadores().get(1).getNombreCompleto() + " ($ " + p.getJugadores().get(1).getSaldo() + ") : $";
             

@@ -24,8 +24,8 @@ public class Login extends javax.swing.JDialog implements VistaLogin{
     public Login(java.awt.Frame parent, boolean modal, boolean jugador) {
         super(parent, modal);
         initComponents();
-        setLocationRelativeTo(null);
         controlador = new ControladorLogin(this,jugador);
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -105,14 +105,13 @@ public class Login extends javax.swing.JDialog implements VistaLogin{
         setTitle(textoInicial);
     }
     
-    //Ver esto... Está bien colocar los bloques Try y Catch acá? O sería algo que debe resolver el Controlador?
     @Override
     public void ingresarJugador(Jugador j) {
         try{
             new Juego(j).setVisible(true);
         }  
         catch(ObligatorioException ex){
-            JOptionPane.showMessageDialog(this, ex.getMessage());
+            error(ex.getMessage());
         }
     }
 

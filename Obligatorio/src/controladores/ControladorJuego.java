@@ -61,10 +61,10 @@ public class ControladorJuego implements Observador{
         //Se podria tener un evento solo ya que 
         //hacen casi todos lo mismo
         
-        if(evento.equals(Partida.Eventos.ingresoJugador)){           
-            vista.actualizarPaneles(partida, jugador);
-        }
-        else if(evento.equals(Partida.Eventos.roboFicha)){
+        if(evento.equals(Partida.Eventos.ingresoJugador)
+                || evento.equals(Partida.Eventos.roboFicha)
+                || evento.equals(Partida.Eventos.confirmacionApuesta)
+                || evento.equals(Partida.Eventos.realizoMovimiento)){           
             vista.actualizarPaneles(partida, jugador);
         }
         else if(evento.equals(Partida.Eventos.apuesta)){
@@ -73,12 +73,6 @@ public class ControladorJuego implements Observador{
             }else{
                 vista.confirmarApuesta("Acepta la apuesta de: $"+ partida.getUltimaApuesta().getValor() + "?");
             }
-        }
-        else if(evento.equals(Partida.Eventos.confirmacionApuesta)){
-            vista.actualizarPaneles(partida, jugador);
-        }
-        else if(evento.equals(Partida.Eventos.realizoMovimiento)){
-            vista.actualizarPaneles(partida, jugador);
         }
         else if(evento.equals(Partida.Eventos.partidaFinalizada)){
             vista.actualizarPaneles(partida, jugador); //Actualizo para que muestre bien el saldo del jugador cuando termina la partida
@@ -101,9 +95,9 @@ public class ControladorJuego implements Observador{
         }
     }
 
-    public void apostar(double parseDouble) {
+    public void apostar(double monto) {
         try {
-            partida.apostar(jugador, parseDouble);
+            partida.apostar(jugador, monto);
         } catch (ObligatorioException ex) {
             vista.mensaje(ex.getMessage());
         }
