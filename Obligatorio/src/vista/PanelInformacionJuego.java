@@ -51,7 +51,7 @@ public class PanelInformacionJuego extends javax.swing.JPanel {
         jLabel7 = new javax.swing.JLabel();
         btnDescartar = new javax.swing.JButton();
         lblTurno = new javax.swing.JLabel();
-        lblMensajeEspera = new javax.swing.JLabel();
+        lblMensaje = new javax.swing.JLabel();
 
         setLayout(null);
 
@@ -148,10 +148,11 @@ public class PanelInformacionJuego extends javax.swing.JPanel {
         add(lblTurno);
         lblTurno.setBounds(20, 10, 360, 40);
 
-        lblMensajeEspera.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        lblMensajeEspera.setForeground(new java.awt.Color(0, 204, 0));
-        add(lblMensajeEspera);
-        lblMensajeEspera.setBounds(560, 10, 360, 40);
+        lblMensaje.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblMensaje.setForeground(new java.awt.Color(0, 204, 0));
+        lblMensaje.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        add(lblMensaje);
+        lblMensaje.setBounds(410, 10, 500, 40);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRobarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRobarActionPerformed
@@ -189,7 +190,7 @@ public class PanelInformacionJuego extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel lblMensajeEspera;
+    private javax.swing.JLabel lblMensaje;
     private javax.swing.JLabel lblTurno;
     private javax.swing.JTextField txtFichasDisponibles;
     private javax.swing.JTextField txtNombreJugador;
@@ -212,9 +213,12 @@ public class PanelInformacionJuego extends javax.swing.JPanel {
         txtFichasDisponibles.setText(partida.getLibres().size()+"");
         lblTurno.setText("Turno de "+partida.getTurno().getNombreCompleto());
         if(partida.getJugadores().size()<2){
-            lblMensajeEspera.setText("Esperando jugador rival");
-        }else{
-            lblMensajeEspera.setText("");
+            lblMensaje.setText("Esperando jugador rival");
+        }else if(partida.getGanador() != null){
+            lblMensaje.setText("El Ganador es: " + partida.getGanador().getNombreCompleto());
+        }
+        else{
+            lblMensaje.setText("");
         }
     }
 }

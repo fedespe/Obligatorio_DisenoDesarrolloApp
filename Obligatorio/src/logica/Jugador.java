@@ -14,8 +14,8 @@ import utilidades.ObligatorioException;
  */
 public class Jugador extends Usuario {
     private double saldo;
-    private ArrayList<Ficha> fichas = new ArrayList();
-    private Partida partida;
+    private ArrayList<Ficha> mano = new ArrayList();
+    private Partida partidaJugando;
     
     public Jugador(String n, String p, String np, double s){
         super(n,p,np);
@@ -36,20 +36,24 @@ public class Jugador extends Usuario {
 
     //Usé este método porque estaba creado... Pero es necesario? Para eso no son los getter y setter?
     public void agregarFicha(Ficha f) {
-        fichas.add(f);
+        mano.add(f);
     }
 
     public ArrayList<Ficha> getFichas() {
-        return fichas;
+        return mano;
     }
 
-    void quitarApuesta(double valor) throws ObligatorioException{
+    public void quitarApuesta(double valor) throws ObligatorioException{
         verificarSaldo(valor);
         saldo-=valor;
     }
 
-    void eliminarFicha(Ficha ficha) {
-        fichas.remove(ficha);
+    public void eliminarFicha(Ficha ficha) {
+        mano.remove(ficha);
+    }    
+
+    public void vaciarMano() {
+        mano = new ArrayList();
     }
     
 }

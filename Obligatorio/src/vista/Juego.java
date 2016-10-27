@@ -120,11 +120,6 @@ public class Juego extends javax.swing.JFrame implements VistaJuego{
             controlador.confirmarApuesta(false);
         }    
     }
-    
-    @Override
-    public void mostrarGanador(Jugador ganador) {
-        JOptionPane.showMessageDialog(this, "El ganador es: " + ganador.getNombreCompleto(), "Partida Finalizada", HEIGHT);
-    }
 
     
 

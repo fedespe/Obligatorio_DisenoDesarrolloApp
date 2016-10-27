@@ -16,7 +16,7 @@ import utilidades.ObligatorioException;
 public class Partida extends utilidades.Observable{
     //private double apuestaInicial;
     private boolean partidaActiva=false;
-    private double pozoApuestas=0;
+    private double pozoApuestas = 0;
     private ArrayList<Jugador> jugadores = new ArrayList();
     private Jugador turno;
     private Jugador ganador;
@@ -100,14 +100,11 @@ public class Partida extends utilidades.Observable{
     }
     
     public void agregarJugador(Jugador jugador) throws ObligatorioException{
-        if(jugadores.isEmpty()){
-            jugador.verificarSaldo(ultimaApuesta.getValor());
-            jugadores.add(jugador);
-            //Hay que asignarle esta partida al jugador
+        jugador.verificarSaldo(ultimaApuesta.getValor());
+        jugadores.add(jugador);
+        if(jugadores.size()==1){
             turno=jugador;
-        }else if(jugadores.size()==1){
-            jugador.verificarSaldo(ultimaApuesta.getValor());
-            jugadores.add(jugador);
+        }else if(jugadores.size()==2){
             restarMontoJugadoresSumarApuestaEnPartida();
             repartirFichas();
             partidaActiva=true;
@@ -137,21 +134,11 @@ public class Partida extends utilidades.Observable{
         }
     }
     
-    public void primerJugada(Jugador jugador, Ficha fichaDescartada)throws ObligatorioException{
-        controlesAntesJugar(jugador);
-        tablero.add(fichaDescartada);
-        ultima = fichaDescartada;
-        primera = fichaDescartada;
-        cambiarTurno();
-    }
-    
     private void controlesAntesJugar(Jugador jugador) throws ObligatorioException{
         sePuedeJugar();
         verificarTurno(jugador);//tira excepcion
     }
     
-    //El metodo robar tendria que ser void
-    //ya que el sistema vuelve a mostrar las fichas
     public void robar(Jugador j)throws ObligatorioException{
         sePuedeJugar();
         verificarTurno(j);
@@ -208,53 +195,58 @@ public class Partida extends utilidades.Observable{
         avisar(Eventos.confirmacionApuesta);
         Sistema.getInstancia().avisar(Sistema.Eventos.actualizacionEnPartida);
     }
-      
-    private void unirFicha(Ficha fichaTablero, Ficha fichaDescartada)throws ObligatorioException{
-        //Todas las verificaciones lanzan exceptions
-        String lado = "";
-        if(primera==null){
-            if(fichaDescartada == null)
+    
+    public void primerJugada(Ficha fichaDescartada)throws ObligatorioException{
+        if(fichaDescartada == null)
                 throw new ObligatorioException("Debe seleccionar la ficha a descartar.");
-            tablero.add(fichaDescartada);
-            primera=ultima=fichaDescartada;
-            turno.eliminarFicha(primera);
-        }
-        else if(fichaTablero == null || fichaDescartada == null){
-            throw new ObligatorioException("Debe seleccionar una ficha de origen y una de destino.");
-        }//Si la ficha en el tablero es una sola da problema
-        //por que si en la primera le erra tira excepcion
-        else if(fichaTablero == primera){
-            lado = "Izq";
-            //aca arregle el tema comentado arriba de 
-            //forma espantosa solo para probar que ande
-            try {
-                primera.sePuedeUnir(lado, fichaDescartada);
-            } catch (ObligatorioException ex) {
-                if(primera==ultima){
-                    lado = "Der";
-                    ultima.sePuedeUnir(lado, fichaDescartada);
-                    tablero.add(fichaDescartada); //Si no se puede unir la ficha, lanza excepcion
-                    ultima = fichaDescartada;
-                    turno.eliminarFicha(fichaDescartada);
-                    return;
-                }else{
-                    throw new ObligatorioException("Las fichas seleccionadas no se pueden unir.");
-                }        
-            }  
+        
+        tablero.add(fichaDescartada);
+        primera=ultima=fichaDescartada;
+    }
+    
+    public void segundaJugada(Ficha fichaTablero, Ficha fichaDescartada)throws ObligatorioException{
+        String lado = "Izq";
+        
+        try {
+            primera.sePuedeUnir(lado, fichaDescartada);
             tablero.add(0,fichaDescartada); //Si no se puede unir la ficha, lanza excepcion
             primera = fichaDescartada;
-            turno.eliminarFicha(fichaDescartada);
-        }
-        else if(fichaTablero.equals(ultima)){
+        } catch (ObligatorioException ex) {
             lado = "Der";
             ultima.sePuedeUnir(lado, fichaDescartada);
             tablero.add(fichaDescartada); //Si no se puede unir la ficha, lanza excepcion
             ultima = fichaDescartada;
-            turno.eliminarFicha(fichaDescartada);
+        }  
+    }
+    
+    private void unirFicha(Ficha fichaTablero, Ficha fichaDescartada)throws ObligatorioException{
+        //Todas las verificaciones lanzan exceptions
+        String lado = "";
+        if(primera==null){
+            primerJugada(fichaDescartada);
+        }
+        else if(fichaTablero == null || fichaDescartada == null){
+            throw new ObligatorioException("Debe seleccionar una ficha de origen y una de destino.");
+        }
+        else if(primera == ultima){
+            segundaJugada(fichaTablero, fichaDescartada);
+        }
+        else if(fichaTablero == primera){
+            lado = "Izq";
+            primera.sePuedeUnir(lado, fichaDescartada);
+            tablero.add(0,fichaDescartada); //Si no se puede unir la ficha, lanza excepcion
+            primera = fichaDescartada;
+        }
+        else if(fichaTablero.equals(ultima)){
+            lado = "Der";
+            ultima.sePuedeUnir(lado, fichaDescartada);//Tira excepción si no se puede
+            tablero.add(fichaDescartada);
+            ultima = fichaDescartada;
         }
         else{
             throw new ObligatorioException("Debe seleccionar una ficha de uno de los extremos del tablero.");
         }
+        turno.eliminarFicha(fichaDescartada);
     }
   
     private void restarMontoJugadoresSumarApuestaEnPartida()throws ObligatorioException{
@@ -262,15 +254,14 @@ public class Partida extends utilidades.Observable{
         jugadores.get(1).quitarApuesta(ultimaApuesta.getValor());
         pozoApuestas+=ultimaApuesta.getValor()*2;
     }
-    //Metodo para reuso en unir ficha codigo repetido
-    //No lo cambie todavia
-    private void agregarFichaAlTableroYRemoverDelJugador(Ficha ficha){
-        
-    }
+
     private void repartirFichas(){
         //se reparten 7 para cada uno
         Jugador j1 = jugadores.get(0);
         Jugador j2 = jugadores.get(1);
+        
+        j1.vaciarMano();
+        j2.vaciarMano();
         
         for(int i=1; i<=7; i++){
             Ficha f1 = libres.get(0);
@@ -301,9 +292,6 @@ public class Partida extends utilidades.Observable{
         partidaActiva=false;
         this.ganador=ganador;
         ganador.setSaldo(ganador.getSaldo() + pozoApuestas);
-        for(Jugador j:jugadores){
-            j.getFichas().clear();
-        }
         movimientos.get(movimientos.size()-1).setGanador(ganador);
         avisar(Eventos.partidaFinalizada);
         Sistema.getInstancia().avisar(Sistema.Eventos.actualizacionEnPartida);
