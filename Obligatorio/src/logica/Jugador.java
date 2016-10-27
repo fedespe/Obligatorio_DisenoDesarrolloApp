@@ -34,7 +34,6 @@ public class Jugador extends Usuario {
             throw new ObligatorioException(getNombreCompleto() + " no posee saldo suficiente.");
     }
 
-    //Usé este método porque estaba creado... Pero es necesario? Para eso no son los getter y setter?
     public void agregarFicha(Ficha f) {
         mano.add(f);
     }

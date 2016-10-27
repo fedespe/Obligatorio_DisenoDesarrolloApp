@@ -26,25 +26,20 @@ public class ControladorJuego implements Observador{
     private Jugador jugador;
     
     public ControladorJuego(VistaJuego vista, Jugador j){
-        //modelo.agregar(this);
         this.vista = vista;       
         jugador=j;
         partida = modelo.getPartidaParaJugar();
         partida.agregar(this);
     }
-    //tuve que sacarlo del constructor sino los paneles me 
-    //quedaban con el controlador en null, no se terminaba de crear el
-    // contructor del controlador y largaba la actualizacion por agregar el jugador
+    
     public void agregarJugador(){
         try {
-            modelo.agregarJugador(jugador);//aca realiza la carga de paneles por que actualiza
+            modelo.agregarJugador(jugador);
         } catch (ObligatorioException ex) {
             vista.mensajeModal(ex.getMessage());
             modelo.logoutJugador(jugador);
             partida.quitar(this);
             jugador=null;
-            //vista.cerrar(); no se puede por que tidavia no esta creada la vista
-            //por eso se crea un evento despues que la ventana esta creada
         }
     }
     
@@ -58,8 +53,6 @@ public class ControladorJuego implements Observador{
     
     @Override
     public void actualizar(Observable origen, Object evento) {
-        //Se podria tener un evento solo ya que 
-        //hacen casi todos lo mismo
         
         if(evento.equals(Partida.Eventos.ingresoJugador)
                 || evento.equals(Partida.Eventos.roboFicha)

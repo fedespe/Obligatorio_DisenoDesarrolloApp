@@ -11,16 +11,11 @@ package logica;
  */
 public class Apuesta {
     private double valor;
-    //private boolean aceptada;
     private Jugador jugador;
 
     public double getValor() {
         return valor;
     }
-
-//    public boolean isAceptada() {
-//        return aceptada;
-//    }
 
     public Jugador getJugador() {
         return jugador;

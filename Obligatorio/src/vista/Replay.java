@@ -74,18 +74,14 @@ public class Replay extends javax.swing.JDialog implements VistaReplay{
         panelInfo=new PanelInformacionReplay(this.controlador);
         panelVentana.add(panelInfo);
         
-        panelFichasTablero = new PanelFichasReplay(this.controlador); //True para decirle que es el panel de destino (Las del tablero)
+        panelFichasTablero = new PanelFichasReplay(this.controlador);
         panelVentana.add(panelFichasTablero);
 
         
         panelFichasTablero.mostrar(movimiento.getTablero());
         panelInfo.mostrar(movimiento);
         
-        //el show esta puesto para que refresque
-        //hay que ver que es lo ideal
-        //this.setVisible(true);
         this.validate();
-        this.repaint();
     }
 
     @Override

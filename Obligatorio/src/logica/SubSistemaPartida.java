@@ -17,8 +17,6 @@ public class SubSistemaPartida {
     private Partida proximaPartida;
 
     public SubSistemaPartida() {
-        //siempre dejo una partida iniciada para evitar conflicto
-        //al enviar evento de actualizar al controlador
         proximaPartida = new Partida();
     }
     

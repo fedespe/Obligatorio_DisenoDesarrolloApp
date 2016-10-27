@@ -80,7 +80,6 @@ public class Login extends javax.swing.JDialog implements VistaLogin{
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     private void txtPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPassActionPerformed
-        // TODO add your handling code here:
         login();
     }//GEN-LAST:event_txtPassActionPerformed
 

@@ -88,7 +88,6 @@ public class Servidor extends javax.swing.JFrame implements VistaServidor{
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
         controlador.salir();
     }//GEN-LAST:event_formWindowClosing
 

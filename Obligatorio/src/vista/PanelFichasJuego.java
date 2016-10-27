@@ -32,7 +32,7 @@ public class PanelFichasJuego extends JPanel implements ActionListener{
     public void mostrar(ArrayList<Ficha> fichas){
         GridLayout layout = new GridLayout(1,fichas.size()); //Creo un GridLayout de una fila por tantas columnas como fichas tenga.
         setLayout(layout); //Metodo heredado de la clase JPanel.
-        for(int i = 0; i < fichas.size(); i++){ //Se puede hacer con for(IFicha f:fichas) pero nos puede servir la variable i para trabajar diferentes los botones según su posición.
+        for(int i = 0; i < fichas.size(); i++){ 
             Ficha f = fichas.get(i);
             BotonFicha boton = new BotonFicha(f);
             ImageIcon icono = null;
@@ -48,13 +48,6 @@ public class PanelFichasJuego extends JPanel implements ActionListener{
             boton.setEnabled(!destino || i==0 || i==fichas.size()-1); //Solo dejo habilitados los botones de las puntas.
             
             this.add(boton);
-            
-            //Si consigo saber que alto y ancho va a tener cada botón, se puede hacer una imagen a escala para ponerle como imagen
-            //a iconoEscala en lugar de icono
-            //int alto = ;
-            //int ancho = ;
-            //ImageIcon iconoEscala = new ImageIcon(icono.getImage().getScaledInstance(ancho, alto, java.awt.Image.SCALE_DEFAULT));
-            
         }
     }
 

@@ -16,17 +16,12 @@ import logica.Partida;
 import utilidades.ObligatorioException;
 
 
-//El juego tiene que ser jDialog para que se cierre todo junto
-//El jfream tendria que ser solo la ventana servidor
 public class Juego extends javax.swing.JFrame implements VistaJuego{
     private ControladorJuego controlador;
     
     public Juego(Jugador j) throws ObligatorioException{
         initComponents();
         controlador = new ControladorJuego(this,j);
-        //tuve que sacarlo del contructor por problemas
-        //con los paneles, larga actualizacion antes de crear contructor
-        //entonces los paneles info y fichas quedan con controlador en null
         controlador.agregarJugador();
         setLocationRelativeTo(null);
         setTitle("Partida");
@@ -88,11 +83,7 @@ public class Juego extends javax.swing.JFrame implements VistaJuego{
         panelFichasTablero.mostrar(partida.getTablero());
         panelFichasJugador.mostrar(jugador.getFichas());
         
-        //el show esta puesto para que refresque
-        //hay que ver que es lo ideal
-        //this.setVisible(true);
         this.validate();
-        this.repaint();
     }
 
     @Override

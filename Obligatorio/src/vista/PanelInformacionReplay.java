@@ -114,12 +114,10 @@ public class PanelInformacionReplay extends javax.swing.JPanel {
     }//GEN-LAST:event_txtTotalApostadoActionPerformed
 
     private void btnMovimientoSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMovimientoSiguienteActionPerformed
-        // TODO add your handling code here:
         controlador.movimientoSiguiente();
     }//GEN-LAST:event_btnMovimientoSiguienteActionPerformed
 
     private void btnMovimientoAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMovimientoAnteriorActionPerformed
-        // TODO add your handling code here:
         controlador.movimientoAnterior();
     }//GEN-LAST:event_btnMovimientoAnteriorActionPerformed
 

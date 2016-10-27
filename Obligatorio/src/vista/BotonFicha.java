@@ -21,8 +21,7 @@ public class BotonFicha extends JButton{
         return ficha;
     }
 
-    public BotonFicha(Ficha ficha) { //Podría recibir la imagen
-        //super(ficha.getValorIzquierda() + "  |  " + ficha.getValorDerecha()); //Esto es si me interesara ponerle un texto a la ficha...
+    public BotonFicha(Ficha ficha) { 
         this.ficha = ficha;
         setBackground(Color.white);
     }

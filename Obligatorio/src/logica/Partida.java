@@ -14,7 +14,6 @@ import utilidades.ObligatorioException;
  * @author usuario
  */
 public class Partida extends utilidades.Observable{
-    //private double apuestaInicial;
     private boolean partidaActiva=false;
     private double pozoApuestas = 0;
     private ArrayList<Jugador> jugadores = new ArrayList();
@@ -89,13 +88,9 @@ public class Partida extends utilidades.Observable{
         return movimientos;
     }
     
-    //Se crea la partida y luego se agregan los jugadores
-    //La partida se agrega al sistema si tiene jugadores ingresados
     public Partida(){
-        //iniciar la apuesta   
         ultimaApuesta= new Apuesta(100);
         crearFichas();
-        //No mezclo para hacer pruebas
         mezclarFichas();
     }
     
@@ -113,15 +108,10 @@ public class Partida extends utilidades.Observable{
         avisar(Eventos.ingresoJugador);
     }
 
-    //Podemos hacer que el movimiento inicial en el cual 
-    //no hay fichas en el tablero se ingrese 
-    //fichaTablero null
     public void mover(Jugador jugador, Ficha fichaTablero, Ficha fichaDescartada)throws ObligatorioException{
         controlesAntesJugar(jugador);
-        //falta registrar movimiento
-        unirFicha(fichaTablero, fichaDescartada);//tira excepcion
+        unirFicha(fichaTablero, fichaDescartada);
         agregarMovimiento();
-        //Finaliza la partida si se descarto todas
         verificarSiSeDescartoTodas();
         cambiarTurno();
         avisar(Eventos.realizoMovimiento);
@@ -136,7 +126,7 @@ public class Partida extends utilidades.Observable{
     
     private void controlesAntesJugar(Jugador jugador) throws ObligatorioException{
         sePuedeJugar();
-        verificarTurno(jugador);//tira excepcion
+        verificarTurno(jugador);
     }
     
     public void robar(Jugador j)throws ObligatorioException{
@@ -154,28 +144,16 @@ public class Partida extends utilidades.Observable{
             throw new ObligatorioException("No quedan más fichas en el pozo.");
         }
         
-        //Esto no es un else del if de arriba, porque tiene que hacer el control después de haber eliminado la ficha que se robó.
         if(libres.isEmpty()){
-            //Finaliza la partida si no se puede colocar
             if(!verificarSiTieneMovimientos(j)){
-                //Cambio el jugador para dar el ganador 
-                //asi no hago otro metodo
                 cambiarTurno();
                 finalizarPartida(turno); 
             } 
         }
-        //ver si hay que evaluar el caso en que no hay mas fichas       
     }
-    //Ver que el pozoApuesta creo tiene que tener la suma
-    //de los dos si se apuesta 500 creo tiene que ser 1000
+    
     public void apostar(Jugador apostador, double monto)throws ObligatorioException{
         sePuedeJugar();
-        //Verifico que no haya sido el ultimo en apostar
-        //Verifico que el monto sea correcto
-        //tanto para el que apuesta como para el rival
-        //Ingreso la apuesta ya que si no la acepta termina el juego
-        //Verificar que el rival acepte
-        //esto lo hace lanzando una notificacion al observador
         verificarUltimoEnApostar(apostador);
         verificarApuesta(monto);
         ultimaApuesta.setJugador(apostador);
@@ -184,8 +162,6 @@ public class Partida extends utilidades.Observable{
         avisar(Eventos.apuesta);
     }
     public void confirmarApuesta(boolean confirmacion)throws ObligatorioException{
-        //si acepta incremento el pozo
-        //si no acepta finaliza partida
         if(confirmacion){
             restarMontoJugadoresSumarApuestaEnPartida();
             partidaActiva=true;
@@ -209,18 +185,17 @@ public class Partida extends utilidades.Observable{
         
         try {
             primera.sePuedeUnir(lado, fichaDescartada);
-            tablero.add(0,fichaDescartada); //Si no se puede unir la ficha, lanza excepcion
+            tablero.add(0,fichaDescartada); 
             primera = fichaDescartada;
         } catch (ObligatorioException ex) {
             lado = "Der";
             ultima.sePuedeUnir(lado, fichaDescartada);
-            tablero.add(fichaDescartada); //Si no se puede unir la ficha, lanza excepcion
+            tablero.add(fichaDescartada); 
             ultima = fichaDescartada;
         }  
     }
     
     private void unirFicha(Ficha fichaTablero, Ficha fichaDescartada)throws ObligatorioException{
-        //Todas las verificaciones lanzan exceptions
         String lado = "";
         if(primera==null){
             primerJugada(fichaDescartada);
@@ -234,12 +209,12 @@ public class Partida extends utilidades.Observable{
         else if(fichaTablero == primera){
             lado = "Izq";
             primera.sePuedeUnir(lado, fichaDescartada);
-            tablero.add(0,fichaDescartada); //Si no se puede unir la ficha, lanza excepcion
+            tablero.add(0,fichaDescartada); 
             primera = fichaDescartada;
         }
         else if(fichaTablero.equals(ultima)){
             lado = "Der";
-            ultima.sePuedeUnir(lado, fichaDescartada);//Tira excepción si no se puede
+            ultima.sePuedeUnir(lado, fichaDescartada);
             tablero.add(fichaDescartada);
             ultima = fichaDescartada;
         }
@@ -256,7 +231,6 @@ public class Partida extends utilidades.Observable{
     }
 
     private void repartirFichas(){
-        //se reparten 7 para cada uno
         Jugador j1 = jugadores.get(0);
         Jugador j2 = jugadores.get(1);
         
@@ -287,8 +261,6 @@ public class Partida extends utilidades.Observable{
     }
     
     private void finalizarPartida(Jugador ganador){
-        //da fin a la partida indicando el gandor
-        //lanzar evento de fin de partida
         partidaActiva=false;
         this.ganador=ganador;
         ganador.setSaldo(ganador.getSaldo() + pozoApuestas);
@@ -298,12 +270,10 @@ public class Partida extends utilidades.Observable{
     }
     
     private void verificarTurno(Jugador jugador)throws ObligatorioException{
-        //ver si sirve que compare direccion de memoria
         if(jugador != turno)
             throw new ObligatorioException("No es su turno.");
     }
     
-    //ver que solo puedo preguntar por el jugador que tiene el turno - Eso está bien... Porque nunca se va a quedar sin fichas uno que no sea el turno de él
     private void verificarSiSeDescartoTodas(){
         if(turno.getFichas().isEmpty())
             finalizarPartida(turno);
@@ -322,8 +292,6 @@ public class Partida extends utilidades.Observable{
         return false;
     }
     
-    //Le cambie el nombre a verificarApuesta asi
-    //el que verifica el saldo es el propio jugador.
     private void verificarApuesta(double monto) throws ObligatorioException{
         for(Jugador j : jugadores){
             j.verificarSaldo(monto);
@@ -337,12 +305,6 @@ public class Partida extends utilidades.Observable{
         if(!partidaActiva)
             throw new ObligatorioException("La partida no está en condiciones de recibir movimientos.");
     }
-    //public boolean enEspera() {
-    //    if(jugadores.size() < 2)
-   //         return true;
-    //    
-    //    return false;
-    //}
     
     private void agregarMovimiento(){
         movimientos.add(new Movimiento(ganador, pozoApuestas, turno, (ArrayList<Ficha>)tablero.clone()));

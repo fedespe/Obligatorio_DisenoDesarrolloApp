@@ -30,6 +30,4 @@ public class ControladorServidor{
             vista.error(ex.getMessage());
         }
     }
-
-    
 }

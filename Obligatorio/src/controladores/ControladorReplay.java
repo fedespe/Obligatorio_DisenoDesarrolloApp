@@ -15,8 +15,6 @@ import logica.Sistema;
  * @author usuario
  */
 
-//Creo que no se va a secesitar que sea Observador, ya que no recuerdo nada que haya que actualizar automáticamente...
-//creo que todo se va actualizando al hacer click en Siguiente... Por lo que no hay por qué observar nada...
 public class ControladorReplay{
     
     private Sistema modelo = Sistema.getInstancia();

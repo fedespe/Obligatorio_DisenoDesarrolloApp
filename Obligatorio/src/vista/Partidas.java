@@ -111,17 +111,14 @@ public class Partidas extends javax.swing.JFrame implements VistaPartidas{
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
         controlador.salir();
     }//GEN-LAST:event_formWindowClosing
 
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
-        // TODO add your handling code here:
         controlador.salir();
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
     private void btnVerPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerPartidaActionPerformed
-        // TODO add your handling code here:
         abrirPartida();
     }//GEN-LAST:event_btnVerPartidaActionPerformed
     
@@ -174,7 +171,6 @@ public class Partidas extends javax.swing.JFrame implements VistaPartidas{
         
         lstPartidas.setListData(lista.toArray());
         this.validate();
-        //this.repaint();
     }
 
     @Override
