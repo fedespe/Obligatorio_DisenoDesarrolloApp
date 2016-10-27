@@ -36,10 +36,5 @@ public class BotonFicha extends JButton{
         }
         marcado = !marcado;
     }
-
-    public boolean isMarcado() {
-        return marcado;
-    }
-    
     
 }

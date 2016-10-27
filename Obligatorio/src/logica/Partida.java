@@ -337,12 +337,12 @@ public class Partida extends utilidades.Observable{
         if(!partidaActiva)
             throw new ObligatorioException("La partida no está en condiciones de recibir movimientos.");
     }
-    public boolean enEspera() {
-        if(jugadores.size() < 2)
-            return true;
-        
-        return false;
-    }
+    //public boolean enEspera() {
+    //    if(jugadores.size() < 2)
+   //         return true;
+    //    
+    //    return false;
+    //}
     
     private void agregarMovimiento(){
         movimientos.add(new Movimiento(ganador, pozoApuestas, turno, (ArrayList<Ficha>)tablero.clone()));

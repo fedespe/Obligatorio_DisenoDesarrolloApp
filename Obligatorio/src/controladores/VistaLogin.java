@@ -7,7 +7,6 @@ package controladores;
 
 import logica.Administrador;
 import logica.Jugador;
-import logica.Usuario;
 
 /**
  *

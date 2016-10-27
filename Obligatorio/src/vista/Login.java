@@ -10,7 +10,6 @@ import controladores.VistaLogin;
 import javax.swing.JOptionPane;
 import logica.Administrador;
 import logica.Jugador;
-import logica.Usuario;
 import utilidades.ObligatorioException;
 
 /**

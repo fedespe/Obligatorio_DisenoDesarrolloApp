@@ -1,8 +1,6 @@
 
 package controladores;
 
-import java.util.ArrayList;
-import logica.Ficha;
 import logica.Jugador;
 import logica.Partida;
 

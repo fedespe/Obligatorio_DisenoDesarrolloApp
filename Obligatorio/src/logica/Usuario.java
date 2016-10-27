@@ -33,16 +33,8 @@ public class Usuario {
         password = p;
         nombreCompleto = nc;
     }
-    
-    public Usuario(){
-    }
 
     public String getNombreCompleto() {
         return nombreCompleto;
-    }
-    
-    @Override
-    public boolean equals(Object o){
-        return nombre.equals(((Usuario)o).getNombre());
     }
 }
