@@ -2,6 +2,7 @@
 package controladores;
 
 import logica.Sistema;
+import persistencia.BaseDatos;
 import utilidades.ObligatorioException;
 
 public class ControladorServidor{
@@ -25,6 +26,7 @@ public class ControladorServidor{
         try{
             modelo.partidasFinalizadas();
             vista.cerrar();
+            BaseDatos.getInstancia().desconectar(); //Preguntar si está bien que esté ahí
         }
         catch (ObligatorioException ex){
             vista.error(ex.getMessage());

@@ -25,12 +25,15 @@ public class BaseDatos {
     private Connection conexion;
     private Statement sentencia;
 
-    public static BaseDatos getInstancia() {
+    public static BaseDatos getInstancia(){
         return instancia;
     }
+    
     private BaseDatos() {
+        conectar("jdbc:mysql://localhost/obligatorio_disapp","root","root");
     }
-    public void conectar(String url,String usuario,String pass){
+    
+    private void conectar(String url,String usuario,String pass){
         try {
             conexion = DriverManager.getConnection(url, usuario, pass);
             sentencia = conexion.createStatement();
@@ -38,6 +41,7 @@ public class BaseDatos {
             System.out.println("Error al conectarse a la base:" + ex.getMessage());
         }
     }
+    
     public void desconectar(){
         try {
             sentencia.close();
@@ -45,6 +49,7 @@ public class BaseDatos {
         } catch (SQLException ex) {
         }
     }
+    
     public ResultSet consultar(String sql){
         try {
             ResultSet rs = sentencia.executeQuery(sql);
@@ -55,6 +60,7 @@ public class BaseDatos {
             return null;
         }
     }
+    
     public int modificar(String sql){
         try {
             return sentencia.executeUpdate(sql);
@@ -64,6 +70,7 @@ public class BaseDatos {
             return -1;
         }
     }
+    
     public boolean transaccion(String[] sqls){
         try {
             conexion.setAutoCommit(false); //begin transaccion
@@ -91,7 +98,4 @@ public class BaseDatos {
         }
         return false;
     }
-    
-
-   
 }

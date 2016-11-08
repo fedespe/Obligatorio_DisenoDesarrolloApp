@@ -6,6 +6,8 @@
 package logica;
 
 import java.util.ArrayList;
+import mapeadores.MapeadorJugador;
+import persistencia.Persistencia;
 import utilidades.ObligatorioException;
 
 /**
@@ -16,6 +18,8 @@ public class SubSistemaUsuario{
     private ArrayList<Administrador> administradores = new ArrayList();
     private ArrayList<Jugador> jugadores = new ArrayList();
     private ArrayList<Jugador> jugadoresLogueados = new ArrayList();
+    private Persistencia persistencia = new Persistencia();
+    private MapeadorJugador jugadorMapper = new MapeadorJugador();
     
     public Jugador loginJugador(String n, String p) throws ObligatorioException{
         for(Jugador j:jugadores){
@@ -70,16 +74,12 @@ public class SubSistemaUsuario{
     }
     
     private void cargarUsuarios(){
-        jugadores.add(new Jugador("a","a","Alvaro Fernández",450));
-        jugadores.add(new Jugador("b","b","Bruno Díaz",400));
-        jugadores.add(new Jugador("c","c","Carlos González",350));
-        jugadores.add(new Jugador("d","d","Darío Pérez",300));
-        jugadores.add(new Jugador("e","e","Emiliano Lasa",250));
-        jugadores.add(new Jugador("f","f","Federico Speroni",200));
-        jugadores.add(new Jugador("g","g","Gustavo Valverde",150));
-        jugadores.add(new Jugador("h","h","Hugo Collazo",100));
-        jugadores.add(new Jugador("i","i","Ismael Espósito",50));
-        jugadores.add(new Jugador("j","j","Javier Montero",0));
+        ArrayList<Object> listaJugadores = persistencia.obtenerTodos(jugadorMapper);
+        for(Object o: listaJugadores){
+            Jugador j = (Jugador)o;
+            jugadores.add(j);
+        }
+        
         administradores.add(new Administrador("a","a","Analía Pereyra"));
         administradores.add(new Administrador("b","b","Blanca Moreira"));
         administradores.add(new Administrador("c","c","Claudia Tabárez"));

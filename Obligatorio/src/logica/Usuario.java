@@ -11,6 +11,7 @@ package logica;
  */
 
 public class Usuario {
+    private int oid;
     private String nombre;
     private String password;
     private String nombreCompleto;
@@ -31,5 +32,29 @@ public class Usuario {
 
     public String getNombreCompleto() {
         return nombreCompleto;
+    }
+
+    public int getOid() {
+        return oid;
+    }
+
+    public void setOid(int oid) {
+        this.oid = oid;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setNombreCompleto(String nombreCompleto) {
+        this.nombreCompleto = nombreCompleto;
+    }
+
+    public Usuario(){
+        
     }
 }

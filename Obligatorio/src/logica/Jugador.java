@@ -6,6 +6,8 @@
 package logica;
 
 import java.util.ArrayList;
+import mapeadores.MapeadorJugador;
+import persistencia.Persistencia;
 import utilidades.ObligatorioException;
 
 /**
@@ -16,10 +18,16 @@ public class Jugador extends Usuario {
     private double saldo;
     private ArrayList<Ficha> mano = new ArrayList();
     private Partida partidaJugando;
+    private Persistencia persistencia = new Persistencia();
+    private MapeadorJugador jugadorMapper = new MapeadorJugador();
     
     public Jugador(String n, String p, String np, double s){
         super(n,p,np);
         saldo = s;
+    }
+
+    public Jugador() {
+        super();
     }
 
     public void setSaldo(double saldo) {
@@ -53,6 +61,11 @@ public class Jugador extends Usuario {
 
     public void vaciarMano() {
         mano = new ArrayList();
+    }
+
+    public void actualizarEnBase() {
+        jugadorMapper.setJugador(this);
+        persistencia.guardar(jugadorMapper);
     }
     
 }

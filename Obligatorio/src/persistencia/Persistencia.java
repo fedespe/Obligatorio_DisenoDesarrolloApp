@@ -46,7 +46,6 @@ public class Persistencia {
            p.setOid(0);
            System.out.println("Error al guardar");//Tendriamos que tirar exceptions
         }
-        
     }
 
     private void actualizar(Mapeador p) {
@@ -54,8 +53,8 @@ public class Persistencia {
         if(!bd.transaccion(sqls)){
                 System.out.println("Error al actualizar");//Tendriamos que tirar exceptions
         }
-      
     }
+    
     public void borrar(Mapeador p){
         String[] sqls = p.getSqlDelete();
         if(bd.transaccion(sqls)){
@@ -64,6 +63,7 @@ public class Persistencia {
             System.out.println("Error al borrar");//Tendriamos que tirar exceptions 
         }
     }
+    
     public void restaurar(Mapeador p){
         String sql = p.getSqlRestaurar();
         ResultSet rs = bd.consultar(sql);
@@ -75,10 +75,12 @@ public class Persistencia {
             System.out.println("Error al restaurar:" + ex.getMessage());
         }
     }
+    
     public ArrayList obtenerTodos(Mapeador p){
         return buscar(p,"");
     }
-    public ArrayList buscar(Mapeador p,String where){
+    
+    public ArrayList buscar(Mapeador p, String where){
         String sql = p.getSqlSelect() + " " + where ;
         ResultSet rs = bd.consultar(sql);
         ArrayList resultado = new ArrayList();

@@ -17,8 +17,10 @@ public class Movimiento {
     private Date fechaHora = new Date();
     private double pozoApuestas;
     private Jugador jugador;
-    private ArrayList<Ficha> tablero; 
-
+    private ArrayList<Ficha> tablero;
+    
+    
+    
     public Jugador getGanador() {
         return ganador;
     }

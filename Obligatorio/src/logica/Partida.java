@@ -14,6 +14,7 @@ import utilidades.ObligatorioException;
  * @author usuario
  */
 public class Partida extends utilidades.Observable{
+    private int oid;
     private boolean partidaActiva=false;
     private double pozoApuestas = 0;
     private ArrayList<Jugador> jugadores = new ArrayList();
@@ -25,6 +26,14 @@ public class Partida extends utilidades.Observable{
     private ArrayList<Ficha> tablero = new ArrayList();
     private Ficha primera;
     private Ficha ultima;
+
+    public int getOid() {
+        return oid;
+    }
+
+    public void setOid(int oid) {
+        this.oid = oid;
+    }
 
     public void jugadorAbandonando(Jugador jugador) {
         if(jugadores.size() ==2){
@@ -228,6 +237,7 @@ public class Partida extends utilidades.Observable{
         jugadores.get(0).quitarApuesta(ultimaApuesta.getValor());
         jugadores.get(1).quitarApuesta(ultimaApuesta.getValor());
         pozoApuestas+=ultimaApuesta.getValor()*2;
+        actualizarSaldoJugadores();
     }
 
     private void repartirFichas(){
@@ -264,6 +274,7 @@ public class Partida extends utilidades.Observable{
         partidaActiva=false;
         this.ganador=ganador;
         ganador.setSaldo(ganador.getSaldo() + pozoApuestas);
+        actualizarSaldoJugadores();
         movimientos.get(movimientos.size()-1).setGanador(ganador);
         avisar(Eventos.partidaFinalizada);
         Sistema.getInstancia().avisar(Sistema.Eventos.actualizacionEnPartida);
@@ -308,6 +319,12 @@ public class Partida extends utilidades.Observable{
     
     private void agregarMovimiento(){
         movimientos.add(new Movimiento(ganador, pozoApuestas, turno, (ArrayList<Ficha>)tablero.clone()));
+    }
+    
+    private void actualizarSaldoJugadores(){
+        for(Jugador j:jugadores){
+            j.actualizarEnBase();
+        }
     }
     
     private void crearFichas(){
