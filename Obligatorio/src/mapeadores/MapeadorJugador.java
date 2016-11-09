@@ -35,7 +35,7 @@ public class MapeadorJugador implements Mapeador{
 
     @Override
     public String[] getSqlInsert() {
-        String[] sqls = {"INSERT INTO jugadores (oid, nombre, pass, nombreCompleto, saldo) "
+        String[] sqls = {"INSERT INTO jugador (oid, nombre, pass, nombreCompleto, saldo) "
                 + "VALUES (" + getOid() +",'"+ j.getNombre() +"','" + j.getPassword() +
                 ",'"+ j.getNombreCompleto() + "'," + j.getSaldo() +")"};
         return sqls;
@@ -43,7 +43,7 @@ public class MapeadorJugador implements Mapeador{
 
     @Override
     public String[] getSqlUpdate() {
-        String[] sqls = {"UPDATE jugadores set nombre='" + j.getNombre() + "'," +
+        String[] sqls = {"UPDATE jugador set nombre='" + j.getNombre() + "'," +
                "pass='" + j.getPassword() + "'," + 
                "nombreCompleto='" + j.getNombreCompleto()+ "'," + "saldo=" + j.getSaldo() +
                "WHERE oid=" + getOid()};
@@ -53,18 +53,18 @@ public class MapeadorJugador implements Mapeador{
     @Override
     public String[] getSqlDelete() {
         
-        String[] sqls = {"DELETE FROM jugadores WHERE oid=" + j.getOid()};
+        String[] sqls = {"DELETE FROM jugador WHERE oid=" + j.getOid()};
         return sqls;
     }
 
     @Override
     public String getSqlRestaurar() {
-        return "SELECT * FROM jugadores where oid=" + j.getOid();
+        return "SELECT * FROM jugador where oid=" + j.getOid();
     }
     
     @Override
     public String getSqlSelect() {
-        return "SELECT * FROM jugadores";
+        return "SELECT * FROM jugador";
     }
     
     @Override

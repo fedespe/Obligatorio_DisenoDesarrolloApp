@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import logica.Ficha;
 import logica.Movimiento;
 import logica.Partida;
 import persistencia.Mapeador;
@@ -41,25 +42,51 @@ public class MapeadorPartida implements Mapeador{
     public void setOid(int oid) {
         partida.setOid(oid);
     }
-
+        //new java.sql.Timestamp(factura.getFecha().getTime())
     @Override
     public String[] getSqlInsert() {
-        ArrayList<Movimiento> lineas = partida.getMovimientos();
-        String[] sqls = new String[lineas.size() + 1];
-        sqls[0] = "INSERT INTO factura (oid,numeroF,fecha,datos) values " +
-                  "("  + getOid() + "," + factura.getNumero() 
-                + ",'" + new java.sql.Timestamp(factura.getFecha().getTime()) + "','"
-                + factura.getDatos() + "')";
-        generarLineas(sqls,1);
+        int n = partida.getMovimientos().size()-1;
+        int cantSentencias = n*(n+1)/2+2+n;
+        String[] sqls = new String[cantSentencias];
+        sqls[0] = "INSERT INTO partida (oid,nombreJugador1,nombreJugador2) values " +
+                  "("  + getOid() + ",'" + partida.getJugadores().get(0).getNombre() +
+                "','" + partida.getJugadores().get(1).getNombre() + "')";
+        generarMovimientos(sqls,1);
         return sqls;
     }
-    private void generarLineas(String[] sqls,int desde){
-        ArrayList<Linea> lineas = factura.getLineas();
-        for(int x=0; x<lineas.size();x++){
-            Linea l = lineas.get(x);
-            sqls[x+desde] = "INSERT INTO linea (oid,numeroF,numeroL,producto,cantidad) "+
-                        "values (" + getOid() +","+ factura.getNumero()+"," + (x+1) + 
-                        ",'" + l.getProducto() + "'," + l.getCantidad() +")";
+    
+    private void generarMovimientos(String[] sqls,int desde){
+        ArrayList<Movimiento> movimientos = partida.getMovimientos();
+        for(int x=0; x<movimientos.size();x++){
+            Movimiento m = movimientos.get(x);
+            String nombreGanador = "";
+            if(m.getGanador() != null)
+                nombreGanador = m.getGanador().getNombre();
+            
+            //select last_insert_id(); - Es una función de MySQL que retorna el último ID generado
+            
+            sqls[x+desde] = "INSERT INTO movimiento (oid,numeroMovimiento,codPartida,ganador,fecha,pozo,nombreJugador) "+
+                        "values (" + getOid() + "," + (x+1) + "," + acaVaElIdDeLaPartida + ",'" + nombreGanador + 
+                        "','" + new java.sql.Timestamp(m.getFechaHora().getTime()) + "'," + m.getPozoApuestas() +
+                        ",'" + m.getJugador() + "')";
+        }
+        desde = movimientos.size() + 1;
+        generarTableros(sqls,desde);
+    }
+    
+    private void generarTableros(String[] sqls, int desde) {
+        ArrayList<Movimiento> movimientos = partida.getMovimientos();
+        
+        for(int x=1;x<movimientos.size(); x++){
+            Movimiento m = movimientos.get(x);
+            ArrayList<Ficha> tablero = m.getTablero();
+            for(int i=0;i<tablero.size();i++){
+                Ficha f = tablero.get(i);
+                sqls[desde] = "INSERT INTO tableromovimiento (oid,posicionFicha,codPartida,numeroMovimiento,valorDer,valorIzq) "+
+                        "values (" + getOid() +","+ (i+1) + "," + acaVaElIdDeLaPartida + "," + x + 
+                        "," + f.getValorDerecha() + "," + f.getValorIzquierda() + ")";
+                desde++;
+            }
         }
     }
 
@@ -70,7 +97,7 @@ public class MapeadorPartida implements Mapeador{
                    "fecha='" + new Timestamp(factura.getFecha().getTime()) + 
                    "',datos='" + factura.getDatos() + "' WHERE oid=" + getOid(); 
         sqls[1] = "DELETE FROM linea where oid=" + getOid();
-        generarLineas(sqls,2);
+        generarMovimientos(sqls,2);
         return sqls;
     }
 
@@ -81,9 +108,7 @@ public class MapeadorPartida implements Mapeador{
 
     @Override
     public String getSqlRestaurar() {
-        
         return "SELECT * FROM Factura f,Linea l WHERE f.oid=l.oid AND f.oid=" + getOid() ;
-
     }
 
     @Override
@@ -118,6 +143,8 @@ public class MapeadorPartida implements Mapeador{
     public Object getObjeto() {
         return partida;
     }
+
+    
     
     
 }
