@@ -6,6 +6,8 @@
 package logica;
 
 import java.util.ArrayList;
+import mapeadores.MapeadorPartida;
+import persistencia.Persistencia;
 import utilidades.ObligatorioException;
 
 /**
@@ -15,9 +17,12 @@ import utilidades.ObligatorioException;
 public class SubSistemaPartida {
     private ArrayList<Partida> partidas = new ArrayList();
     private Partida proximaPartida;
+    private Persistencia persistencia = new Persistencia();
+    private MapeadorPartida partidaMapper = new MapeadorPartida();
 
     public SubSistemaPartida() {
         proximaPartida = new Partida();
+        cargarPartidas();
     }
     
     public Partida partidaParaJugar(){
@@ -44,4 +49,14 @@ public class SubSistemaPartida {
             Sistema.getInstancia().avisar(Sistema.Eventos.actualizacionEnPartida);
         } 
     }
+    
+    private void cargarPartidas(){
+        ArrayList<Object> listaPartidas = persistencia.obtenerTodos(partidaMapper);
+        for(Object o: listaPartidas){
+            Partida p = (Partida)o;
+            partidas.add(p);
+        }
+    }
 }
+    
+    

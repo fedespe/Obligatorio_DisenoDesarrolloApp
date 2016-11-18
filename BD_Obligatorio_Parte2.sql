@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `administradores`;
 CREATE TABLE `administradores` (
   `oid` INT(11) NOT NULL,
   `nombre` VARCHAR(50) NOT NULL,
-  `password` VARCHAR(50) NOT NULL,
+  `pass` VARCHAR(50) NOT NULL,
   `nombreCompleto` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`nombre`)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
@@ -40,7 +40,7 @@ DROP TABLE IF EXISTS `jugadores`;
 CREATE TABLE `jugadores` (
   `oid` INT(11) NOT NULL,
   `nombre` VARCHAR(50) NOT NULL,
-  `password` VARCHAR(50) NOT NULL,
+  `pass` VARCHAR(50) NOT NULL,
   `nombreCompleto` VARCHAR(50) NOT NULL,
   `saldo` DECIMAL(12,2) NOT NULL,
   PRIMARY KEY (`nombre`)
@@ -70,7 +70,7 @@ DROP TABLE IF EXISTS `partida`;
 
 CREATE TABLE `partida` (
   `oid` INT(11) NOT NULL,
-  `codPartida` INT(11) NOT NULL AUTO_INCREMENT,
+  `codPartida` VARCHAR(100) NOT NULL,
   `nombreJugador1` VARCHAR(50) NOT NULL,
   `nombreJugador2` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`codPartida`),
@@ -89,7 +89,7 @@ DROP TABLE IF EXISTS `movimiento`;
 CREATE TABLE `movimiento` (
   `oid` INT(11) NOT NULL,
   `numeroMovimiento` INT(11) NOT NULL AUTO_INCREMENT,
-  `codPartida` INT(11) NOT NULL,
+  `codPartida` VARCHAR(100) NOT NULL,
   `ganador` VARCHAR(50) NOT NULL,
   `fecha` DATE NOT NULL,
   `pozo` DECIMAL(12,2) NOT NULL,
@@ -112,7 +112,7 @@ DROP TABLE IF EXISTS `fichastableromovimiento`;
 CREATE TABLE `fichastableromovimiento` (
   `oid` INT(11) NOT NULL,
   `numroFichaJugada` INT(11) NOT NULL AUTO_INCREMENT,
-  `codPartida` INT(11) NOT NULL,
+  `codPartida` VARCHAR(100) NOT NULL,
   `numeroMovimiento` INT(11) NOT NULL,
   `valorDer` INT(11) NOT NULL,
   `valorIzq` INT(11) NOT NULL,

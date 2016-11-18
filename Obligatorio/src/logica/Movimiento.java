@@ -18,6 +18,18 @@ public class Movimiento {
     private double pozoApuestas;
     private Jugador jugador;
     private ArrayList<Ficha> tablero;
+
+    public void setJugador(Jugador jugador) {
+        this.jugador = jugador;
+    }
+
+    public void setFechaHora(Date fechaHora) {
+        this.fechaHora = fechaHora;
+    }
+
+    public void setPozoApuestas(double pozoApuestas) {
+        this.pozoApuestas = pozoApuestas;
+    }
     
     
     

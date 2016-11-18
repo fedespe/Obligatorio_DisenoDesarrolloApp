@@ -5,8 +5,12 @@
  */
 package logica;
 
+import com.sun.corba.se.spi.orbutil.fsm.GuardBase;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
+import mapeadores.MapeadorPartida;
+import persistencia.Persistencia;
 import utilidades.ObligatorioException;
 
 /**
@@ -26,6 +30,33 @@ public class Partida extends utilidades.Observable{
     private ArrayList<Ficha> tablero = new ArrayList();
     private Ficha primera;
     private Ficha ultima;
+    private String id;
+    private Persistencia persistencia = new Persistencia();
+    private MapeadorPartida partidaMapeador = new MapeadorPartida();
+
+    public void setMovimientos(ArrayList<Movimiento> movimientos) {
+        this.movimientos = movimientos;
+    }
+
+    public void setPozoApuestas(double pozoApuestas) {
+        this.pozoApuestas = pozoApuestas;
+    }
+
+    public void setJugadores(ArrayList<Jugador> jugadores) {
+        this.jugadores = jugadores;
+    }
+
+    public void setGanador(Jugador ganador) {
+        this.ganador = ganador;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public int getOid() {
         return oid;
@@ -113,6 +144,7 @@ public class Partida extends utilidades.Observable{
             repartirFichas();
             partidaActiva=true;
             agregarMovimiento();
+            this.id=(new Date()).toString()+"_"+jugadores.get(0).getNombre();//genero el identificador de la partida
         }
         avisar(Eventos.ingresoJugador);
     }
@@ -173,6 +205,9 @@ public class Partida extends utilidades.Observable{
     public void confirmarApuesta(boolean confirmacion)throws ObligatorioException{
         if(confirmacion){
             restarMontoJugadoresSumarApuestaEnPartida();
+            //ACTUALIZO EL ULTIMO MOVIMIENTO PARA QUE QUEDE REGISTRO DE LA APUESTA
+            //ASI NO HAY PROBLEMA AL GUARDAR EN LA BASE TAMBIEN
+            movimientos.get(movimientos.size()-1).setPozoApuestas(pozoApuestas);
             partidaActiva=true;
         }else{
             finalizarPartida(ultimaApuesta.getJugador());
@@ -236,7 +271,7 @@ public class Partida extends utilidades.Observable{
     private void restarMontoJugadoresSumarApuestaEnPartida()throws ObligatorioException{
         jugadores.get(0).quitarApuesta(ultimaApuesta.getValor());
         jugadores.get(1).quitarApuesta(ultimaApuesta.getValor());
-        pozoApuestas+=ultimaApuesta.getValor()*2;
+        pozoApuestas+=ultimaApuesta.getValor()*2;        
         actualizarSaldoJugadores();
     }
 
@@ -276,6 +311,7 @@ public class Partida extends utilidades.Observable{
         ganador.setSaldo(ganador.getSaldo() + pozoApuestas);
         actualizarSaldoJugadores();
         movimientos.get(movimientos.size()-1).setGanador(ganador);
+        actualizarEnBase();//Guardo la partida en la base!
         avisar(Eventos.partidaFinalizada);
         Sistema.getInstancia().avisar(Sistema.Eventos.actualizacionEnPartida);
     }
@@ -356,5 +392,9 @@ public class Partida extends utilidades.Observable{
         libres.add(new Ficha(5,5));
         libres.add(new Ficha(5,6));
         libres.add(new Ficha(6,6));
+    }
+    private void actualizarEnBase() {
+        partidaMapeador.setPartida(this);
+        persistencia.guardar(partidaMapeador);
     }
 }
