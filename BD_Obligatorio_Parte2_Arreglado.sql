@@ -28,7 +28,7 @@ CREATE TABLE `parametros` (
 
 /*Data for the table `parametros` */
 
-insert  into `parametros`(`Nombre`,`Valor`) values ('oid',135);
+insert  into `parametros`(`Nombre`,`Valor`) values ('oid',100);
 
 
 /*Table structure for table `administradores` */
@@ -61,7 +61,6 @@ CREATE TABLE `jugadores` (
 
 /*Data for the table `jugadores` */
 
-insert  into `jugadores`(`oid`,`nombre`,`pass`,`nombreCompleto`,`saldo`) values (99,'a','a','Alvaro Fernández','668.00'),(98,'b','b','Bruno Díaz','0.00'),(97,'c','c','Carlos González','229.00'),(96,'d','d','Darío Pérez','400.00'),(95,'e','e','Emiliano Lasa','26.00'),(94,'f','f','Federico Speroni','627.00'),(93,'g','g','Gustavo Valverde','150.00'),(92,'h','h','Hugo Collazo','100.00'),(91,'i','i','Ismael Espósito','50.00'),(90,'j','j','Javier Montero','0.00');
 
 /*Table structure for table `partida` */
 
@@ -81,7 +80,6 @@ CREATE TABLE `partida` (
 
 /*Data for the table `partida` */
 
-insert  into `partida`(`oid`,`codPartida`,`nombreJugador1`,`nombreJugador2`) values (133,'Fri Nov 18 11:19:52 UYT 2016_a','a','f'),(134,'Fri Nov 18 11:25:53 UYT 2016_a','a','f');
 
 /*Table structure for table `movimiento` */
 
@@ -106,7 +104,6 @@ CREATE TABLE `movimiento` (
 
 /*Data for the table `movimiento` */
 
-insert  into `movimiento`(`oid`,`numeroMovimiento`,`codPartida`,`ganador`,`fecha`,`pozo`,`nombreJugador`) values (133,1,'Fri Nov 18 11:19:52 UYT 2016_a',NULL,'2016-11-18','200.00','a'),(134,1,'Fri Nov 18 11:25:53 UYT 2016_a',NULL,'2016-11-18','200.00','a'),(133,2,'Fri Nov 18 11:19:52 UYT 2016_a',NULL,'2016-11-18','200.00','a'),(134,2,'Fri Nov 18 11:25:53 UYT 2016_a',NULL,'2016-11-18','200.00','a'),(133,3,'Fri Nov 18 11:19:52 UYT 2016_a','f','2016-11-18','200.00','f'),(134,3,'Fri Nov 18 11:25:53 UYT 2016_a','a','2016-11-18','200.00','f');
 
 
 /*Table structure for table `fichastableromovimiento` */
@@ -127,7 +124,6 @@ CREATE TABLE `fichastableromovimiento` (
 
 /*Data for the table `fichastableromovimiento` */
 
-insert  into `fichastableromovimiento`(`oid`,`numeroFichaJugada`,`codPartida`,`numeroMovimiento`,`valorDer`,`valorIzq`) values (133,1,'Fri Nov 18 11:19:52 UYT 2016_a',1,1,1),(133,1,'Fri Nov 18 11:19:52 UYT 2016_a',2,1,6),(133,2,'Fri Nov 18 11:19:52 UYT 2016_a',2,1,1),(134,1,'Fri Nov 18 11:25:53 UYT 2016_a',1,6,4),(134,1,'Fri Nov 18 11:25:53 UYT 2016_a',2,4,3),(134,2,'Fri Nov 18 11:25:53 UYT 2016_a',2,6,4);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

@@ -3,13 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Usuario/Documents/FEDE/Github/DiseñoApp/Obligatorio/src/logica/Partida.java</file>
-            <file>file:/C:/Users/Usuario/Documents/FEDE/Github/DiseñoApp/Obligatorio/src/mapeadores/MapeadorJugador.java</file>
-            <file>file:/C:/Users/Usuario/Documents/FEDE/Github/DiseñoApp/Obligatorio/src/logica/Jugador.java</file>
-            <file>file:/C:/Users/Usuario/Documents/FEDE/Github/DiseñoApp/Obligatorio/src/controladores/ControladorPartidas.java</file>
-            <file>file:/C:/Users/Usuario/Documents/FEDE/Github/DiseñoApp/Obligatorio/src/controladores/ControladorServidor.java</file>
-            <file>file:/C:/Users/Usuario/Documents/FEDE/Github/DiseñoApp/Obligatorio/src/mapeadores/MapeadorPartida.java</file>
-            <file>file:/C:/Users/Usuario/Documents/FEDE/Github/DiseñoApp/Obligatorio/src/vista/Partidas.java</file>
+            <file>file:/C:/Users/Usuario/Documents/FEDE/Github/DiseñoApp/Obligatorio/src/vista/PanelFichasJuego.java</file>
+            <file>file:/C:/Users/Usuario/Documents/FEDE/Github/DiseñoApp/Obligatorio/src/vista/PanelInformacionJuego.java</file>
+            <file>file:/C:/Users/Usuario/Documents/FEDE/Github/DiseñoApp/Obligatorio/src/controladores/ControladorJuego.java</file>
+            <file>file:/C:/Users/Usuario/Documents/FEDE/Github/DiseñoApp/Obligatorio/src/vista/Juego.java</file>
         </group>
     </open-files>
 </project-private>

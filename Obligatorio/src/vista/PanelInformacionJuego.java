@@ -218,7 +218,7 @@ public class PanelInformacionJuego extends javax.swing.JPanel {
             lblMensaje.setText("El Ganador es: " + partida.getGanador().getNombreCompleto());
         }
         else{
-            lblMensaje.setText("");
+            lblMensaje.setText(partida.getTiempoTurno().getSegundos()+"");
         }
     }
 }
