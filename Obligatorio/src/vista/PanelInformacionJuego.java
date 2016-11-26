@@ -223,7 +223,7 @@ public class PanelInformacionJuego extends javax.swing.JPanel {
     }
     public void actualizarSegundos(Partida partida){
         if(partida!=null){
-            lblMensaje.setText(partida.getTiempoTurno().getSegundos()+"");
+            lblMensaje.setText("Tiempo Turno: "+partida.getTiempoTurno().getSegundos()+" Tiempo Apuesta: "+partida.getTiempoApuesta().getSegundos()+" ");
         }
     }
 }
