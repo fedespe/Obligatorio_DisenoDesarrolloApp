@@ -70,8 +70,8 @@ public class ControladorJuego implements Observador{
         else if(evento.equals(Partida.Eventos.partidaFinalizada)){
             vista.actualizarPaneles(partida, jugador); //Actualizo para que muestre bien el saldo del jugador cuando termina la partida
         }
-        else if(evento.equals(Partida.Eventos.segundo)){
-            vista.actualizarPaneles(partida, jugador);
+        else if(evento.equals(Partida.Eventos.segundo)){        
+            vista.actualizarTiempo(partida);
         }
     }
     

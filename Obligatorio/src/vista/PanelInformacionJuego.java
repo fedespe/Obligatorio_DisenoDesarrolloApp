@@ -217,7 +217,12 @@ public class PanelInformacionJuego extends javax.swing.JPanel {
         }else if(partida.getGanador() != null){
             lblMensaje.setText("El Ganador es: " + partida.getGanador().getNombreCompleto());
         }
-        else{
+//        else{
+//            lblMensaje.setText(partida.getTiempoTurno().getSegundos()+"");
+//        }
+    }
+    public void actualizarSegundos(Partida partida){
+        if(partida!=null){
             lblMensaje.setText(partida.getTiempoTurno().getSegundos()+"");
         }
     }

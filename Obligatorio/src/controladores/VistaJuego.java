@@ -19,4 +19,6 @@ public interface VistaJuego {
     public void confirmarApuesta(String mensaje);
     
     public void mensajeModal(String message);
+
+    public void actualizarTiempo(Partida partida);
 }

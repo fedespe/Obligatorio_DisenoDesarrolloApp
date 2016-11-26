@@ -112,6 +112,21 @@ public class Juego extends javax.swing.JFrame implements VistaJuego{
         }    
     }
 
+    @Override
+    public void actualizarTiempo(Partida partida) {
+        //En la primera vez que se genera el evento no estan creado los paneles 
+        //si no espero que esten creado los paneles da una exception MIRAR!!
+        //if(partida.getTiempoTurno().getSegundos()!=partida.getSegTurno()){
+            JPanel panelVentana = (JPanel)getContentPane();
+            try{            
+                PanelInformacionJuego panelInfo=(PanelInformacionJuego) panelVentana.getComponent(0);
+                panelInfo.actualizarSegundos(partida);
+            }catch(Exception ex){
+                
+            }
+        //}  
+    }
+
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

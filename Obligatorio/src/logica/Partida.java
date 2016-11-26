@@ -17,12 +17,13 @@ import java.util.logging.Logger;
 import mapeadores.MapeadorPartida;
 import persistencia.Persistencia;
 import utilidades.ObligatorioException;
+import static java.lang.Thread.sleep;
 
 /**
  *
  * @author usuario
  */
-public class Partida extends utilidades.Observable implements Observer{
+public class Partida extends utilidades.Observable {
     private int oid;
     private boolean partidaActiva=false;
     private double pozoApuestas = 0;
@@ -38,10 +39,19 @@ public class Partida extends utilidades.Observable implements Observer{
     private String id;
     private Persistencia persistencia = new Persistencia();
     private MapeadorPartida partidaMapeador = new MapeadorPartida();
-    //Nuevo Hilos
-    private ProcesoContadorTiempo tiempoTurno=new ProcesoContadorTiempo("TiempoTurno", 10);
-    private ProcesoContadorTiempo tiempoApuesta=new ProcesoContadorTiempo("TiempoApuesta", 10);
-
+    
+    //************************************************************
+    //Nuevo Hilos 
+    //************************************************************
+    private int segTurno=15;//Solamente cambiar aca para cambiar tiempo de juego
+    private int segApuesta=15;
+    private ProcesoContadorTiempo tiempoTurno=new ProcesoContadorTiempo(this,"TiempoTurno", segTurno);
+    private ProcesoContadorTiempo tiempoApuesta=new ProcesoContadorTiempo(this,"TiempoApuesta", segApuesta);
+    
+    public int getSegTurno() {
+        return segTurno;
+    } 
+    
     public ProcesoContadorTiempo getTiempoTurno() {
         return tiempoTurno;
     }
@@ -52,32 +62,28 @@ public class Partida extends utilidades.Observable implements Observer{
 
     private void iniciarTiempoTurno(){    
         tiempoTurno.terminar();
-        tiempoTurno.deleteObserver(this);
-        tiempoTurno=new ProcesoContadorTiempo("TiempoTurno", 10);
-        tiempoTurno.addObserver(this);
+        tiempoTurno=new ProcesoContadorTiempo(this, "tiempoTurno", segTurno);
         tiempoTurno.iniciar();
     }
     private void iniciarTiempoApuesta(){
         tiempoApuesta.terminar();
-        tiempoApuesta.deleteObserver(this);
-        tiempoApuesta=new ProcesoContadorTiempo("TiempoTurno", 10);
-        tiempoApuesta.addObserver(this);
+        tiempoApuesta=new ProcesoContadorTiempo(this, "tiempoTurno", segApuesta);
         tiempoApuesta.iniciar();
     }
     private void pausarTiempoTurno(){
         tiempoTurno.pausar();
-        tiempoTurno.deleteObserver(this);
     }
-    private void pausarTiempoApuesta(){
+    private void terminarTiempoApuesta(){
         tiempoApuesta.terminar();
-        tiempoApuesta.deleteObserver(this);
     }
     private void continuarTiempoTurno(){
         int seg=tiempoTurno.getSegundos();
-        tiempoTurno=new ProcesoContadorTiempo("TiempoTurno", seg);
-        tiempoTurno.addObserver(this);
-        tiempoTurno.iniciar();
+        tiempoApuesta=new ProcesoContadorTiempo(this, "tiempoTurno", seg);
+        tiempoTurno.continuar();
     }
+    //************************************************************
+    //fin hilos
+    //************************************************************
     
     public void setMovimientos(ArrayList<Movimiento> movimientos) {
         this.movimientos = movimientos;
@@ -131,6 +137,11 @@ public class Partida extends utilidades.Observable implements Observer{
         }
     }
 
+    public void tiempoFinalizado() {
+        cambiarTurno();
+        finalizarPartida(turno);
+    }
+
     
     
     public enum Eventos{
@@ -141,7 +152,8 @@ public class Partida extends utilidades.Observable implements Observer{
         apuesta, 
         confirmacionApuesta,
         realizoMovimiento,
-        segundo
+        segundo,
+        finTiempo
     }
 
     public ArrayList<Ficha> getLibres() {
@@ -180,9 +192,6 @@ public class Partida extends utilidades.Observable implements Observer{
         ultimaApuesta= new Apuesta(100);
         crearFichas();
         mezclarFichas();
-        //Nuevo Hilos
-        tiempoTurno.addObserver(this);
-        tiempoApuesta.addObserver(this);
     }
     
     public void agregarJugador(Jugador jugador) throws ObligatorioException{
@@ -264,6 +273,7 @@ public class Partida extends utilidades.Observable implements Observer{
         avisar(Eventos.apuesta);     
     }
     public void confirmarApuesta(boolean confirmacion)throws ObligatorioException{
+        terminarTiempoApuesta();
         if(confirmacion){
             restarMontoJugadoresSumarApuestaEnPartida();
             //ACTUALIZO EL ULTIMO MOVIMIENTO PARA QUE QUEDE REGISTRO DE LA APUESTA
@@ -271,14 +281,10 @@ public class Partida extends utilidades.Observable implements Observer{
             movimientos.get(movimientos.size()-1).setPozoApuestas(pozoApuestas);
             partidaActiva=true;
             //nuevo hilo
-            continuarTiempoTurno();
-            pausarTiempoApuesta();
+            continuarTiempoTurno();           
         }else{
-            finalizarPartida(ultimaApuesta.getJugador());
-            //nuevo hilo
-            pausarTiempoTurno();
-            pausarTiempoApuesta();
-        }
+            finalizarPartida(ultimaApuesta.getJugador());           
+        }    
         avisar(Eventos.confirmacionApuesta);
         Sistema.getInstancia().avisar(Sistema.Eventos.actualizacionEnPartida);
     }
@@ -374,6 +380,9 @@ public class Partida extends utilidades.Observable implements Observer{
     
     private void finalizarPartida(Jugador ganador){
         partidaActiva=false;
+        //Nuevo Hilo 
+        terminarTiempoApuesta();
+        pausarTiempoTurno();
         this.ganador=ganador;
         ganador.setSaldo(ganador.getSaldo() + pozoApuestas);
         actualizarSaldoJugadores();
@@ -465,24 +474,5 @@ public class Partida extends utilidades.Observable implements Observer{
         persistencia.guardar(partidaMapeador);
     }
     
-    //Nuevo Hilos
-    @Override
-    public void update(Observable o, Object arg) {
-        ProcesoContadorTiempo p=(ProcesoContadorTiempo)o;
-        if(p.getNombre().equals(tiempoTurno.getNombre())){
-            if(arg.equals(ProcesoContadorTiempo.Eventos.finalizado)){
-                cambiarTurno();
-                finalizarPartida(turno);
-            }
-            if(arg.equals(ProcesoContadorTiempo.Eventos.segundo)){
-                avisar(Eventos.segundo);
-            }
-        }
-        if(p.getNombre().equals(tiempoApuesta.getNombre())){
-            if(arg.equals(ProcesoContadorTiempo.Eventos.finalizado)){
-                finalizarPartida(ultimaApuesta.getJugador());
-            }
-        }
-        
-    }
+    
 }

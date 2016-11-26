@@ -15,12 +15,14 @@ import static java.lang.Thread.sleep;
  *
  * @author Usuario
  */
-public class ProcesoContadorTiempo extends Observable implements Runnable {
+public class ProcesoContadorTiempo implements Runnable {
     private Thread hilo;
     private boolean correr;
     private String nombre;
     private int segundosInicial;
     private int segundos;
+    private Partida partida;
+   
 
     public enum Eventos{
         segundo, 
@@ -35,7 +37,8 @@ public class ProcesoContadorTiempo extends Observable implements Runnable {
         return segundos;
     }
     
-    public ProcesoContadorTiempo(String nombre, int segundos) {
+    public ProcesoContadorTiempo(Partida partida,String nombre, int segundos) {
+        this.partida=partida;
         this.nombre = nombre;
         this.segundosInicial = segundos;
     }
@@ -65,19 +68,20 @@ public class ProcesoContadorTiempo extends Observable implements Runnable {
         } 
     }
     
-    
     @Override
     public void run() {
         //Hilo alternativo al Main
         System.out.println("INICIO:" + getNombre());
         for(;segundos>0 && correr;){
             System.out.println("Segundos: " + segundos + " - " + getNombre());
-            if(correr)
-                avisar(Eventos.segundo);
-            try {
-                sleep(1000);
-            } catch (InterruptedException ex) {
-            }
+            partida.avisar(Partida.Eventos.segundo);
+            if(correr) {
+                try {
+                    sleep(1000);              
+                } catch (InterruptedException ex) {
+                }
+            }                    
+            
             if(correr)
                 segundos--;
         }
@@ -85,7 +89,7 @@ public class ProcesoContadorTiempo extends Observable implements Runnable {
         if(segundos==0){ 
             System.out.println("FIN:" + getNombre());
             segundos=segundosInicial;
-            avisar(Eventos.finalizado);
+            partida.tiempoFinalizado();
             correr = false;
         }
         
@@ -97,11 +101,6 @@ public class ProcesoContadorTiempo extends Observable implements Runnable {
         String c = "corriendo";
         if(!correr) c = "fin";
         return "Segundos:" + segundos + " - " + getNombre()+ " " + c;
-    }
-
-    private void avisar(Object evento) {
-        setChanged();
-        notifyObservers(evento);
     }
     
 }
