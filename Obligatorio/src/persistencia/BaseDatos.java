@@ -30,11 +30,21 @@ public class BaseDatos {
     }
     
     private BaseDatos() {
-        conectar("jdbc:mysql://localhost/obligatorio_disapp","root","root");
+        //conectar("jdbc:mysql://localhost/obligatorio_disapp","root","root");
+        //*****para que se conecte a la base desde web
+        conectar("jdbc:mysql://localhost:3306/obligatorio_disapp","root","root");
+        //********************************************
     }
     
     private void conectar(String url,String usuario,String pass){
         try {
+            //*****para que se conecte a la base desde web
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            //********************************************
             conexion = DriverManager.getConnection(url, usuario, pass);
             sentencia = conexion.createStatement();
         } catch (SQLException ex) {

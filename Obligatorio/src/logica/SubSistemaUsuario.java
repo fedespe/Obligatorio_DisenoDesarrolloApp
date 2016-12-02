@@ -89,6 +89,6 @@ public class SubSistemaUsuario{
         administradores.add(new Administrador("g","g","Graciela García"));
         administradores.add(new Administrador("h","h","Heidy Montero"));
         administradores.add(new Administrador("i","i","Ilda De León"));
-        administradores.add(new Administrador("j","j","Judith Barsi"));
+        administradores.add(new Administrador("j","j","Judith Barsi"));    
     }
 }

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Monitoreo</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="http://code.jquery.com/jquery-latest.min.js">
+            //Biblioteca jquery para enviar peticiones a la vista en el servidor
+        </script>
+        <script type="text/javascript">
+            
+            var observadorWeb = new EventSource("loginAdministrador?accion=new");
+            
+            observadorWeb.onerror = function(evento) {
+               alert("No hay conexion con servicios de partidas");
+               observadorWeb.close();
+            };
+            observadorWeb.addEventListener("mostrarPartidas", function (evento){
+                window.open("monitoreo.html");
+            },false);
+            function ingresar() {
+                var nombre = document.getElementById("nombre").value;
+                var pass = document.getElementById("pass").value;
+                $.get("loginAdministrador?accion=ingresar&nombre=" + nombre + "&pass=" + pass, function (d) { 
+                    
+                });
+            };
+          
+        </script>
+    </head>
+    <body>
+        <div><h1>Login</h1></div>
+        <br>
+        Nombre <input type="text" id="nombre">
+        Pass   <input type="text" id="pass">
+        <input type="button" value="Ingresar" onclick="ingresar()">
+    </body>
+</html>

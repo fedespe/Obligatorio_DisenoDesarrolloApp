@@ -41,6 +41,7 @@ public class ProcesoContadorTiempo implements Runnable {
         this.partida=partida;
         this.nombre = nombre;
         this.segundosInicial = segundos;
+        this.segundos=segundos;
     }
     
     public void continuar(){
