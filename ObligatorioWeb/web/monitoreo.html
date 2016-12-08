@@ -23,13 +23,23 @@ and open the template in the editor.
             
             observadorWeb.addEventListener("listarPartidas", function (evento){
                 document.getElementById("listaPartidas").innerHTML = evento.data;
-            },false);           
+            },false);   
+            observadorWeb.addEventListener("mostrarPartida", function (evento){
+                window.open("replay.html");
+            },false);   
+            function mostrar() {
+                var nroPartida = document.getElementById("iDlistaPartidas").value;
+                $.get("MonitoreoPartidas?accion=mostrarPartida&nroPartida="+nroPartida, function (d) { 
+                    
+                });
+            };
         </script>
     </head>
     <body>
         <div><h1>Monitoreo Partidas</h1></div>
         <br>
         Partidas <span id="listaPartidas"></span>
+        <input type="button" value="Mostrar" onclick="mostrar()">
 
     </body>
 </html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Replay</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="http://code.jquery.com/jquery-latest.min.js">
+            //Biblioteca jquery para enviar peticiones a la vista en el servidor
+        </script>
+        <script type="text/javascript">
+            
+            var observadorWeb = new EventSource("ReplayPartida?accion=new");
+            
+            observadorWeb.onerror = function(evento) {
+               alert("No hay conexion con servicios de partidas");
+               observadorWeb.close();
+            };
+            observadorWeb.addEventListener("mostrarFichas", function (evento){
+                document.getElementById("informacionJuego").innerHTML = evento.data;
+            },false);
+            var nombreVista;
+            observadorWeb.addEventListener("guardarNombreVista", function (evento){
+                nombreVista = evento.data;
+            },false);
+            function siguiente() {
+                $.get("ReplayPartida?accion=siguiente&nombreVista="+nombreVista, function (d) { 
+                    
+                });
+            };
+            function anterior() {
+                $.get("ReplayPartida?accion=anterior&nombreVista="+nombreVista, function (d) { 
+                    
+                });
+            };
+          
+        </script>
+    </head>
+    <body>
+        <div><h1>Partida</h1></div>
+        <input type="button" value="Anterior" onclick="anterior()">
+        <input type="button" value="Siguiente" onclick="siguiente()">
+        
+        <span id="informacionJuego"></span>       
+    </body>
+</html>

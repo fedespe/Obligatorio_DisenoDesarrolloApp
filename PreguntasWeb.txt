@@ -1,0 +1,6 @@
+*Como cambiar la ruta de las imagenes para que las levante.
+
+//crear sevlet HECHO
+//crear html y establecer conexion
+//crear vista 
+//implementar metodos de la vista

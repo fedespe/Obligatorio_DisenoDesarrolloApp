@@ -31,7 +31,7 @@ public class PanelFichasReplay extends javax.swing.JPanel {
         for(int i = 0; i < fichas.size(); i++){
             Ficha f = fichas.get(i);
             BotonFicha boton = new BotonFicha(f);
-            ImageIcon icono = new ImageIcon("Imagenes\\Horizontales\\" + f.getValorIzquierda() + "-" + f.getValorDerecha() + ".jpg");
+            ImageIcon icono = new ImageIcon(getClass().getResource("/Imagenes/Horizontales/" + f.getValorIzquierda() + "-" + f.getValorDerecha() + ".jpg"));
             
             boton.setIcon(icono);
 

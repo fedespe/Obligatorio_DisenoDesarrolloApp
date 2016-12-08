@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.AsyncContext;
+import javax.servlet.http.HttpServletRequest;
 import logica.Jugador;
 import logica.Partida;
 
@@ -23,6 +24,7 @@ public class VistaMonitoreoWeb implements VistaPartidas{
     private ControladorPartidas controlador;
     private AsyncContext contexto;
     private PrintWriter out;
+    private Partida partidaSelccionada;
 
     public VistaMonitoreoWeb(AsyncContext contexto) {
         this.contexto = contexto;
@@ -30,6 +32,10 @@ public class VistaMonitoreoWeb implements VistaPartidas{
             out = contexto.getResponse().getWriter();
         } catch (IOException ex) { }
         controlador = new ControladorPartidas(this);
+    }
+
+    public Partida getPartidaSelccionada() {
+        return partidaSelccionada;
     }
 
     @Override
@@ -43,9 +49,14 @@ public class VistaMonitoreoWeb implements VistaPartidas{
     }
 
     @Override
-    public void mostrarPartida(Partida get) {
+    public void mostrarPartida(Partida partida) {
+        partidaSelccionada=partida;
+        //((HttpServletRequest)contexto.getRequest()).getSession().setAttribute("nombreAtributo", objeto);
+        enviar("mostrarPartida"," ");
     }
-    
+    public void abrirPartida(int nroPartida) {
+        controlador.abrirPartida(nroPartida);
+    }
     private void enviar(String evento, String dato) {
         if(out!=null){
             out.write("event: " + evento + "\n"); //asi se especifica el nombre del evento, con este nombre se registran los listeners en la pagina
@@ -79,26 +90,5 @@ public class VistaMonitoreoWeb implements VistaPartidas{
         }
         return lista;
     }
-    //    @Override
-//    public void cargarTipos(ArrayList<String> tipos) {
-//        enviar("listaTipos",Componentes.select(tipos, "iDListaTipos"));
-//    }
-//
-//    @Override
-//    public void limpiar() {
-//        enviar("limpiar","");
-//    }
-//
-//    @Override
-//    public void mostrarAvisos(ArrayList<Aviso> avisos) {
-//        enviar("listaAvisos",Componentes.select(avisos, "iDlistaAvisos"));
-//    }
-//
-//    public void agregar(String texto, String duracion) {
-//        controlador.agregarAviso(texto, Integer.parseInt(duracion));
-//    }
-//
-//    public void crear(String nombre, String tipo) {
-//        controlador.agregarPublicidad(nombre, tipo);
-//    }
+
 }

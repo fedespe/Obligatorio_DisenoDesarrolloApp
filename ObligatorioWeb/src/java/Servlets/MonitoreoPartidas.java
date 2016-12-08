@@ -43,7 +43,7 @@ public class MonitoreoPartidas extends HttpServlet {
             contexto.getResponse().setContentType("text/event-stream"); 
             contexto.getResponse().setCharacterEncoding("UTF-8");
             contexto.setTimeout(0);
-            request.getSession(true).setAttribute("vista",new VistaMonitoreoWeb(contexto));
+            request.getSession(true).setAttribute("vistaMonitoreo",new VistaMonitoreoWeb(contexto));
 
         }else{
             HttpSession sesion = request.getSession();
@@ -51,9 +51,11 @@ public class MonitoreoPartidas extends HttpServlet {
                 System.out.println("SE PERDIO LA SESION");
                 return;
             }
-            VistaMonitoreoWeb vista = (VistaMonitoreoWeb)sesion.getAttribute("vista");
+            VistaMonitoreoWeb vista = (VistaMonitoreoWeb)sesion.getAttribute("vistaMonitoreo");
             switch(accion){
-//                case "agregar" : vista.agregar(request.getParameter("texto"),request.getParameter("duracion"));break;
+                case "mostrarPartida" : vista.abrirPartida(Integer.parseInt(request.getParameter("nroPartida")));
+                                        request.getSession(true).setAttribute("partidaSeleccionada",vista.getPartidaSelccionada());
+                                        break;
 //                case "crear" : vista.crear(request.getParameter("nombre"),request.getParameter("tipo"));break;
             }
         }

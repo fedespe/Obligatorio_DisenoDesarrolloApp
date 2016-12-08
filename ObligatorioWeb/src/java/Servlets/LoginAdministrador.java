@@ -45,7 +45,7 @@ public class LoginAdministrador extends HttpServlet {
             contexto.getResponse().setContentType("text/event-stream"); 
             contexto.getResponse().setCharacterEncoding("UTF-8");
             contexto.setTimeout(0);
-            request.getSession(true).setAttribute("vista",new VistaLoginWeb(contexto));
+            request.getSession(true).setAttribute("vistaLogin",new VistaLoginWeb(contexto));
             
         }else{
             HttpSession sesion = request.getSession();
@@ -53,7 +53,7 @@ public class LoginAdministrador extends HttpServlet {
                 System.out.println("SE PERDIO LA SESION");
                 return;
             }
-            VistaLoginWeb vista = (VistaLoginWeb)sesion.getAttribute("vista");
+            VistaLoginWeb vista = (VistaLoginWeb)sesion.getAttribute("vistaLogin");
             switch(accion){
                 case "ingresar" : vista.ingresar(request.getParameter("nombre"),request.getParameter("pass"));break;
 //                case "crear" : vista.crear(request.getParameter("nombre"),request.getParameter("tipo"));break;
