@@ -6,6 +6,7 @@
 package logica;
 
 import java.util.ArrayList;
+import mapeadores.MapeadorAdministrador;
 import mapeadores.MapeadorJugador;
 import persistencia.Persistencia;
 import utilidades.ObligatorioException;
@@ -20,6 +21,7 @@ public class SubSistemaUsuario{
     private ArrayList<Jugador> jugadoresLogueados = new ArrayList();
     private Persistencia persistencia = new Persistencia();
     private MapeadorJugador jugadorMapper = new MapeadorJugador();
+    private MapeadorAdministrador administradorMapper = new MapeadorAdministrador();
     
     public Jugador loginJugador(String n, String p) throws ObligatorioException{
         for(Jugador j:jugadores){
@@ -80,15 +82,10 @@ public class SubSistemaUsuario{
             jugadores.add(j);
         }
         
-        administradores.add(new Administrador("a","a","Analía Pereyra"));
-        administradores.add(new Administrador("b","b","Blanca Moreira"));
-        administradores.add(new Administrador("c","c","Claudia Tabárez"));
-        administradores.add(new Administrador("d","d","Dilma Rousseff"));
-        administradores.add(new Administrador("e","e","Emilia Suárez"));
-        administradores.add(new Administrador("f","f","Fabiana Guerra"));
-        administradores.add(new Administrador("g","g","Graciela García"));
-        administradores.add(new Administrador("h","h","Heidy Montero"));
-        administradores.add(new Administrador("i","i","Ilda De León"));
-        administradores.add(new Administrador("j","j","Judith Barsi"));    
+        ArrayList<Object> listaAdministradores = persistencia.obtenerTodos(administradorMapper);
+        for(Object o: listaAdministradores){
+            Administrador a = (Administrador)o;
+            administradores.add(a);
+        }
     }
 }

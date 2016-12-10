@@ -38,10 +38,15 @@ public class PanelFichasJuego extends JPanel implements ActionListener{
             ImageIcon icono = null;
             
             if(destino)
+                //Con Web
                 icono = new ImageIcon(getClass().getResource("/Imagenes/Horizontales/" + f.getValorIzquierda() + "-" + f.getValorDerecha() + ".jpg"));
+                //Sin Web
+                //icono = new ImageIcon("Imagenes/Horizontales/" + f.getValorIzquierda() + "-" + f.getValorDerecha() + ".jpg");
             else
+                //ConWeb
                 icono = new ImageIcon(getClass().getResource("/Imagenes/Verticales/" + f.getValorIzquierda() + "-" + f.getValorDerecha() + ".jpg"));
-            
+                //Sin Web
+                //icono = new ImageIcon("Imagenes/Verticales/" + f.getValorIzquierda() + "-" + f.getValorDerecha() + ".jpg");
             boton.setIcon(icono);
             boton.addActionListener(this); //Me agrego en la lista de escuchadores del botón (Para cada botón creado)
 

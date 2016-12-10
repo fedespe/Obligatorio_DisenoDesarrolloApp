@@ -13,4 +13,7 @@ public class Administrador extends Usuario {
     public Administrador(String n, String p, String np){
         super(n,p,np);
     }
+    public Administrador(){
+        super();
+    }
 }
