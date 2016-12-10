@@ -34,6 +34,7 @@ public class VistaReplayWeb implements VistaReplay{
         } catch (IOException ex) { }
         controlador = new ControladorReplay(this,partida);
         this.nombreVista=nombreVista;
+        controlador.inicializar();
     }
     public void siguiente(){
         controlador.movimientoSiguiente();
@@ -46,7 +47,7 @@ public class VistaReplayWeb implements VistaReplay{
 
     @Override
     public void error(String message) {
-        enviar("mostrarFichas","No existen mas movimientos");
+        //enviar("mostrarFichas","<p>No existen mas movimientos</p>");
     }
     private void enviar(String evento, String dato) {
         if(out!=null){
@@ -60,13 +61,18 @@ public class VistaReplayWeb implements VistaReplay{
     private String formatear(Movimiento movimiento) {
         String out="";
         if(movimiento.getGanador()!=null){
-            out+="<p>Ganador: "+movimiento.getGanador().getNombreCompleto();
+            out+="<p>Ganador: "+movimiento.getGanador().getNombreCompleto()+"</p>";
         }else{
-            out+="<p>Ganador: aún no hay ganador";
+            out+="<p>Ganador: aún no hay ganador</p>";
+        }
+        if(movimiento.getTablero().isEmpty()){
+            out+="<br><p>Jugador: Aún no se ha jugado </p>";
+            out+="<br><p>Fecha: Aún no se ha jugado </p>";
+        }else{
+            out+="<br><p>Jugador: "+movimiento.getJugador().getNombreCompleto()+"</p>";
+            out+="<br><p>Fecha: "+movimiento.getFechaHora()+"</p>";
         }
         
-        out+="</p><br><p>Jugador: "+movimiento.getJugador().getNombreCompleto();
-        out+="</p><br><p>Fecha: "+movimiento.getFechaHora()+"</p>";
         
         for(Ficha f : movimiento.getTablero()){
             out+="<img src='Imagenes/Horizontales/" + f.getValorIzquierda() + "-" + f.getValorDerecha() + ".jpg'>";

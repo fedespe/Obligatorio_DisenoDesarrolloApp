@@ -218,7 +218,8 @@ public class Partida extends utilidades.Observable {
         verificarSiSeDescartoTodas();
         cambiarTurno();
         //nuevo hilo
-        iniciarTiempoTurno();
+        if(partidaActiva)
+            iniciarTiempoTurno();//aca hay que agregarle que si la partida finalizo o se que esta inactiva no inicie
         avisar(Eventos.realizoMovimiento);
         Sistema.getInstancia().avisar(Sistema.Eventos.actualizacionEnPartida);
         if(libres.isEmpty()){
