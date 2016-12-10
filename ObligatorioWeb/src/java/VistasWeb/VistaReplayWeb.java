@@ -59,19 +59,21 @@ public class VistaReplayWeb implements VistaReplay{
     }
 
     private String formatear(Movimiento movimiento) {
-        String out="";
+        String out="<table class='table table-striped'><tr>";
+        out+="<tr><th>Ganador</th><th>Jugador</th><th>Fecha</th></tr>";
         if(movimiento.getGanador()!=null){
-            out+="<p>Ganador: "+movimiento.getGanador().getNombreCompleto()+"</p>";
+            out+="<td>"+movimiento.getGanador().getNombreCompleto()+"</td>";
         }else{
-            out+="<p>Ganador: aún no hay ganador</p>";
+            out+="<td>Aún no hay ganador</td>";
         }
         if(movimiento.getTablero().isEmpty()){
-            out+="<br><p>Jugador: Aún no se ha jugado </p>";
-            out+="<br><p>Fecha: Aún no se ha jugado </p>";
+            out+="<td>Aún no se ha jugado </td>";
+            out+="<td>Aún no se ha jugado </td>";
         }else{
-            out+="<br><p>Jugador: "+movimiento.getJugador().getNombreCompleto()+"</p>";
-            out+="<br><p>Fecha: "+movimiento.getFechaHora()+"</p>";
+            out+="<td>"+movimiento.getJugador().getNombreCompleto()+"</td>";
+            out+="<td>"+movimiento.getFechaHora()+"</td>";
         }
+        out+="</tr></table>";
         
         
         for(Ficha f : movimiento.getTablero()){

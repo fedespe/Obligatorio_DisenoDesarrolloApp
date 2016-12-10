@@ -12,6 +12,9 @@ and open the template in the editor.
         <script src="http://code.jquery.com/jquery-latest.min.js">
             //Biblioteca jquery para enviar peticiones a la vista en el servidor
         </script>
+        <link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+        <script src="bootstrap-3.3.7-dist/jquery-3.1.1.min.js"></script>
+        <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
         <script type="text/javascript">
             
             var observadorWeb = new EventSource("MonitoreoPartidas?accion=new");
@@ -35,11 +38,15 @@ and open the template in the editor.
             };
         </script>
     </head>
-    <body>
-        <div><h1>Monitoreo Partidas</h1></div>
-        <br>
-        Partidas <span id="listaPartidas"></span>
-        <input type="button" value="Mostrar" onclick="mostrar()">
-
+    <body>     
+        <div class="container">
+            <div class="page-header">
+                <h1>Monitoreo <small>partidas del sistema</small></h1>
+            </div>
+            <h2>Partidas</h2>
+            <div id="listaPartidas"></div>
+            <br>
+            <input type="button" class="btn btn-default" value="Mostrar" onclick="mostrar()">       
+        </div> 
     </body>
 </html>

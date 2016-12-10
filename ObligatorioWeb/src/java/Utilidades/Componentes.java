@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class Componentes {
     public static String select(ArrayList<String> opciones,String id){
-        String select = "<select multiple id='" + id + "'>";
+        String select = "<select class='form-control' multiple id='" + id + "'>";
         int i = 0;
         for(String ob:opciones){
             select +="<option value='" + i + "'>"  + ob  +"</option>";

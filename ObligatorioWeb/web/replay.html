@@ -12,6 +12,9 @@ and open the template in the editor.
         <script src="http://code.jquery.com/jquery-latest.min.js">
             //Biblioteca jquery para enviar peticiones a la vista en el servidor
         </script>
+        <link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+        <script src="bootstrap-3.3.7-dist/jquery-3.1.1.min.js"></script>
+        <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
         <script type="text/javascript">
             
             var observadorWeb = new EventSource("ReplayPartida?accion=new");
@@ -40,11 +43,18 @@ and open the template in the editor.
           
         </script>
     </head>
-    <body>
-        <div><h1>Partida</h1></div>
-        <input type="button" value="Anterior" onclick="anterior()">
-        <input type="button" value="Siguiente" onclick="siguiente()">
-        
-        <span id="informacionJuego"></span>       
+    <body>          
+        <div class="container">
+            <div class="page-header">
+                <h1>Replay <small>repetición de la partida</small></h1>
+            </div>
+            <h2>Partida</h2>
+            <div>
+                <input type="button" class="btn btn-primary btn-sm" value="Anterior" onclick="anterior()">
+                <input type="button" class="btn btn-primary btn-sm" value="Siguiente" onclick="siguiente()">
+            </div>
+            <br>
+            <div id="informacionJuego"></div>               
+        </div> 
     </body>
 </html>
