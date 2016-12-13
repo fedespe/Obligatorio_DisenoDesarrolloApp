@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Replay</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="http://code.jquery.com/jquery-latest.min.js">
+            //Biblioteca jquery para enviar peticiones a la vista en el servidor
+        </script>
+        <link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+        <script src="bootstrap-3.3.7-dist/jquery-3.1.1.min.js"></script>
+        <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+            
+            var observadorWeb = new EventSource("ReplayPartida?accion=new");
+            
+            observadorWeb.onerror = function(evento) {
+               alert("No hay conexion con servicios de partidas");
+               observadorWeb.close();
+            };
+            observadorWeb.addEventListener("mostrarFichas", function (evento){
+                document.getElementById("informacionJuego").innerHTML = evento.data;
+            },false);
+            var nombreVista;
+            observadorWeb.addEventListener("guardarNombreVista", function (evento){
+                nombreVista = evento.data;
+            },false);
+            function siguiente() {
+                $.get("ReplayPartida?accion=siguiente&nombreVista="+nombreVista, function (d) { 
+                    
+                });
+            };
+            function anterior() {
+                $.get("ReplayPartida?accion=anterior&nombreVista="+nombreVista, function (d) { 
+                    
+                });
+            };
+          
+        </script>
+    </head>
+    <body>          
+        <div class="container">
+            <div class="page-header">
+                <h1>Replay <small>repetición de la partida</small></h1>
+            </div>
+            <h2>Partida</h2>
+            <div>
+                <input type="button" class="btn btn-primary btn-sm" value="Anterior" onclick="anterior()">
+                <input type="button" class="btn btn-primary btn-sm" value="Siguiente" onclick="siguiente()">
+            </div>
+            <br>
+            <div id="informacionJuego"></div>               
+        </div> 
+    </body>
+</html>

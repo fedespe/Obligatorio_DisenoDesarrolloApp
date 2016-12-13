@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Monitoreo</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="http://code.jquery.com/jquery-latest.min.js">
+            //Biblioteca jquery para enviar peticiones a la vista en el servidor
+        </script>
+        <link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+        <script src="bootstrap-3.3.7-dist/jquery-3.1.1.min.js"></script>
+        <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+            
+            var observadorWeb = new EventSource("MonitoreoPartidas?accion=new");
+            
+            observadorWeb.onerror = function(evento) {
+               alert("No hay conexion con servicios de partidas");
+               observadorWeb.close();
+            };
+            
+            observadorWeb.addEventListener("listarPartidas", function (evento){
+                document.getElementById("listaPartidas").innerHTML = evento.data;
+            },false);   
+            observadorWeb.addEventListener("mostrarPartida", function (evento){
+                window.open("replay.html");
+            },false);   
+            function mostrar() {
+                var nroPartida = document.getElementById("iDlistaPartidas").value;
+                $.get("MonitoreoPartidas?accion=mostrarPartida&nroPartida="+nroPartida, function (d) { 
+                    
+                });
+            };
+        </script>
+    </head>
+    <body>     
+        <div class="container">
+            <div class="page-header">
+                <h1>Monitoreo <small>partidas del sistema</small></h1>
+            </div>
+            <h2>Partidas</h2>
+            <div id="listaPartidas"></div>
+            <br>
+            <input type="button" class="btn btn-default" value="Mostrar" onclick="mostrar()">       
+        </div> 
+    </body>
+</html>
